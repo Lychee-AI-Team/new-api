@@ -60,7 +60,8 @@ export default defineConfig({
     // }),
   ],
   optimizeDeps: {
-    force: true,
+    // 移除 force: true，让 Vite 按需优化，减少内存占用
+    // force: true,
     esbuildOptions: {
       loader: {
         '.js': 'jsx',
