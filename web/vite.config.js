@@ -29,6 +29,8 @@ export default defineConfig({
   resolve: {
     alias: {
       '@': path.resolve(__dirname, './src'),
+      // 修复 Semi-UI CSS 导入路径问题（新版本 Semi-UI 不再导出 ./dist/css/semi.css）
+      '@douyinfe/semi-ui/dist/css/semi.css': path.resolve(__dirname, './node_modules/@douyinfe/semi-ui/dist/css/semi.css'),
     },
   },
   plugins: [
@@ -51,9 +53,11 @@ export default defineConfig({
       },
     },
     react(),
-    vitePluginSemi({
-      cssLayer: true,
-    }),
+    // vite-plugin-semi 插件与 pnpm + Semi-UI 2.x 有兼容性问题
+    // 已直接在 index.jsx 中导入预编译的 CSS
+    // vitePluginSemi({
+    //   cssLayer: true,
+    // }),
   ],
   optimizeDeps: {
     force: true,

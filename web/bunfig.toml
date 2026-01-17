@@ -1,0 +1,6 @@
+# Bun 配置文件
+# 使用中国镜像加速
+
+[install]
+# 使用 registry.npmmirror.com 镜像
+registry = "https://registry.npmmirror.com"
