@@ -189,6 +189,11 @@ export const CHANNEL_OPTIONS = [
     color: 'blue',
     label: 'Codex (OpenAI OAuth)',
   },
+  {
+    value: 58,
+    color: 'teal',
+    label: '腾讯混元-三段式密钥',
+  },
 ];
 
 export const MODEL_TABLE_PAGE_SIZE = 10;
