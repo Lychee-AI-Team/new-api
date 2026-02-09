@@ -25,6 +25,7 @@ import {
   Tooltip,
   Popover,
   Typography,
+  Button
 } from '@douyinfe/semi-ui';
 import {
   timestamp2string,
@@ -40,8 +41,8 @@ import {
   renderClaudeModelPrice,
   renderModelPrice,
 } from '../../../helpers';
-import { IconHelpCircle, IconStarStroked } from '@douyinfe/semi-icons';
-import { Route } from 'lucide-react';
+import { IconHelpCircle } from '@douyinfe/semi-icons';
+import { Route, Sparkles } from 'lucide-react';
 
 const colors = [
   'amber',
@@ -69,6 +70,34 @@ function formatRatio(ratio) {
     return ratio.toFixed(4);
   }
   return String(ratio);
+}
+
+function buildChannelAffinityTooltip(affinity, t) {
+  if (!affinity) {
+    return null;
+  }
+
+  const keySource = affinity.key_source || '-';
+  const keyPath = affinity.key_path || affinity.key_key || '-';
+  const keyHint = affinity.key_hint || '';
+  const keyFp = affinity.key_fp ? `#${affinity.key_fp}` : '';
+  const keyText = `${keySource}:${keyPath}${keyFp}`;
+
+  const lines = [
+    t('渠道亲和性'),
+    `${t('规则')}：${affinity.rule_name || '-'}`,
+    `${t('分组')}：${affinity.selected_group || '-'}`,
+    `${t('Key')}：${keyText}`,
+    ...(keyHint ? [`${t('Key 摘要')}：${keyHint}`] : []),
+  ];
+
+  return (
+    <div style={{ lineHeight: 1.6, display: 'flex', flexDirection: 'column' }}>
+      {lines.map((line, i) => (
+        <div key={i}>{line}</div>
+      ))}
+    </div>
+  );
 }
 
 // Render functions
@@ -182,6 +211,18 @@ function renderFirstUseTime(type, t) {
   }
 }
 
+function renderBillingTag(record, t) {
+  const other = getLogOther(record.other);
+  if (other?.billing_source === 'subscription') {
+    return (
+      <Tag color='green' shape='circle'>
+        {t('订阅抵扣')}
+      </Tag>
+    );
+  }
+  return null;
+}
+
 function renderModelName(record, copyText, t) {
   let other = getLogOther(record.other);
   let modelMapped =
@@ -250,6 +291,7 @@ export const getLogsColumns = ({
   COLUMN_KEYS,
   copyText,
   showUserInfoFunc,
+  openChannelAffinityUsageCacheModal,
   isAdminUser,
 }) => {
   return [
@@ -265,6 +307,9 @@ export const getLogsColumns = ({
       render: (text, record, index) => {
         let isMultiKey = false;
         let multiKeyIndex = -1;
+        let content = t('渠道') + `：${record.channel}`;
+        let affinity = null;
+        let showMarker = false;
         let other = getLogOther(record.other);
         if (other?.admin_info) {
           let adminInfo = other.admin_info;
@@ -272,21 +317,71 @@ export const getLogsColumns = ({
             isMultiKey = true;
             multiKeyIndex = adminInfo.multi_key_index;
           }
+          if (
+            Array.isArray(adminInfo.use_channel) &&
+            adminInfo.use_channel.length > 0
+          ) {
+            content = t('渠道') + `：${adminInfo.use_channel.join('->')}`;
+          }
+          if (adminInfo.channel_affinity) {
+            affinity = adminInfo.channel_affinity;
+            showMarker = true;
+          }
         }
 
         return isAdminUser &&
           (record.type === 0 || record.type === 2 || record.type === 5) ? (
           <Space>
-            <Tooltip content={record.channel_name || t('未知渠道')}>
-              <span>
-                <Tag
-                  color={colors[parseInt(text) % colors.length]}
-                  shape='circle'
+            <span style={{ position: 'relative', display: 'inline-block' }}>
+              <Tooltip content={record.channel_name || t('未知渠道')}>
+                <span>
+                  <Tag
+                    color={colors[parseInt(text) % colors.length]}
+                    shape='circle'
+                  >
+                    {text}
+                  </Tag>
+                </span>
+              </Tooltip>
+              {showMarker && (
+                <Tooltip
+                  content={
+                    <div style={{ lineHeight: 1.6 }}>
+                      <div>{content}</div>
+                      {affinity ? (
+                        <div style={{ marginTop: 6 }}>
+                          {buildChannelAffinityTooltip(affinity, t)}
+                        </div>
+                      ) : null}
+                    </div>
+                  }
                 >
-                  {text}
-                </Tag>
-              </span>
-            </Tooltip>
+                  <span
+                    style={{
+                      position: 'absolute',
+                      right: -4,
+                      top: -4,
+                      lineHeight: 1,
+                      fontWeight: 600,
+                      color: '#f59e0b',
+                      cursor: 'pointer',
+                      userSelect: 'none',
+                    }}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      openChannelAffinityUsageCacheModal?.(affinity);
+                    }}
+                  >
+                    <Sparkles
+                      size={14}
+                      strokeWidth={2}
+                      color='currentColor'
+                      fill='currentColor'
+                    />
+                  </span>
+                </Tooltip>
+              )}
+            </span>
             {isMultiKey && (
               <Tag color='white' shape='circle'>
                 {multiKeyIndex}
@@ -457,11 +552,20 @@ export const getLogsColumns = ({
       title: t('花费'),
       dataIndex: 'quota',
       render: (text, record, index) => {
-        return record.type === 0 || record.type === 2 || record.type === 5 ? (
-          <>{renderQuota(text, 6)}</>
-        ) : (
-          <></>
-        );
+        if (!(record.type === 0 || record.type === 2 || record.type === 5)) {
+          return <></>;
+        }
+        const other = getLogOther(record.other);
+        const isSubscription = other?.billing_source === 'subscription';
+        if (isSubscription) {
+          // Subscription billed: show only tag (no $0), but keep tooltip for equivalent cost.
+          return (
+            <Tooltip content={`${t('由订阅抵扣')}：${renderQuota(text, 6)}`}>
+              <span>{renderBillingTag(record, t)}</span>
+            </Tooltip>
+          );
+        }
+        return <>{renderQuota(text, 6)}</>;
       },
     },
     {
@@ -508,7 +612,6 @@ export const getLogsColumns = ({
           return <></>;
         }
         let content = t('渠道') + `：${record.channel}`;
-        let affinity = null;
         if (record.other !== '') {
           let other = JSON.parse(record.other);
           if (other === null) {
@@ -516,63 +619,17 @@ export const getLogsColumns = ({
           }
           if (other.admin_info !== undefined) {
             if (
-              other.admin_info.use_channel !== null &&
-              other.admin_info.use_channel !== undefined &&
-              other.admin_info.use_channel !== ''
+                other.admin_info.use_channel !== null &&
+                other.admin_info.use_channel !== undefined &&
+                other.admin_info.use_channel !== ''
             ) {
               let useChannel = other.admin_info.use_channel;
               let useChannelStr = useChannel.join('->');
               content = t('渠道') + `：${useChannelStr}`;
             }
-            if (other.admin_info.channel_affinity) {
-              affinity = other.admin_info.channel_affinity;
-            }
           }
         }
-        return isAdminUser ? (
-          <Space>
-            <div>{content}</div>
-	            {affinity ? (
-	              <Tooltip
-	                content={
-	                  <div style={{ lineHeight: 1.6 }}>
-	                    <Typography.Text strong>{t('渠道亲和性')}</Typography.Text>
-	                    <div>
-	                      <Typography.Text type='secondary'>
-	                        {t('规则')}：{affinity.rule_name || '-'}
-	                      </Typography.Text>
-	                    </div>
-	                    <div>
-	                      <Typography.Text type='secondary'>
-	                        {t('分组')}：{affinity.selected_group || '-'}
-	                      </Typography.Text>
-	                    </div>
-	                    <div>
-	                      <Typography.Text type='secondary'>
-	                        {t('Key')}：
-	                        {(affinity.key_source || '-') +
-	                          ':' +
-	                          (affinity.key_path || affinity.key_key || '-') +
-                          (affinity.key_fp ? `#${affinity.key_fp}` : '')}
-                      </Typography.Text>
-                    </div>
-	                  </div>
-	                }
-	              >
-	                <span>
-	                  <Tag className='channel-affinity-tag' color='cyan' shape='circle'>
-	                    <span className='channel-affinity-tag-content'>
-	                      <IconStarStroked style={{ fontSize: 13 }} />
-	                      {t('优选')}
-	                    </span>
-	                  </Tag>
-	                </span>
-	              </Tooltip>
-            ) : null}
-          </Space>
-        ) : (
-          <></>
-        );
+        return isAdminUser ? <div>{content}</div> : <></>;
       },
     },
     {
@@ -672,14 +729,14 @@ export const getLogsColumns = ({
               'openai',
             );
         return (
-          <Typography.Paragraph
-            ellipsis={{
-              rows: 3,
-            }}
-            style={{ maxWidth: 240, whiteSpace: 'pre-line' }}
-          >
-            {content}
-          </Typography.Paragraph>
+            <Typography.Paragraph
+                ellipsis={{
+                  rows: 3,
+                }}
+                style={{ maxWidth: 240, whiteSpace: 'pre-line' }}
+            >
+              {content}
+            </Typography.Paragraph>
         );
       },
     },
