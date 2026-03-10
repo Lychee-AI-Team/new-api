@@ -46,6 +46,7 @@ import {
   Col,
   Highlight,
   Input,
+  Tooltip,
 } from '@douyinfe/semi-ui';
 import {
   getChannelModels,
@@ -55,6 +56,7 @@ import {
   selectFilter,
 } from '../../../../helpers';
 import ModelSelectModal from './ModelSelectModal';
+import SingleModelSelectModal from './SingleModelSelectModal';
 import OllamaModelModal from './OllamaModelModal';
 import CodexOAuthModal from './CodexOAuthModal';
 import JSONEditor from '../../../common/ui/JSONEditor';
@@ -70,6 +72,7 @@ import {
   IconCode,
   IconGlobe,
   IconBolt,
+  IconSearch,
   IconChevronUp,
   IconChevronDown,
 } from '@douyinfe/semi-icons';
@@ -169,6 +172,7 @@ const EditChannelModal = (props) => {
     allow_service_tier: false,
     disable_store: false, // false = 允许透传（默认开启）
     allow_safety_identifier: false,
+    claude_beta_query: false,
   };
   const [batch, setBatch] = useState(false);
   const [multiToSingle, setMultiToSingle] = useState(false);
@@ -186,6 +190,13 @@ const EditChannelModal = (props) => {
   const [isModalOpenurl, setIsModalOpenurl] = useState(false);
   const [modelModalVisible, setModelModalVisible] = useState(false);
   const [fetchedModels, setFetchedModels] = useState([]);
+  const [modelMappingValueModalVisible, setModelMappingValueModalVisible] =
+    useState(false);
+  const [modelMappingValueModalModels, setModelMappingValueModalModels] =
+    useState([]);
+  const [modelMappingValueKey, setModelMappingValueKey] = useState('');
+  const [modelMappingValueSelected, setModelMappingValueSelected] =
+    useState('');
   const [ollamaModalVisible, setOllamaModalVisible] = useState(false);
   const formApiRef = useRef(null);
   const [vertexKeys, setVertexKeys] = useState([]);
@@ -428,7 +439,11 @@ const EditChannelModal = (props) => {
   const isIonetLocked = isIonetChannel && isEdit;
 
   const handleInputChange = (name, value) => {
-    if (isIonetChannel && isEdit && ['type', 'key', 'base_url'].includes(name)) {
+    if (
+      isIonetChannel &&
+      isEdit &&
+      ['type', 'key', 'base_url'].includes(name)
+    ) {
       return;
     }
     if (formApiRef.current) {
@@ -626,6 +641,7 @@ const EditChannelModal = (props) => {
           data.disable_store = parsedSettings.disable_store || false;
           data.allow_safety_identifier =
             parsedSettings.allow_safety_identifier || false;
+          data.claude_beta_query = parsedSettings.claude_beta_query || false;
         } catch (error) {
           console.error('解析其他设置失败:', error);
           data.azure_responses_version = '';
@@ -636,6 +652,7 @@ const EditChannelModal = (props) => {
           data.allow_service_tier = false;
           data.disable_store = false;
           data.allow_safety_identifier = false;
+          data.claude_beta_query = false;
         }
       } else {
         // 兼容历史数据：老渠道没有 settings 时，默认按 json 展示
@@ -645,6 +662,7 @@ const EditChannelModal = (props) => {
         data.allow_service_tier = false;
         data.disable_store = false;
         data.allow_safety_identifier = false;
+        data.claude_beta_query = false;
       }
 
       if (
@@ -761,10 +779,49 @@ const EditChannelModal = (props) => {
       if (!silent) {
         setModelModalVisible(true);
       }
+      setLoading(false);
+      return uniqueModels;
     } else {
       showError(t('获取模型列表失败'));
     }
     setLoading(false);
+    return null;
+  };
+
+  const openModelMappingValueModal = async ({ pairKey, value }) => {
+    const mappingKey = String(pairKey ?? '').trim();
+    if (!mappingKey) return;
+
+    if (!MODEL_FETCHABLE_TYPES.has(inputs.type)) {
+      return;
+    }
+
+    let modelsToUse = fetchedModels;
+    if (!Array.isArray(modelsToUse) || modelsToUse.length === 0) {
+      const fetched = await fetchUpstreamModelList('models', { silent: true });
+      if (Array.isArray(fetched)) {
+        modelsToUse = fetched;
+      }
+    }
+
+    if (!Array.isArray(modelsToUse) || modelsToUse.length === 0) {
+      showInfo(t('暂无模型'));
+      return;
+    }
+
+    const normalizedModelsToUse = Array.from(
+      new Set(
+        modelsToUse.map((model) => String(model ?? '').trim()).filter(Boolean),
+      ),
+    );
+    const currentValue = String(value ?? '').trim();
+
+    setModelMappingValueModalModels(normalizedModelsToUse);
+    setModelMappingValueKey(mappingKey);
+    setModelMappingValueSelected(
+      normalizedModelsToUse.includes(currentValue) ? currentValue : '',
+    );
+    setModelMappingValueModalVisible(true);
   };
 
   const fetchModels = async () => {
@@ -1348,6 +1405,9 @@ const EditChannelModal = (props) => {
         settings.allow_safety_identifier =
           localInputs.allow_safety_identifier === true;
       }
+      if (localInputs.type === 14) {
+        settings.claude_beta_query = localInputs.claude_beta_query === true;
+      }
     }
 
     localInputs.settings = JSON.stringify(settings);
@@ -1368,6 +1428,7 @@ const EditChannelModal = (props) => {
     delete localInputs.allow_service_tier;
     delete localInputs.disable_store;
     delete localInputs.allow_safety_identifier;
+    delete localInputs.claude_beta_query;
 
     let res;
     localInputs.auto_ban = localInputs.auto_ban ? 1 : 0;
@@ -1775,7 +1836,9 @@ const EditChannelModal = (props) => {
                         type='info'
                         closeIcon={null}
                         className='mb-4 rounded-xl'
-                        description={t('此渠道由 IO.NET 自动同步，类型、密钥和 API 地址已锁定。')}
+                        description={t(
+                          '此渠道由 IO.NET 自动同步，类型、密钥和 API 地址已锁定。',
+                        )}
                       >
                         <Space>
                           {ionetMetadata?.deployment_id && (
@@ -1809,6 +1872,17 @@ const EditChannelModal = (props) => {
                       disabled={isIonetLocked}
                     />
 
+
+                    {inputs.type === 57 && (
+                      <Banner
+                        type='warning'
+                        closeIcon={null}
+                        className='mb-4 rounded-xl'
+                        description={t(
+                          '免责声明：仅限个人使用，请勿分发或共享任何凭证。该渠道存在前置条件与使用门槛，请在充分了解流程与风险后使用，并遵守 OpenAI 的相关条款与政策。相关凭证与配置仅限接入 Codex CLI 使用，不适用于其他客户端、平台或渠道。',
+                        )}
+                      />
+                    )}
                     {inputs.type === 20 && (
                       <Form.Switch
                         field='is_enterprise_account'
@@ -1852,7 +1926,10 @@ const EditChannelModal = (props) => {
                           style={{ width: '100%' }}
                           value={inputs.aws_key_type || 'ak_sk'}
                           onChange={(value) => {
-                            handleChannelOtherSettingsChange('aws_key_type', value);
+                            handleChannelOtherSettingsChange(
+                              'aws_key_type',
+                              value,
+                            );
                           }}
                           extraText={t(
                             'AK/SK 模式：使用 AccessKey 和 SecretAccessKey；API Key 模式：使用 API Key',
@@ -1932,7 +2009,9 @@ const EditChannelModal = (props) => {
                           placeholder={
                             inputs.type === 33
                               ? inputs.aws_key_type === 'api_key'
-                                ? t('请输入 API Key，一行一个，格式：APIKey|Region')
+                                ? t(
+                                  '请输入 API Key，一行一个，格式：APIKey|Region',
+                                )
                                 : t(
                                   '请输入密钥，一行一个，格式：AccessKey|SecretAccessKey|Region',
                                 )
@@ -1991,10 +2070,17 @@ const EditChannelModal = (props) => {
                               rules={
                                 isEdit
                                   ? []
-                                  : [{ required: true, message: t('请输入密钥') }]
+                                  : [
+                                    {
+                                      required: true,
+                                      message: t('请输入密钥'),
+                                    },
+                                  ]
                               }
                               autoComplete='new-password'
-                              onChange={(value) => handleInputChange('key', value)}
+                              onChange={(value) =>
+                                handleInputChange('key', value)
+                              }
                               disabled={isIonetLocked}
                               extraText={
                                 <div className='flex flex-col gap-2'>
@@ -2089,7 +2175,9 @@ const EditChannelModal = (props) => {
                                   </Button>
                                   <Button
                                     size='small'
-                                    type={useManualInput ? 'primary' : 'tertiary'}
+                                    type={
+                                      useManualInput ? 'primary' : 'tertiary'
+                                    }
                                     onClick={() => {
                                       setUseManualInput(true);
                                       // 切换到手动输入模式时清空文件上传相关状态
@@ -2220,7 +2308,9 @@ const EditChannelModal = (props) => {
                               inputs.type === 33
                                 ? inputs.aws_key_type === 'api_key'
                                   ? t('请输入 API Key，格式：APIKey|Region')
-                                  : t('按照如下格式输入：AccessKey|SecretAccessKey|Region')
+                                  : t(
+                                    '按照如下格式输入：AccessKey|SecretAccessKey|Region',
+                                  )
                                 : t(type2secretPrompt(inputs.type))
                             }
                             rules={
@@ -2608,14 +2698,17 @@ const EditChannelModal = (props) => {
                                 label: 'https://ark.cn-beijing.volces.com',
                               },
                               {
-                                value: 'https://ark.ap-southeast.bytepluses.com',
-                                label: 'https://ark.ap-southeast.bytepluses.com',
+                                value:
+                                  'https://ark.ap-southeast.bytepluses.com',
+                                label:
+                                  'https://ark.ap-southeast.bytepluses.com',
                               },
                               {
                                 value: 'doubao-coding-plan',
                                 label: 'Doubao Coding Plan',
                               },
-                            ]} defaultValue='https://ark.cn-beijing.volces.com'
+                            ]}
+                            defaultValue='https://ark.cn-beijing.volces.com'
                             disabled={isIonetLocked}
                           />
                         </div>
@@ -2761,7 +2854,9 @@ const EditChannelModal = (props) => {
                                   try {
                                     if (Array.isArray(group.items)) {
                                       items = group.items;
-                                    } else if (typeof group.items === 'string') {
+                                    } else if (
+                                      typeof group.items === 'string'
+                                    ) {
                                       const parsed = JSON.parse(
                                         group.items || '[]',
                                       );
@@ -2834,6 +2929,27 @@ const EditChannelModal = (props) => {
                       templateLabel={t('填入模板')}
                       editorType='keyValue'
                       formApi={formApiRef.current}
+                      renderStringValueSuffix={({ pairKey, value }) => {
+                        if (!MODEL_FETCHABLE_TYPES.has(inputs.type)) {
+                          return null;
+                        }
+                        const disabled = !String(pairKey ?? '').trim();
+                        return (
+                          <Tooltip content={t('选择模型')}>
+                            <Button
+                              type='tertiary'
+                              theme='borderless'
+                              size='small'
+                              icon={<IconSearch size={14} />}
+                              disabled={disabled}
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                openModelMappingValueModal({ pairKey, value });
+                              }}
+                            />
+                          </Tooltip>
+                        );
+                      }}
                       extraText={t(
                         '键为请求中的模型名称，值为要替换的模型名称',
                       )}
@@ -3030,9 +3146,12 @@ const EditChannelModal = (props) => {
                                   'header_override',
                                   JSON.stringify(
                                     {
+                                      '*': true,
+                                      're:^X-Trace-.*$': true,
+                                      'X-Foo': '{client_header:X-Foo}',
+                                      Authorization: 'Bearer {api_key}',
                                       'User-Agent':
                                         'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Safari/537.36 Edg/139.0.0.0',
-                                      Authorization: 'Bearer{api_key}',
                                     },
                                     null,
                                     2,
@@ -3041,6 +3160,23 @@ const EditChannelModal = (props) => {
                               }
                             >
                               {t('填入模板')}
+                            </Text>
+                            <Text
+                              className='!text-semi-color-primary cursor-pointer'
+                              onClick={() =>
+                                handleInputChange(
+                                  'header_override',
+                                  JSON.stringify(
+                                    {
+                                      '*': true,
+                                    },
+                                    null,
+                                    2,
+                                  ),
+                                )
+                              }
+                            >
+                              {t('填入透传模版')}
                             </Text>
                             <Text
                               className='!text-semi-color-primary cursor-pointer'
@@ -3194,6 +3330,24 @@ const EditChannelModal = (props) => {
                         </Text>
                       </div>
                     </div>
+
+                    {inputs.type === 14 && (
+                      <Form.Switch
+                        field='claude_beta_query'
+                        label={t('Claude 强制 beta=true')}
+                        checkedText={t('开')}
+                        uncheckedText={t('关')}
+                        onChange={(value) =>
+                          handleChannelOtherSettingsChange(
+                            'claude_beta_query',
+                            value,
+                          )
+                        }
+                        extraText={t(
+                          '开启后，该渠道请求 Claude 时将强制追加 ?beta=true（无需客户端手动传参）',
+                        )}
+                      />
+                    )}
 
                     {inputs.type === 1 && (
                       <Form.Switch
@@ -3358,6 +3512,53 @@ const EditChannelModal = (props) => {
           setModelModalVisible(false);
         }}
         onCancel={() => setModelModalVisible(false)}
+      />
+
+      <SingleModelSelectModal
+        visible={modelMappingValueModalVisible}
+        models={modelMappingValueModalModels}
+        selected={modelMappingValueSelected}
+        onConfirm={(selectedModel) => {
+          const modelName = String(selectedModel ?? '').trim();
+          if (!modelName) {
+            showError(t('请先选择模型！'));
+            return;
+          }
+
+          const mappingKey = String(modelMappingValueKey ?? '').trim();
+          if (!mappingKey) {
+            setModelMappingValueModalVisible(false);
+            return;
+          }
+
+          let parsed = {};
+          const currentMapping = inputs.model_mapping;
+          if (typeof currentMapping === 'string' && currentMapping.trim()) {
+            try {
+              parsed = JSON.parse(currentMapping);
+            } catch (error) {
+              parsed = {};
+            }
+          } else if (
+            currentMapping &&
+            typeof currentMapping === 'object' &&
+            !Array.isArray(currentMapping)
+          ) {
+            parsed = currentMapping;
+          }
+          if (!parsed || typeof parsed !== 'object' || Array.isArray(parsed)) {
+            parsed = {};
+          }
+
+          parsed[mappingKey] = modelName;
+          const nextMapping = JSON.stringify(parsed, null, 2);
+          handleInputChange('model_mapping', nextMapping);
+          if (formApiRef.current) {
+            formApiRef.current.setValue('model_mapping', nextMapping);
+          }
+          setModelMappingValueModalVisible(false);
+        }}
+        onCancel={() => setModelMappingValueModalVisible(false)}
       />
 
       <OllamaModelModal
