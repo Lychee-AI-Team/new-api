@@ -276,7 +276,8 @@ func updatePricing() {
 		}
 
 		// 补充模型元数据（描述、标签、供应商、状态）
-		if meta, ok := metaMap[model]; ok {
+		// 只展示在模型管理中显式配置（ID > 0）且状态为启用的模型
+		if meta, ok := metaMap[model]; ok && meta.Id > 0 {
 			// 若模型被禁用(status!=1)，则直接跳过，不返回给前端
 			if meta.Status != 1 {
 				continue
@@ -285,6 +286,9 @@ func updatePricing() {
 			pricing.Icon = meta.Icon
 			pricing.Tags = meta.Tags
 			pricing.VendorID = meta.VendorID
+		} else {
+			// 若模型未配置（ID 为 0 表示是自动映射的默认配置），则直接跳过，不展示在模型广场中
+			continue
 		}
 		modelPrice, findPrice := ratio_setting.GetModelPrice(model, false)
 		if findPrice {
