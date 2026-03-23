@@ -41,7 +41,6 @@ const ModelsActions = ({
   applyUpstreamOverwrite,
   compactMode,
   setCompactMode,
-  activeVendorKey,
   t,
 }) => {
   // Modal states
@@ -112,8 +111,6 @@ const ModelsActions = ({
           onClick={() => {
             setEditingModel({
               id: undefined,
-              vendor_id:
-                activeVendorKey !== 'all' ? Number(activeVendorKey) : undefined,
             });
             setShowEdit(true);
           }}
@@ -223,12 +220,7 @@ const ModelsActions = ({
         visible={showMissingModal}
         onClose={() => setShowMissingModal(false)}
         onConfigureModel={(name) => {
-          setEditingModel({
-            id: undefined,
-            model_name: name,
-            vendor_id:
-              activeVendorKey !== 'all' ? Number(activeVendorKey) : undefined,
-          });
+          setEditingModel({ id: undefined, model_name: name });
           setShowEdit(true);
           setShowMissingModal(false);
         }}
