@@ -117,7 +117,7 @@ const EditModelModal = (props) => {
     description: '',
     icon: '',
     tags: [],
-    vendor_id: props.editingModel?.vendor_id || undefined,
+    vendor_id: undefined,
     vendor: '',
     vendor_icon: '',
     endpoints: '',
@@ -172,11 +172,7 @@ const EditModelModal = (props) => {
         });
       }
     }
-  }, [
-    props.editingModel?.id,
-    props.editingModel?.model_name,
-    props.editingModel?.vendor_id,
-  ]);
+  }, [props.editingModel?.id, props.editingModel?.model_name]);
 
   useEffect(() => {
     if (props.visiable) {
@@ -191,12 +187,7 @@ const EditModelModal = (props) => {
     } else {
       formApiRef.current?.reset();
     }
-  }, [
-    props.visiable,
-    props.editingModel?.id,
-    props.editingModel?.model_name,
-    props.editingModel?.vendor_id,
-  ]);
+  }, [props.visiable, props.editingModel?.id, props.editingModel?.model_name]);
 
   const submit = async (values) => {
     setLoading(true);
@@ -382,20 +373,21 @@ const EditModelModal = (props) => {
                       addOnBlur
                       showClear
                       onChange={(newTags) => {
-                        if (!formApiRef.current || !Array.isArray(newTags)) return;
-                        // 仅在标签包含逗号时进行规范化处理（支持粘贴逗号分隔文本）
-                        const hasComma = newTags.some(tag => typeof tag === 'string' && tag.includes(','));
-                        if (!hasComma) return;
-
-                        const normalized = [
-                          ...new Set(
-                            newTags.flatMap((tag) =>
-                              typeof tag === 'string'
-                                ? tag.split(',').map((t) => t.trim())
-                                : [tag]
-                            ).filter(Boolean)
-                          ),
-                        ];
+                        if (!formApiRef.current) return;
+                        const normalize = (tags) => {
+                          if (!Array.isArray(tags)) return [];
+                          return [
+                            ...new Set(
+                              tags.flatMap((tag) =>
+                                tag
+                                  .split(',')
+                                  .map((t) => t.trim())
+                                  .filter(Boolean),
+                              ),
+                            ),
+                          ];
+                        };
+                        const normalized = normalize(newTags);
                         formApiRef.current.setValue('tags', normalized);
                       }}
                       style={{ width: '100%' }}
@@ -409,26 +401,17 @@ const EditModelModal = (props) => {
                                 type='primary'
                                 onClick={() => {
                                   if (formApiRef.current) {
-                                    const items = group.items;
-                                    let itemsArray = [];
-                                    try {
-                                      if (typeof items === 'string') {
-                                        if (items.startsWith('[') && items.endsWith(']')) {
-                                          itemsArray = JSON.parse(items);
-                                        } else {
-                                          itemsArray = items.split(',').map(s => s.trim()).filter(Boolean);
-                                        }
-                                      } else if (Array.isArray(items)) {
-                                        itemsArray = items;
-                                      }
-                                    } catch (e) {
-                                      itemsArray = [];
-                                    }
-
-                                    const currentTags = values.tags || [];
-                                    const newTags = [...currentTags, ...itemsArray];
-                                    const uniqueTags = [...new Set(newTags.filter(Boolean))];
-                                    formApiRef.current.setValue('tags', uniqueTags, { touch: true });
+                                    const currentTags =
+                                      formApiRef.current.getValue('tags') || [];
+                                    const newTags = [
+                                      ...currentTags,
+                                      ...(group.items || []),
+                                    ];
+                                    const uniqueTags = [...new Set(newTags)];
+                                    formApiRef.current.setValue(
+                                      'tags',
+                                      uniqueTags,
+                                    );
                                   }
                                 }}
                               >
@@ -503,7 +486,10 @@ const EditModelModal = (props) => {
                                 type='primary'
                                 onClick={() => {
                                   try {
-                                    const current = values.endpoints || '';
+                                    const current =
+                                      formApiRef.current?.getValue(
+                                        'endpoints',
+                                      ) || '';
                                     let base = {};
                                     if (current && current.trim())
                                       base = JSON.parse(current);
@@ -526,7 +512,7 @@ const EditModelModal = (props) => {
                                         'endpoints',
                                         JSON.stringify(groupObj, null, 2),
                                       );
-                                    } catch { }
+                                    } catch {}
                                   }
                                 }}
                               >
