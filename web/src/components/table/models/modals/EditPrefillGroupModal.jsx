@@ -64,10 +64,51 @@ const EditPrefillGroupModal = ({
 
   const [selectedType, setSelectedType] = useState(editingGroup?.type || 'tag');
 
+  // 安全解析 items 数据，兼容后端返回的多种格式
+  // 后端 items 字段使用 JSONValue 类型，可能返回：
+  // - JSON 字符串：'["tag1","tag2"]'
+  // - 原生数组：["tag1","tag2"]
+  // - 对象（endpoint 类型）：{"openai": {...}}
+  // - null 或 undefined
+  const parseItems = (group) => {
+    if (!group) return [];
+    const type = group.type || 'tag';
+    const items = group.items;
+
+    try {
+      if (type === 'endpoint') {
+        if (typeof items === 'string') return items;
+        if (items && typeof items === 'object') return JSON.stringify(items, null, 2);
+        return '';
+      }
+      // 标签组或模型组
+      if (Array.isArray(items)) return items;
+      if (typeof items === 'string') {
+        const parsed = JSON.parse(items);
+        return Array.isArray(parsed) ? parsed : [];
+      }
+      return [];
+    } catch {
+      return type === 'endpoint' ? '' : [];
+    }
+  };
+
   // 当外部传入的编辑组类型变化时同步 selectedType
   useEffect(() => {
     setSelectedType(editingGroup?.type || 'tag');
   }, [editingGroup?.type]);
+
+  // 当 editingGroup 变化时，重新设置表单值（解决 initValues 仅在首次挂载生效的问题）
+  useEffect(() => {
+    if (visible && formRef.current && editingGroup) {
+      formRef.current.setValues({
+        name: editingGroup.name || '',
+        type: editingGroup.type || 'tag',
+        description: editingGroup.description || '',
+        items: parseItems(editingGroup),
+      });
+    }
+  }, [visible, editingGroup?.id, editingGroup?.name]);
 
   const typeOptions = [
     { label: t('模型组'), value: 'model' },
@@ -168,21 +209,7 @@ const EditPrefillGroupModal = ({
             name: editingGroup?.name || '',
             type: editingGroup?.type || 'tag',
             description: editingGroup?.description || '',
-            items: (() => {
-              try {
-                if (editingGroup?.type === 'endpoint') {
-                  // 保持原始字符串
-                  return typeof editingGroup?.items === 'string'
-                    ? editingGroup.items
-                    : JSON.stringify(editingGroup.items || {}, null, 2);
-                }
-                return Array.isArray(editingGroup?.items)
-                  ? editingGroup.items
-                  : [];
-              } catch {
-                return editingGroup?.type === 'endpoint' ? '' : [];
-              }
-            })(),
+            items: parseItems(editingGroup),
           }}
           onSubmit={handleSubmit}
         >
