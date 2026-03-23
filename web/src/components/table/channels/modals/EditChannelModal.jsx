@@ -109,6 +109,8 @@ function type2secretPrompt(type) {
     case 22:
       return '按照如下格式输入：APIKey-AppId，例如：fastgpt-0sp2gtvfdgyi4k30jwlgwf1i-64f335d84283f05518e9e041';
     case 23:
+      return '请输出渠道对应的鉴权密钥';
+    case 58:
       return '按照如下格式输入：AppId|SecretId|SecretKey';
     case 33:
       return '按照如下格式输入：Ak|Sk|Region';
@@ -513,7 +515,12 @@ const EditChannelModal = (props) => {
           localModels = getChannelModels(value);
           break;
       }
-      if (inputs.models.length === 0) {
+      if (!isEdit) {
+        setInputs((inputs) => ({ ...inputs, models: [] }));
+        if (formApiRef.current) {
+          formApiRef.current.setValue('models', []);
+        }
+      } else if (inputs.models.length === 0) {
         setInputs((inputs) => ({ ...inputs, models: localModels }));
       }
       setBasicModels(localModels);
@@ -1676,7 +1683,7 @@ const EditChannelModal = (props) => {
       'flex items-center gap-3 px-3 py-2 transition-all duration-200 rounded-lg mx-2 my-1',
       focused && 'bg-blue-50 shadow-sm',
       selected &&
-        'bg-blue-100 text-blue-700 shadow-lg ring-2 ring-blue-200 ring-opacity-50',
+      'bg-blue-100 text-blue-700 shadow-lg ring-2 ring-blue-200 ring-opacity-50',
       disabled && 'opacity-50 cursor-not-allowed',
       !disabled && 'hover:bg-gray-50 hover:shadow-md cursor-pointer',
       className,
@@ -1865,6 +1872,7 @@ const EditChannelModal = (props) => {
                       disabled={isIonetLocked}
                     />
 
+
                     {inputs.type === 57 && (
                       <Banner
                         type='warning'
@@ -1875,7 +1883,6 @@ const EditChannelModal = (props) => {
                         )}
                       />
                     )}
-
                     {inputs.type === 20 && (
                       <Form.Switch
                         field='is_enterprise_account'
@@ -1968,7 +1975,7 @@ const EditChannelModal = (props) => {
                     )}
                     {batch ? (
                       inputs.type === 41 &&
-                      (inputs.vertex_key_type || 'json') === 'json' ? (
+                        (inputs.vertex_key_type || 'json') === 'json' ? (
                         <Form.Upload
                           field='vertex_files'
                           label={t('密钥文件 (.json)')}
@@ -1987,11 +1994,11 @@ const EditChannelModal = (props) => {
                             isEdit
                               ? []
                               : [
-                                  {
-                                    required: true,
-                                    message: t('请上传密钥文件'),
-                                  },
-                                ]
+                                {
+                                  required: true,
+                                  message: t('请上传密钥文件'),
+                                },
+                              ]
                           }
                           extraText={batchExtra}
                         />
@@ -2003,11 +2010,11 @@ const EditChannelModal = (props) => {
                             inputs.type === 33
                               ? inputs.aws_key_type === 'api_key'
                                 ? t(
-                                    '请输入 API Key，一行一个，格式：APIKey|Region',
-                                  )
+                                  '请输入 API Key，一行一个，格式：APIKey|Region',
+                                )
                                 : t(
-                                    '请输入密钥，一行一个，格式：AccessKey|SecretAccessKey|Region',
-                                  )
+                                  '请输入密钥，一行一个，格式：AccessKey|SecretAccessKey|Region',
+                                )
                               : t('请输入密钥，一行一个')
                           }
                           rules={
@@ -2064,11 +2071,11 @@ const EditChannelModal = (props) => {
                                 isEdit
                                   ? []
                                   : [
-                                      {
-                                        required: true,
-                                        message: t('请输入密钥'),
-                                      },
-                                    ]
+                                    {
+                                      required: true,
+                                      message: t('请输入密钥'),
+                                    },
+                                  ]
                               }
                               autoComplete='new-password'
                               onChange={(value) =>
@@ -2210,8 +2217,8 @@ const EditChannelModal = (props) => {
                                 label={
                                   isEdit
                                     ? t(
-                                        '密钥（编辑模式下，保存的密钥不会显示）',
-                                      )
+                                      '密钥（编辑模式下，保存的密钥不会显示）',
+                                    )
                                     : t('密钥')
                                 }
                                 placeholder={t(
@@ -2221,11 +2228,11 @@ const EditChannelModal = (props) => {
                                   isEdit
                                     ? []
                                     : [
-                                        {
-                                          required: true,
-                                          message: t('请输入密钥'),
-                                        },
-                                      ]
+                                      {
+                                        required: true,
+                                        message: t('请输入密钥'),
+                                      },
+                                    ]
                                 }
                                 autoComplete='new-password'
                                 onChange={(value) =>
@@ -2279,11 +2286,11 @@ const EditChannelModal = (props) => {
                                   isEdit
                                     ? []
                                     : [
-                                        {
-                                          required: true,
-                                          message: t('请上传密钥文件'),
-                                        },
-                                      ]
+                                      {
+                                        required: true,
+                                        message: t('请上传密钥文件'),
+                                      },
+                                    ]
                                 }
                                 extraText={batchExtra}
                               />
@@ -2302,8 +2309,8 @@ const EditChannelModal = (props) => {
                                 ? inputs.aws_key_type === 'api_key'
                                   ? t('请输入 API Key，格式：APIKey|Region')
                                   : t(
-                                      '按照如下格式输入：AccessKey|SecretAccessKey|Region',
-                                    )
+                                    '按照如下格式输入：AccessKey|SecretAccessKey|Region',
+                                  )
                                 : t(type2secretPrompt(inputs.type))
                             }
                             rules={
@@ -2855,7 +2862,7 @@ const EditChannelModal = (props) => {
                                       );
                                       if (Array.isArray(parsed)) items = parsed;
                                     }
-                                  } catch {}
+                                  } catch { }
                                   const current =
                                     formApiRef.current?.getValue('models') ||
                                     inputs.models ||
