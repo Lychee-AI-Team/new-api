@@ -1,4 +1,4 @@
-package tencent_tc3
+package tencent
 
 import (
 	"bufio"
@@ -13,7 +13,6 @@ import (
 	"strconv"
 	"strings"
 	"time"
-	"unicode"
 
 	"github.com/QuantumNous/new-api/common"
 	"github.com/QuantumNous/new-api/constant"
@@ -28,7 +27,6 @@ import (
 
 // https://cloud.tencent.com/document/product/1729/97732
 
-// requestOpenAI2Tencent 将 OpenAI 请求转换为腾讯 TC3 格式
 func requestOpenAI2Tencent(a *Adaptor, request dto.GeneralOpenAIRequest) *TencentChatRequest {
 	messages := make([]*TencentMessage, 0, len(request.Messages))
 	for i := 0; i < len(request.Messages); i++ {
@@ -50,7 +48,6 @@ func requestOpenAI2Tencent(a *Adaptor, request dto.GeneralOpenAIRequest) *Tencen
 	return &req
 }
 
-// responseTencent2OpenAI 将腾讯非流式响应转换为 OpenAI 格式
 func responseTencent2OpenAI(response *TencentChatResponse) *dto.OpenAITextResponse {
 	fullTextResponse := dto.OpenAITextResponse{
 		Id:      response.Id,
@@ -76,7 +73,6 @@ func responseTencent2OpenAI(response *TencentChatResponse) *dto.OpenAITextRespon
 	return &fullTextResponse
 }
 
-// streamResponseTencent2OpenAI 将腾讯流式响应转换为 OpenAI 格式
 func streamResponseTencent2OpenAI(TencentResponse *TencentChatResponse) *dto.ChatCompletionsStreamResponse {
 	response := dto.ChatCompletionsStreamResponse{
 		Object:  "chat.completion.chunk",
@@ -94,7 +90,6 @@ func streamResponseTencent2OpenAI(TencentResponse *TencentChatResponse) *dto.Cha
 	return &response
 }
 
-// tencentStreamHandler 处理腾讯流式响应
 func tencentStreamHandler(c *gin.Context, info *relaycommon.RelayInfo, resp *http.Response) (*dto.Usage, *types.NewAPIError) {
 	var responseText string
 	scanner := bufio.NewScanner(resp.Body)
@@ -138,7 +133,6 @@ func tencentStreamHandler(c *gin.Context, info *relaycommon.RelayInfo, resp *htt
 	return service.ResponseText2Usage(c, responseText, info.UpstreamModelName, info.GetEstimatePromptTokens()), nil
 }
 
-// tencentHandler 处理腾讯非流式响应
 func tencentHandler(c *gin.Context, info *relaycommon.RelayInfo, resp *http.Response) (*dto.Usage, *types.NewAPIError) {
 	var tencentSb TencentChatResponseSB
 	responseBody, err := io.ReadAll(resp.Body)
@@ -150,7 +144,7 @@ func tencentHandler(c *gin.Context, info *relaycommon.RelayInfo, resp *http.Resp
 	if err != nil {
 		return nil, types.NewOpenAIError(err, types.ErrorCodeBadResponseBody, http.StatusInternalServerError)
 	}
-	if tencentSb.Response.Error.Code != "" {
+	if tencentSb.Response.Error.Code != 0 {
 		return nil, types.WithOpenAIError(types.OpenAIError{
 			Message: tencentSb.Response.Error.Message,
 			Code:    tencentSb.Response.Error.Code,
@@ -167,12 +161,10 @@ func tencentHandler(c *gin.Context, info *relaycommon.RelayInfo, resp *http.Resp
 	return &fullTextResponse.Usage, nil
 }
 
-// parseTencentConfig 解析三段式密钥配置
-// 格式：AppID|SecretID|SecretKey
 func parseTencentConfig(config string) (appId int64, secretId string, secretKey string, err error) {
 	parts := strings.Split(config, "|")
 	if len(parts) != 3 {
-		err = errors.New("invalid tencent config, expected format: AppID|SecretID|SecretKey")
+		err = errors.New("invalid tencent config")
 		return
 	}
 	appId, err = strconv.ParseInt(parts[0], 10, 64)
@@ -181,35 +173,19 @@ func parseTencentConfig(config string) (appId int64, secretId string, secretKey 
 	return
 }
 
-// sha256hex 计算 SHA256 哈希的十六进制字符串
 func sha256hex(s string) string {
 	b := sha256.Sum256([]byte(s))
 	return hex.EncodeToString(b[:])
 }
 
-// hmacSha256 计算 HMAC-SHA256
 func hmacSha256(s, key string) string {
 	hashed := hmac.New(sha256.New, []byte(key))
 	hashed.Write([]byte(s))
 	return string(hashed.Sum(nil))
 }
 
-// getTencentSign 生成 TC3-HMAC-SHA256 签名（ChatCompletions 请求）
-// 文档参考：https://cloud.tencent.com/document/api/1729/101843
 func getTencentSign(req TencentChatRequest, adaptor *Adaptor, secId, secKey string) string {
-	payload, _ := json.Marshal(req)
-	return buildTC3Sign(payload, adaptor, secId, secKey)
-}
-
-// getTencentTranslationSign 生成 TC3-HMAC-SHA256 签名（ChatTranslations 请求）
-func getTencentTranslationSign(req TencentTranslationRequest, adaptor *Adaptor, secId, secKey string) string {
-	payload, _ := json.Marshal(req)
-	return buildTC3Sign(payload, adaptor, secId, secKey)
-}
-
-// buildTC3Sign 构建 TC3-HMAC-SHA256 签名（通用）
-func buildTC3Sign(payload []byte, adaptor *Adaptor, secId, secKey string) string {
-	// 构建规范请求串
+	// build canonical request string
 	host := "hunyuan.tencentcloudapi.com"
 	httpRequestMethod := "POST"
 	canonicalURI := "/"
@@ -217,6 +193,7 @@ func buildTC3Sign(payload []byte, adaptor *Adaptor, secId, secKey string) string
 	canonicalHeaders := fmt.Sprintf("content-type:%s\nhost:%s\nx-tc-action:%s\n",
 		"application/json", host, strings.ToLower(adaptor.Action))
 	signedHeaders := "content-type;host;x-tc-action"
+	payload, _ := json.Marshal(req)
 	hashedRequestPayload := sha256hex(string(payload))
 	canonicalRequest := fmt.Sprintf("%s\n%s\n%s\n%s\n%s\n%s",
 		httpRequestMethod,
@@ -225,12 +202,12 @@ func buildTC3Sign(payload []byte, adaptor *Adaptor, secId, secKey string) string
 		canonicalHeaders,
 		signedHeaders,
 		hashedRequestPayload)
-
-	// 构建待签名字符串
+	// build string to sign
 	algorithm := "TC3-HMAC-SHA256"
 	requestTimestamp := strconv.FormatInt(adaptor.Timestamp, 10)
 	timestamp, _ := strconv.ParseInt(requestTimestamp, 10, 64)
 	t := time.Unix(timestamp, 0).UTC()
+	// must be the format 2006-01-02, ref to package time for more info
 	date := t.Format("2006-01-02")
 	credentialScope := fmt.Sprintf("%s/%s/tc3_request", date, "hunyuan")
 	hashedCanonicalRequest := sha256hex(canonicalRequest)
@@ -240,13 +217,13 @@ func buildTC3Sign(payload []byte, adaptor *Adaptor, secId, secKey string) string
 		credentialScope,
 		hashedCanonicalRequest)
 
-	// 计算签名
+	// sign string
 	secretDate := hmacSha256(date, "TC3"+secKey)
 	secretService := hmacSha256("hunyuan", secretDate)
 	secretKey := hmacSha256("tc3_request", secretService)
 	signature := hex.EncodeToString([]byte(hmacSha256(string2sign, secretKey)))
 
-	// 构建 Authorization 头
+	// build authorization
 	authorization := fmt.Sprintf("%s Credential=%s/%s, SignedHeaders=%s, Signature=%s",
 		algorithm,
 		secId,
@@ -254,14 +231,4 @@ func buildTC3Sign(payload []byte, adaptor *Adaptor, secId, secKey string) string
 		signedHeaders,
 		signature)
 	return authorization
-}
-
-// containsChinese 检测字符串是否包含中文字符
-func containsChinese(s string) bool {
-	for _, r := range s {
-		if unicode.Is(unicode.Han, r) {
-			return true
-		}
-	}
-	return false
 }

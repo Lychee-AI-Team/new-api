@@ -101,7 +101,7 @@ const ModelsPage = () => {
       onOk: () => {
         try {
           localStorage.setItem(MARKETPLACE_DISPLAY_NOTICE_STORAGE_KEY, '1');
-        } catch (_) { }
+        } catch (_) {}
         setShowMarketplaceDisplayNotice(false);
       },
     });
@@ -175,7 +175,6 @@ const ModelsPage = () => {
               applyUpstreamOverwrite={modelsData.applyUpstreamOverwrite}
               compactMode={compactMode}
               setCompactMode={setCompactMode}
-              activeVendorKey={modelsData.activeVendorKey}
               t={t}
             />
 

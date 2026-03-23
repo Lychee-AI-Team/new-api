@@ -149,6 +149,12 @@ func InitOptionMap() {
 	common.OptionMap["AutomaticRetryStatusCodes"] = operation_setting.AutomaticRetryStatusCodesToString()
 	common.OptionMap["ExposeRatioEnabled"] = strconv.FormatBool(ratio_setting.IsExposeRatioEnabled())
 
+	// 自动添加所有注册的模型配置
+	modelConfigs := config.GlobalConfig.ExportAllConfigs()
+	for k, v := range modelConfigs {
+		common.OptionMap[k] = v
+	}
+
 	common.OptionMapRWMutex.Unlock()
 	loadOptionsFromDatabase()
 }

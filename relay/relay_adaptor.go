@@ -41,7 +41,6 @@ import (
 	taskvertex "github.com/QuantumNous/new-api/relay/channel/task/vertex"
 	taskVidu "github.com/QuantumNous/new-api/relay/channel/task/vidu"
 	"github.com/QuantumNous/new-api/relay/channel/tencent"
-	tencent_tc3 "github.com/QuantumNous/new-api/relay/channel/tencent_tc3"
 	"github.com/QuantumNous/new-api/relay/channel/vertex"
 	"github.com/QuantumNous/new-api/relay/channel/volcengine"
 	"github.com/QuantumNous/new-api/relay/channel/xai"
@@ -121,8 +120,6 @@ func GetAdaptor(apiType int) channel.Adaptor {
 		return &replicate.Adaptor{}
 	case constant.APITypeCodex:
 		return &codex.Adaptor{}
-	case constant.APITypeTencentTC3:
-		return &tencent_tc3.Adaptor{}
 	}
 	return nil
 }
