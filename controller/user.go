@@ -1103,6 +1103,14 @@ func TopUp(c *gin.Context) {
 		common.ApiError(c, err)
 		return
 	}
+
+	// 异步同步兑换码到外部平台（不影响主流程）
+	go func() {
+		if syncErr := service.SyncExchangeRedeem(req.Key, id); syncErr != nil {
+			common.SysError(fmt.Sprintf("exchange sync failed: %s", syncErr.Error()))
+		}
+	}()
+
 	c.JSON(http.StatusOK, gin.H{
 		"success": true,
 		"message": "",

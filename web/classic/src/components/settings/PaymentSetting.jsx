@@ -27,6 +27,7 @@ import SettingsPaymentGatewayWaffo from '../../pages/Setting/Payment/SettingsPay
 import SettingsPaymentGatewayWaffoPancake from '../../pages/Setting/Payment/SettingsPaymentGatewayWaffoPancake';
 import SettingsPaymentGatewayWeChatPay from '../../pages/Setting/Payment/SettingsPaymentGatewayWeChatPay';
 import SettingsPaymentGatewayAliPay from '../../pages/Setting/Payment/SettingsPaymentGatewayAliPay';
+import SettingsExchangeSync from '../../pages/Setting/Payment/SettingsExchangeSync';
 import { API, showError, toBoolean } from '../../helpers';
 import { useTranslation } from 'react-i18next';
 
@@ -74,6 +75,10 @@ const PaymentSetting = () => {
     AliPayAppID: '',
     AliPayUnitPrice: 1.0,
     AliPayMinTopUp: 1,
+
+    ExchangeSyncEnabled: false,
+    ExchangeSyncApiUrl: '',
+    ExchangeSyncAuthToken: '',
   });
 
   let [loading, setLoading] = useState(false);
@@ -144,6 +149,15 @@ const PaymentSetting = () => {
             break;
           case 'WaffoPancakeSandbox':
             newInputs[item.key] = toBoolean(item.value);
+            break;
+          case 'exchange_sync_setting.enabled':
+            newInputs['ExchangeSyncEnabled'] = toBoolean(item.value);
+            break;
+          case 'exchange_sync_setting.api_url':
+            newInputs['ExchangeSyncApiUrl'] = item.value;
+            break;
+          case 'exchange_sync_setting.auth_token':
+            newInputs['ExchangeSyncAuthToken'] = item.value;
             break;
           default:
             if (item.key.endsWith('Enabled')) {
@@ -229,6 +243,13 @@ const PaymentSetting = () => {
             </Tabs.TabPane>
             <Tabs.TabPane tab={t('支付宝设置')} itemKey='alipay'>
               <SettingsPaymentGatewayAliPay
+                options={inputs}
+                refresh={onRefresh}
+                hideSectionTitle
+              />
+            </Tabs.TabPane>
+            <Tabs.TabPane tab={t('兑换码同步设置')} itemKey='exchange-sync'>
+              <SettingsExchangeSync
                 options={inputs}
                 refresh={onRefresh}
                 hideSectionTitle
