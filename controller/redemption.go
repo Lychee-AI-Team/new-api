@@ -165,6 +165,27 @@ func UpdateRedemption(c *gin.Context) {
 	return
 }
 
+func DisableRedemptionByKey(c *gin.Context) {
+	key := c.Query("key")
+	if key == "" {
+		c.JSON(http.StatusOK, gin.H{
+			"success": false,
+			"message": "缺少 key 参数",
+		})
+		return
+	}
+	redemption, err := model.DisableRedemptionByKey(key)
+	if err != nil {
+		common.ApiError(c, err)
+		return
+	}
+	c.JSON(http.StatusOK, gin.H{
+		"success": true,
+		"message": "作废成功",
+		"data":    redemption,
+	})
+}
+
 func DeleteInvalidRedemption(c *gin.Context) {
 	rows, err := model.DeleteInvalidRedemptions()
 	if err != nil {

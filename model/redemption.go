@@ -191,6 +191,30 @@ func DeleteRedemptionById(id int) (err error) {
 	return redemption.Delete()
 }
 
+func DisableRedemptionByKey(key string) (*Redemption, error) {
+	if key == "" {
+		return nil, errors.New("兑换码为空")
+	}
+	redemption := &Redemption{}
+	keyCol := "`key`"
+	if common.UsingPostgreSQL {
+		keyCol = `"key"`
+	}
+	err := DB.Where(keyCol+" = ?", key).First(redemption).Error
+	if err != nil {
+		return nil, errors.New("兑换码不存在")
+	}
+	if redemption.Status != common.RedemptionCodeStatusEnabled {
+		return nil, errors.New("该兑换码已不可用")
+	}
+	redemption.Status = common.RedemptionCodeStatusDisabled
+	err = DB.Model(redemption).Update("status", common.RedemptionCodeStatusDisabled).Error
+	if err != nil {
+		return nil, err
+	}
+	return redemption, nil
+}
+
 func DeleteInvalidRedemptions() (int64, error) {
 	now := common.GetTimestamp()
 	result := DB.Where("status IN ? OR (status = ? AND expired_time != 0 AND expired_time < ?)", []int{common.RedemptionCodeStatusUsed, common.RedemptionCodeStatusDisabled}, common.RedemptionCodeStatusEnabled, now).Delete(&Redemption{})
