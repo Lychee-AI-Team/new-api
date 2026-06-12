@@ -4,4 +4,4 @@ globs:
 alwaysApply: true
 ---
 
-每次修改完 请cd 到 web/classics 目录下 执行 bun run build 然后再 cd 到 web/default/dist 目录下 执行 bun run build 
+每次修改完 请cd 到 web/classics 目录下 执行 bun run build 构建完成后 再 cd 到 web/default/dist 目录下 执行 bun run build 

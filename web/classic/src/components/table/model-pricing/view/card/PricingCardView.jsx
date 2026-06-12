@@ -254,7 +254,13 @@ const PricingCardView = ({
           return (
             <Card
               key={modelKey || index}
-              className={`!rounded-2xl transition-all duration-200 hover:shadow-lg border cursor-pointer ${isSelected ? CARD_STYLES.selected : CARD_STYLES.default}`}
+              style={{
+                boxShadow: '0px 4px 8px 0px #6A3AC714',
+                border: '1px solid #E2DAFD',
+                backdropFilter: 'blur(12px)',
+                boxShadow: '-4px -4px 4px 0px #FFFFFF40 inset 0px 4px 4px 0px #FFFFFF40 inset',
+              }}
+              className={`!bg-[#FFFFFF80] !rounded-2xl transition-all duration-200 hover:shadow-lg border cursor-pointer ${isSelected ? CARD_STYLES.selected : CARD_STYLES.default}`}
               bodyStyle={{ height: '100%' }}
               onClick={() => openModelDetail && openModelDetail(model)}
             >

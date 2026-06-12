@@ -549,6 +549,32 @@ html.dark .sbg-variant-green {
   background: transparent;
 }
 
+/** 表格背景色改动 - 所有单元格背景透明 */
+.semi-table-tbody>.semi-table-row,
+.semi-table-tbody>.semi-table-row>.semi-table-row-cell,
+.semi-table-thead>.semi-table-row,
+.semi-table-thead>.semi-table-row>.semi-table-row-head {
+  background-color: transparent !important;
+}
+
+.semi-table-row-head.semi-table-cell-fixed-right:before {
+  background-color: transparent !important;
+}
+
+/** 表格行 hover 样式 */
+.semi-table-tbody>.semi-table-row:hover {
+  background: #FFFFFF80 !important;
+  backdrop-filter: blur(12px);
+}
+.semi-table-tbody>.semi-table-row:hover>.semi-table-row-cell {
+  background: transparent !important;
+}
+/* 置顶列 hover 同样效果 */
+.semi-table-tbody>.semi-table-row:hover .semi-table-cell-fixed-left,
+.semi-table-tbody>.semi-table-row:hover .semi-table-cell-fixed-right {
+  background: #FFFFFF80 !important;
+  backdrop-filter: blur(12px);
+}
 /* 侧边抽屉滚动条样式 */
 .semi-sidesheet-body::-webkit-scrollbar {
   width: 6px;
@@ -907,13 +933,17 @@ html.dark .with-pastel-balls::before {
   min-width: clamp(280px, 24vw, 520px) !important;
   max-width: clamp(280px, 24vw, 520px) !important;
   height: calc(100vh - 60px);
-  background-color: var(--semi-color-bg-0);
+  /* background-color: rgba(255, 255, 255, 0.88); */
+  backdrop-filter: blur(8px);
+  padding-top: 28px;
   overflow: auto;
 }
 
 .pricing-content {
-  height: calc(100vh - 60px);
-  background-color: var(--semi-color-bg-0);
+  height: calc(100vh - 88px);
+  /* background-color: rgba(255, 255, 255, 0.88); */
+  backdrop-filter: blur(8px);
+  margin-top: 28px;
   display: flex;
   flex-direction: column;
 }
@@ -931,7 +961,8 @@ html.dark .with-pastel-balls::before {
 
 .pricing-search-header {
   padding: 0.5rem;
-  background-color: var(--semi-color-bg-0);
+  /* background-color: rgba(255, 255, 255, 0.88); */
+  backdrop-filter: blur(8px);
   flex-shrink: 0;
   position: sticky;
   top: 0;
