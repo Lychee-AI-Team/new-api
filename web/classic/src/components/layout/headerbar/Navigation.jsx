@@ -30,14 +30,25 @@ const Navigation = ({
 }) => {
   const renderNavLinks = () => {
     const baseClasses =
-      'flex-shrink-0 flex items-center gap-1 font-semibold rounded-md transition-all duration-200 ease-in-out';
-    const hoverClasses = 'hover:text-semi-color-primary';
-    const spacingClasses = isMobile ? 'p-1' : 'p-2';
+      'flex-shrink-0 flex items-center justify-center rounded-lg transition-all duration-200 ease-in-out';
+    const hoverClasses = 'hover:bg-white/40';
+    const spacingClasses = 'h-9 px-3';
 
     const commonLinkClasses = `${baseClasses} ${spacingClasses} ${hoverClasses}`;
 
     return mainNavLinks.map((link) => {
-      const linkContent = <span>{link.text}</span>;
+      const linkContent = (
+        <span
+          style={{
+            fontSize: '14px',
+            fontWeight: 400,
+            color: '#17171C',
+            fontFamily: 'Inter, sans-serif',
+          }}
+        >
+          {link.text}
+        </span>
+      );
 
       if (link.isExternal) {
         return (
