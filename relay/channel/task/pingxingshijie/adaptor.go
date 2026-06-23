@@ -421,7 +421,7 @@ func (a *TaskAdaptor) DoResponse(c *gin.Context, resp *http.Response, info *rela
 			upstreamID = extractVideoCreateTaskID(responseBody)
 		}
 		if upstreamID == "" {
-			taskErr = service.TaskErrorWrapper(fmt.Errorf("task_id is empty"), "invalid_response", http.StatusInternalServerError)
+			taskErr = service.TaskErrorWrapper(fmt.Errorf("%s", missingVideoTaskIDErrorMessage(responseBody)), "invalid_response", http.StatusInternalServerError)
 			return
 		}
 		ov := dto.NewOpenAIVideo()
@@ -435,6 +435,18 @@ func (a *TaskAdaptor) DoResponse(c *gin.Context, resp *http.Response, info *rela
 		c.JSON(http.StatusOK, ov)
 		return upstreamID, append([]byte(nil), responseBody...), nil
 	}
+}
+
+func missingVideoTaskIDErrorMessage(responseBody []byte) string {
+	const limit = 1200
+	summary := strings.TrimSpace(string(responseBody))
+	if len(summary) > limit {
+		summary = summary[:limit] + "...[truncated]"
+	}
+	if summary == "" {
+		return "task_id is empty; upstream response body is empty"
+	}
+	return fmt.Sprintf("task_id is empty; upstream response=%s", summary)
 }
 
 // extractVideoCreateTaskID resolves upstream task id from POST /v2/video/generations inner JSON,

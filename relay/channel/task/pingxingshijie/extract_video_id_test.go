@@ -1,6 +1,9 @@
 package pingxingshijie
 
-import "testing"
+import (
+	"strings"
+	"testing"
+)
 
 func TestExtractVideoCreateTaskID(t *testing.T) {
 	cases := []struct {
@@ -24,5 +27,16 @@ func TestExtractVideoCreateTaskID(t *testing.T) {
 				t.Fatalf("got %q want %q", got, tc.want)
 			}
 		})
+	}
+}
+
+func TestMissingVideoTaskIDErrorIncludesUpstreamResponse(t *testing.T) {
+	msg := missingVideoTaskIDErrorMessage([]byte(`{"code":0,"msg":"ok","data":{"status":"failed","error":{"message":"captions are not enough or empty"}}}`))
+
+	if !strings.Contains(msg, "task_id is empty") {
+		t.Fatalf("missing task id context: %q", msg)
+	}
+	if !strings.Contains(msg, "captions are not enough or empty") {
+		t.Fatalf("missing upstream response context: %q", msg)
 	}
 }
