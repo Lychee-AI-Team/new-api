@@ -426,6 +426,9 @@ func (a *Adaptor) ConvertAudioRequest(c *gin.Context, info *relaycommon.RelayInf
 func (a *Adaptor) ConvertImageRequest(c *gin.Context, info *relaycommon.RelayInfo, request dto.ImageRequest) (any, error) {
 	switch info.RelayMode {
 	case relayconstant.RelayModeImagesEdits:
+		if !strings.Contains(c.Request.Header.Get("Content-Type"), "multipart/form-data") {
+			return imageRequestPayloadWithExtra(request)
+		}
 
 		var requestBody bytes.Buffer
 		writer := multipart.NewWriter(&requestBody)
@@ -547,8 +550,25 @@ func (a *Adaptor) ConvertImageRequest(c *gin.Context, info *relaycommon.RelayInf
 		return &requestBody, nil
 
 	default:
-		return request, nil
+		return imageRequestPayloadWithExtra(request)
 	}
+}
+
+func imageRequestPayloadWithExtra(request dto.ImageRequest) (map[string]json.RawMessage, error) {
+	body, err := common.Marshal(request)
+	if err != nil {
+		return nil, err
+	}
+	var payload map[string]json.RawMessage
+	if err := common.Unmarshal(body, &payload); err != nil {
+		return nil, err
+	}
+	for key, value := range request.Extra {
+		if _, exists := payload[key]; !exists {
+			payload[key] = value
+		}
+	}
+	return payload, nil
 }
 
 // detectImageMimeType determines the MIME type based on the file extension
@@ -593,7 +613,7 @@ func (a *Adaptor) ConvertOpenAIResponsesRequest(c *gin.Context, info *relaycommo
 func (a *Adaptor) DoRequest(c *gin.Context, info *relaycommon.RelayInfo, requestBody io.Reader) (any, error) {
 	if info.RelayMode == relayconstant.RelayModeAudioTranscription ||
 		info.RelayMode == relayconstant.RelayModeAudioTranslation ||
-		info.RelayMode == relayconstant.RelayModeImagesEdits {
+		(info.RelayMode == relayconstant.RelayModeImagesEdits && strings.Contains(c.Request.Header.Get("Content-Type"), "multipart/form-data")) {
 		return channel.DoFormRequest(a, c, info, requestBody)
 	} else if info.RelayMode == relayconstant.RelayModeRealtime {
 		return channel.DoWssRequest(a, c, info, requestBody)
