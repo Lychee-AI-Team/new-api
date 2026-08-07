@@ -18,10 +18,11 @@ For commercial licensing, please contact support@quantumnous.com
 */
 
 import React from 'react';
-import { Tabs, TabPane, Tag, Button, Dropdown, Modal } from '@douyinfe/semi-ui';
+import { Tabs, TabPane, Tag, Button, Dropdown } from '@douyinfe/semi-ui'
 import { IconEdit, IconDelete } from '@douyinfe/semi-icons';
 import { getLobeHubIcon, showError, showSuccess } from '../../../helpers';
 import { API } from '../../../helpers';
+import ModalPro from '@/components/common/ui/ModalPro';
 
 const ModelsTabs = ({
   activeVendorKey,
@@ -137,7 +138,7 @@ const ModelsTabs = ({
                         icon={<IconDelete />}
                         onClick={(e) => {
                           e.stopPropagation();
-                          Modal.confirm({
+                          ModalPro.confirm({
                             title: t('确认删除'),
                             content: t(
                               '确定要删除供应商 "{{name}}" 吗？此操作不可撤销。',

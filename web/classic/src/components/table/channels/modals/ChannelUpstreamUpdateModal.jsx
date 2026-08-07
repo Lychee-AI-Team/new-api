@@ -19,20 +19,14 @@ For commercial licensing, please contact support@quantumnous.com
 
 import React, { useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import {
-  Modal,
-  Checkbox,
-  Empty,
-  Input,
-  Tabs,
-  Typography,
-} from '@douyinfe/semi-ui';
+import { Checkbox, Empty, Input, Tabs, Typography } from '@douyinfe/semi-ui'
 import {
   IllustrationNoResult,
   IllustrationNoResultDark,
 } from '@douyinfe/semi-illustrations';
 import { IconSearch } from '@douyinfe/semi-icons';
 import { useIsMobile } from '../../../../hooks/common/useIsMobile';
+import ModalPro from '@/components/common/ui/ModalPro';
 
 const normalizeModels = (models = []) =>
   Array.from(
@@ -183,7 +177,7 @@ const ChannelUpstreamUpdateModal = ({
         ? normalizedAddModels.length
         : normalizedRemoveModels.length;
       setActiveTab(missingTab);
-      Modal.confirm({
+      ModalPro.confirm({
         title: t('仍有未处理项'),
         content: t(
           '你还没有处理{{type}}模型（{{count}}个）。是否仅提交当前已勾选内容？',
@@ -207,7 +201,7 @@ const ChannelUpstreamUpdateModal = ({
   };
 
   return (
-    <Modal
+    <ModalPro
       visible={visible}
       title={t('处理上游模型更新')}
       okText={t('确定')}
@@ -306,7 +300,7 @@ const ChannelUpstreamUpdateModal = ({
           />
         </div>
       </div>
-    </Modal>
+    </ModalPro>
   );
 };
 

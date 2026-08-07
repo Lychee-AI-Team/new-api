@@ -36,6 +36,7 @@ const routerMap = {
   token: '/console/token',
   redemption: '/console/redemption',
   topup: '/console/topup',
+  invite: '/console/invite',
   user: '/console/user',
   subscription: '/console/subscription',
   log: '/console/log',
@@ -128,6 +129,11 @@ const SiderBar = ({ onNavigate = () => {} }) => {
         text: t('钱包管理'),
         itemKey: 'topup',
         to: '/topup',
+      },
+      {
+        text: t('邀请奖励'),
+        itemKey: 'invite',
+        to: '/invite',
       },
       {
         text: t('个人设置'),
@@ -304,7 +310,7 @@ const SiderBar = ({ onNavigate = () => {} }) => {
   }, [collapsed]);
 
   // 选中高亮颜色（统一）
-  const SELECTED_COLOR = 'var(--semi-color-primary)';
+  const SELECTED_COLOR = 'var(--sidebar-item-active-color)';
 
   // 渲染自定义菜单项
   const renderNavItem = (item) => {
@@ -500,14 +506,14 @@ const SiderBar = ({ onNavigate = () => {} }) => {
           className='w-full'
         >
           <Button
-            theme='outline'
+            theme='borderless'
             type='tertiary'
             size='small'
             icon={
               <ChevronLeft
                 size={16}
                 strokeWidth={2.5}
-                color='var(--semi-color-text-2)'
+                color='var(--sidebar-collapse-text)'
                 style={{
                   transform: collapsed ? 'rotate(180deg)' : 'rotate(0deg)',
                 }}
@@ -517,8 +523,26 @@ const SiderBar = ({ onNavigate = () => {} }) => {
             icononly={collapsed}
             style={
               collapsed
-                ? { width: 36, height: 24, padding: 0 }
-                : { padding: '4px 12px', width: '100%' }
+                ? {
+                    width: 36,
+                    height: 34,
+                    padding: 0,
+                    borderRadius: '10px',
+                    border: '1px solid var(--sidebar-btn-outline)',
+                    color: 'var(--sidebar-collapse-text)',
+                    fontWeight: 600,
+                    fontSize: '14px',
+                  }
+                : {
+                    padding: '0 12px',
+                    width: '100%',
+                    height: 34,
+                    borderRadius: '10px',
+                    border: '1px solid var(--sidebar-btn-outline)',
+                    color: 'var(--sidebar-collapse-text)',
+                    fontWeight: 600,
+                    fontSize: '14px',
+                  }
             }
           >
             {!collapsed ? t('收起侧边栏') : null}

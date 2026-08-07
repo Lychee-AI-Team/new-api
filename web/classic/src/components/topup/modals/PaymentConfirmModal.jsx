@@ -18,9 +18,10 @@ For commercial licensing, please contact support@quantumnous.com
 */
 
 import React from 'react';
-import { Modal, Typography, Card, Skeleton } from '@douyinfe/semi-ui';
+import { Typography, Card, Skeleton } from '@douyinfe/semi-ui'
 import { SiAlipay, SiWechat, SiStripe } from 'react-icons/si';
 import { CreditCard } from 'lucide-react';
+import ModalPro from '@/components/common/ui/ModalPro';
 
 const { Text } = Typography;
 
@@ -45,7 +46,7 @@ const PaymentConfirmModal = ({
   const originalAmount = hasDiscount ? amountNumber / discountRate : 0;
   const discountAmount = hasDiscount ? originalAmount - amountNumber : 0;
   return (
-    <Modal
+    <ModalPro
       title={
         <div className='flex items-center'>
           <CreditCard className='mr-2' size={18} />
@@ -220,7 +221,7 @@ const PaymentConfirmModal = ({
           </div>
         </Card>
       </div>
-    </Modal>
+    </ModalPro>
   );
 };
 

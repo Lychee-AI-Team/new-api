@@ -18,13 +18,14 @@ For commercial licensing, please contact support@quantumnous.com
 */
 
 import React, { useEffect, useState, useMemo } from 'react';
-import { Card, Spin, Button, Modal } from '@douyinfe/semi-ui';
+import { Card, Spin, Button } from '@douyinfe/semi-ui'
 import { API, showError, showSuccess, toBoolean } from '../../helpers';
 import SettingsAPIInfo from '../../pages/Setting/Dashboard/SettingsAPIInfo';
 import SettingsAnnouncements from '../../pages/Setting/Dashboard/SettingsAnnouncements';
 import SettingsFAQ from '../../pages/Setting/Dashboard/SettingsFAQ';
 import SettingsUptimeKuma from '../../pages/Setting/Dashboard/SettingsUptimeKuma';
 import SettingsDataDashboard from '../../pages/Setting/Dashboard/SettingsDataDashboard';
+import ModalPro from '@/components/common/ui/ModalPro';
 
 const DashboardSetting = () => {
   let [inputs, setInputs] = useState({
@@ -125,7 +126,7 @@ const DashboardSetting = () => {
     <>
       <Spin spinning={loading} size='large'>
         {/* 用于迁移检测的旧键模态框，下个版本会删除 */}
-        <Modal
+        <ModalPro
           title='配置迁移确认'
           visible={showMigrateModal}
           onOk={handleMigrate}
@@ -139,7 +140,7 @@ const DashboardSetting = () => {
             <strong>注意：</strong>
             迁移过程中会自动处理数据格式转换，迁移完成后旧配置将被清除，请在迁移前在数据库中备份好旧配置。
           </p>
-        </Modal>
+        </ModalPro>
 
         {/* 数据看板设置 */}
         <Card style={{ marginTop: '10px' }}>

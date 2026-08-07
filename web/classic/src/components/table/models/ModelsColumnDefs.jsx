@@ -18,14 +18,7 @@ For commercial licensing, please contact support@quantumnous.com
 */
 
 import React from 'react';
-import {
-  Button,
-  Space,
-  Tag,
-  Typography,
-  Modal,
-  Tooltip,
-} from '@douyinfe/semi-ui';
+import { Button, Space, Tag, Typography, Tooltip } from '@douyinfe/semi-ui'
 import {
   timestamp2string,
   getLobeHubIcon,
@@ -35,6 +28,7 @@ import {
   renderLimitedItems,
   renderDescription,
 } from '../../common/ui/RenderUtils';
+import ModalPro from '@/components/common/ui/ModalPro';
 
 const { Text } = Typography;
 
@@ -218,7 +212,7 @@ const renderOperations = (
         type='danger'
         size='small'
         onClick={() => {
-          Modal.confirm({
+          ModalPro.confirm({
             title: t('确定是否要删除此模型？'),
             content: t('此修改将不可逆'),
             onOk: () => {

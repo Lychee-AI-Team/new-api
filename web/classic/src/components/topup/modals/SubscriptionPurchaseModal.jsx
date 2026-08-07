@@ -18,16 +18,7 @@ For commercial licensing, please contact support@quantumnous.com
 */
 
 import React from 'react';
-import {
-  Banner,
-  Modal,
-  Typography,
-  Card,
-  Button,
-  Select,
-  Divider,
-  Tooltip,
-} from '@douyinfe/semi-ui';
+import { Banner, Typography, Card, Button, Select, Divider, Tooltip } from '@douyinfe/semi-ui'
 import { Crown, CalendarClock, Package } from 'lucide-react';
 import { SiStripe } from 'react-icons/si';
 import { IconCreditCard } from '@douyinfe/semi-icons';
@@ -37,6 +28,7 @@ import {
   formatSubscriptionDuration,
   formatSubscriptionResetPeriod,
 } from '../../../helpers/subscriptionFormat';
+import ModalPro from '@/components/common/ui/ModalPro';
 
 const { Text } = Typography;
 
@@ -76,7 +68,7 @@ const SubscriptionPurchaseModal = ({
     purchaseLimit > 0 && purchaseCount >= purchaseLimit;
 
   return (
-    <Modal
+    <ModalPro
       title={
         <div className='flex items-center'>
           <Crown className='mr-2' size={18} />
@@ -252,7 +244,7 @@ const SubscriptionPurchaseModal = ({
           )}
         </div>
       ) : null}
-    </Modal>
+    </ModalPro>
   );
 };
 

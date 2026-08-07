@@ -19,15 +19,9 @@ For commercial licensing, please contact support@quantumnous.com
 
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import {
-  Modal,
-  Button,
-  Space,
-  Typography,
-  Input,
-  Banner,
-} from '@douyinfe/semi-ui';
+import { Button, Space, Typography, Input, Banner } from '@douyinfe/semi-ui'
 import { API, copy, showError, showSuccess } from '../../../../helpers';
+import ModalPro from '@/components/common/ui/ModalPro';
 
 const { Text } = Typography;
 
@@ -108,7 +102,7 @@ const CodexOAuthModal = ({ visible, onCancel, onSuccess }) => {
   }, [visible]);
 
   return (
-    <Modal
+    <ModalPro
       title={t('Codex 授权')}
       visible={visible}
       onCancel={onCancel}
@@ -165,7 +159,7 @@ const CodexOAuthModal = ({ visible, onCancel, onSuccess }) => {
           )}
         </Text>
       </Space>
-    </Modal>
+    </ModalPro>
   );
 };
 

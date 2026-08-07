@@ -18,17 +18,7 @@ For commercial licensing, please contact support@quantumnous.com
 */
 
 import React from 'react';
-import {
-  Button,
-  Dropdown,
-  InputNumber,
-  Modal,
-  Space,
-  SplitButtonGroup,
-  Tag,
-  Tooltip,
-  Typography,
-} from '@douyinfe/semi-ui';
+import { Button, Dropdown, InputNumber, Space, SplitButtonGroup, Tag, Tooltip, Typography } from '@douyinfe/semi-ui'
 import {
   timestamp2string,
   renderGroup,
@@ -50,6 +40,7 @@ import {
   IconAlertTriangle,
 } from '@douyinfe/semi-icons';
 import { FaRandom } from 'react-icons/fa';
+import ModalPro from '@/components/common/ui/ModalPro';
 
 // Render functions
 const renderType = (type, record = {}, t) => {
@@ -601,7 +592,7 @@ export const getChannelsColumns = ({
               name='priority'
               keepFocus={true}
               onBlur={(e) => {
-                Modal.warning({
+                ModalPro.warning({
                   title: t('修改子渠道优先级'),
                   content:
                     t('确定要修改所有子渠道优先级为 ') +
@@ -656,7 +647,7 @@ export const getChannelsColumns = ({
               name='weight'
               keepFocus={true}
               onBlur={(e) => {
-                Modal.warning({
+                ModalPro.warning({
                   title: t('修改子渠道权重'),
                   content:
                     t('确定要修改所有子渠道权重为 ') +
@@ -696,7 +687,7 @@ export const getChannelsColumns = ({
               name: t('删除'),
               type: 'danger',
               onClick: () => {
-                Modal.confirm({
+                ModalPro.confirm({
                   title: t('确定是否要删除此渠道？'),
                   content: t('此修改将不可逆'),
                   onOk: () => {
@@ -718,7 +709,7 @@ export const getChannelsColumns = ({
               name: t('复制'),
               type: 'tertiary',
               onClick: () => {
-                Modal.confirm({
+                ModalPro.confirm({
                   title: t('确定是否要复制此渠道？'),
                   content: t('复制渠道的所有信息'),
                   onOk: () => copySelectedChannel(record),

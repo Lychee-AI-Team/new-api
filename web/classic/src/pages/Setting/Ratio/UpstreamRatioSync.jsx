@@ -18,19 +18,7 @@ For commercial licensing, please contact support@quantumnous.com
 */
 
 import React, { useState, useCallback, useMemo, useEffect } from 'react';
-import {
-  Button,
-  Table,
-  Tag,
-  Empty,
-  Checkbox,
-  Form,
-  Input,
-  Tooltip,
-  Select,
-  Modal,
-  Spin,
-} from '@douyinfe/semi-ui';
+import { Button, Table, Tag, Empty, Checkbox, Form, Input, Tooltip, Select, Spin } from '@douyinfe/semi-ui'
 import { IconSearch } from '@douyinfe/semi-icons';
 import { RefreshCcw, CheckSquare, AlertTriangle } from 'lucide-react';
 import {
@@ -49,6 +37,7 @@ import {
   IllustrationNoResultDark,
 } from '@douyinfe/semi-illustrations';
 import ChannelSelectorModal from '../../../components/settings/ChannelSelectorModal';
+import ModalPro from '@/components/common/ui/ModalPro';
 
 const OFFICIAL_RATIO_PRESET_ID = -100;
 const OFFICIAL_RATIO_PRESET_NAME = '官方倍率预设';
@@ -78,7 +67,7 @@ function ConflictConfirmModal({ t, visible, items, loading, onOk, onCancel }) {
   ];
 
   return (
-    <Modal
+    <ModalPro
       title={t('确认冲突项修改')}
       visible={visible}
       confirmLoading={loading}
@@ -94,7 +83,7 @@ function ConflictConfirmModal({ t, visible, items, loading, onOk, onCancel }) {
         pagination={false}
         size='small'
       />
-    </Modal>
+    </ModalPro>
   );
 }
 

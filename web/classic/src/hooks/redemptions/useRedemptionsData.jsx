@@ -24,9 +24,9 @@ import {
   REDEMPTION_ACTIONS,
   REDEMPTION_STATUS,
 } from '../../constants/redemption.constants';
-import { Modal } from '@douyinfe/semi-ui';
 import { useTranslation } from 'react-i18next';
 import { useTableCompactMode } from '../common/useTableCompactMode';
+import ModalPro from '@/components/common/ui/ModalPro';
 
 export const useRedemptionsData = () => {
   const { t } = useTranslation();
@@ -230,7 +230,7 @@ export const useRedemptionsData = () => {
     if (await copy(text)) {
       showSuccess('已复制到剪贴板！');
     } else {
-      Modal.error({
+      ModalPro.error({
         title: '无法复制到剪贴板，请手动复制',
         content: text,
         size: 'large',
@@ -254,7 +254,7 @@ export const useRedemptionsData = () => {
 
   // Batch delete redemption codes (clear invalid)
   const batchDeleteRedemptions = async () => {
-    Modal.confirm({
+    ModalPro.confirm({
       title: t('确定清除所有失效兑换码？'),
       content: t('将删除已使用、已禁用及过期的兑换码，此操作不可撤销。'),
       onOk: async () => {

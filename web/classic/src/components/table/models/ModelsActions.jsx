@@ -21,12 +21,13 @@ import React, { useState } from 'react';
 import MissingModelsModal from './modals/MissingModelsModal';
 import PrefillGroupManagement from './modals/PrefillGroupManagement';
 import EditPrefillGroupModal from './modals/EditPrefillGroupModal';
-import { Button, Modal, Popover, RadioGroup, Radio } from '@douyinfe/semi-ui';
+import { Button, Popover, RadioGroup, Radio } from '@douyinfe/semi-ui'
 import { showSuccess, showError, copy } from '../../../helpers';
 import CompactModeToggle from '../../common/ui/CompactModeToggle';
 import SelectionNotification from './components/SelectionNotification';
 import UpstreamConflictModal from './modals/UpstreamConflictModal';
 import SyncWizardModal from './modals/SyncWizardModal';
+import ModalPro from '@/components/common/ui/ModalPro';
 
 const ModelsActions = ({
   selectedKeys,
@@ -43,7 +44,7 @@ const ModelsActions = ({
   setCompactMode,
   t,
 }) => {
-  // Modal states
+  // ModalPro states
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [showMissingModal, setShowMissingModal] = useState(false);
   const [showGroupManagement, setShowGroupManagement] = useState(false);
@@ -188,7 +189,7 @@ const ModelsActions = ({
         onCopy={handleCopyNames}
       />
 
-      <Modal
+      <ModalPro
         title={t('批量删除模型')}
         visible={showDeleteModal}
         onCancel={() => setShowDeleteModal(false)}
@@ -200,7 +201,7 @@ const ModelsActions = ({
             count: selectedKeys.length,
           })}
         </div>
-      </Modal>
+      </ModalPro>
 
       <SyncWizardModal
         visible={showSyncModal}

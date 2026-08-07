@@ -18,19 +18,10 @@ For commercial licensing, please contact support@quantumnous.com
 */
 
 import React from 'react';
-import {
-  Button,
-  Modal,
-  Space,
-  Tag,
-  Typography,
-  Popover,
-  Divider,
-  Badge,
-  Tooltip,
-} from '@douyinfe/semi-ui';
+import { Button, Space, Tag, Typography, Popover, Divider, Badge, Tooltip } from '@douyinfe/semi-ui'
 import { renderQuota } from '../../../helpers';
 import { convertUSDToCurrency } from '../../../helpers/render';
+import ModalPro from '@/components/common/ui/ModalPro';
 
 const { Text } = Typography;
 
@@ -233,14 +224,14 @@ const renderOperations = (text, record, { openEdit, setPlanEnabled, t }) => {
 
   const handleToggle = () => {
     if (isEnabled) {
-      Modal.confirm({
+      ModalPro.confirm({
         title: t('确认禁用'),
         content: t('禁用后用户端不再展示，但历史订单不受影响。是否继续？'),
         centered: true,
         onOk: () => setPlanEnabled(record, false),
       });
     } else {
-      Modal.confirm({
+      ModalPro.confirm({
         title: t('确认启用'),
         content: t('启用后套餐将在用户端展示。是否继续？'),
         centered: true,

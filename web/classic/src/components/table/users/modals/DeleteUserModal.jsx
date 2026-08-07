@@ -18,7 +18,7 @@ For commercial licensing, please contact support@quantumnous.com
 */
 
 import React from 'react';
-import { Modal } from '@douyinfe/semi-ui';
+import ModalPro from '@/components/common/ui/ModalPro';
 
 const DeleteUserModal = ({
   visible,
@@ -43,7 +43,7 @@ const DeleteUserModal = ({
   };
 
   return (
-    <Modal
+    <ModalPro
       title={t('确定是否要注销此用户？')}
       visible={visible}
       onCancel={onCancel}
@@ -51,7 +51,7 @@ const DeleteUserModal = ({
       type='danger'
     >
       {t('相当于删除用户，此修改将不可逆')}
-    </Modal>
+    </ModalPro>
   );
 };
 

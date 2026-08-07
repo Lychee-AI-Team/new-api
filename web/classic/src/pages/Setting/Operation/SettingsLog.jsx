@@ -18,16 +18,7 @@ For commercial licensing, please contact support@quantumnous.com
 */
 
 import React, { useEffect, useState, useRef } from 'react';
-import {
-  Button,
-  Col,
-  Form,
-  Row,
-  Spin,
-  DatePicker,
-  Typography,
-  Modal,
-} from '@douyinfe/semi-ui';
+import { Button, Col, Form, Row, Spin, DatePicker, Typography } from '@douyinfe/semi-ui'
 import dayjs from 'dayjs';
 import { useTranslation } from 'react-i18next';
 import {
@@ -37,6 +28,7 @@ import {
   showSuccess,
   showWarning,
 } from '../../../helpers';
+import ModalPro from '@/components/common/ui/ModalPro';
 
 const { Text } = Typography;
 
@@ -100,7 +92,7 @@ export default function SettingsLog(props) {
     const currentTime = now.format('YYYY-MM-DD HH:mm:ss');
     const daysDiff = now.diff(targetDate, 'day');
 
-    Modal.confirm({
+    ModalPro.confirm({
       title: t('确认清除历史日志'),
       content: (
         <div style={{ lineHeight: '1.8' }}>

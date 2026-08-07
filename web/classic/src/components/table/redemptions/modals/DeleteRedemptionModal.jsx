@@ -18,8 +18,8 @@ For commercial licensing, please contact support@quantumnous.com
 */
 
 import React from 'react';
-import { Modal } from '@douyinfe/semi-ui';
 import { REDEMPTION_ACTIONS } from '../../../../constants/redemption.constants';
+import ModalPro from '@/components/common/ui/ModalPro';
 
 const DeleteRedemptionModal = ({
   visible,
@@ -43,7 +43,7 @@ const DeleteRedemptionModal = ({
   };
 
   return (
-    <Modal
+    <ModalPro
       title={t('确定是否要删除此兑换码？')}
       visible={visible}
       onCancel={onCancel}
@@ -51,7 +51,7 @@ const DeleteRedemptionModal = ({
       type='warning'
     >
       {t('此修改将不可逆')}
-    </Modal>
+    </ModalPro>
   );
 };
 

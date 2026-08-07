@@ -18,8 +18,9 @@ For commercial licensing, please contact support@quantumnous.com
 */
 
 import React, { useEffect, useMemo, useRef, useState } from 'react';
-import { Modal, Descriptions, Spin, Typography } from '@douyinfe/semi-ui';
+import { Descriptions, Spin, Typography } from '@douyinfe/semi-ui'
 import { API, showError, timestamp2string } from '../../../../helpers';
+import ModalPro from '@/components/common/ui/ModalPro';
 
 const { Text } = Typography;
 
@@ -192,7 +193,7 @@ const ChannelAffinityUsageCacheModal = ({
   }, [stats, params, t]);
 
   return (
-    <Modal
+    <ModalPro
       title={t('渠道亲和性：上游缓存命中')}
       visible={showChannelAffinityUsageCacheModal}
       onCancel={() => setShowChannelAffinityUsageCacheModal(false)}
@@ -234,7 +235,7 @@ const ChannelAffinityUsageCacheModal = ({
           )}
         </Spin>
       </div>
-    </Modal>
+    </ModalPro>
   );
 };
 

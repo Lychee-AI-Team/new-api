@@ -59,7 +59,7 @@ const HeaderLogo = ({
               style={{
                 fontSize: '18px',
                 fontWeight: 700,
-                color: '#1C1F23',
+                color: 'var(--header-system-name)',
                 fontFamily: 'Inter, sans-serif',
               }}
             >

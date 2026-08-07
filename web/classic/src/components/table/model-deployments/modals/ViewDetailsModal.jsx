@@ -18,19 +18,7 @@ For commercial licensing, please contact support@quantumnous.com
 */
 
 import React, { useState, useEffect } from 'react';
-import {
-  Modal,
-  Typography,
-  Card,
-  Tag,
-  Progress,
-  Descriptions,
-  Spin,
-  Empty,
-  Button,
-  Badge,
-  Tooltip,
-} from '@douyinfe/semi-ui';
+import { Typography, Card, Tag, Progress, Descriptions, Spin, Empty, Button, Badge, Tooltip } from '@douyinfe/semi-ui'
 import {
   FaInfoCircle,
   FaServer,
@@ -49,6 +37,7 @@ import {
   showSuccess,
   timestamp2string,
 } from '../../../../helpers';
+import ModalPro from '@/components/common/ui/ModalPro';
 
 const { Text, Title } = Typography;
 
@@ -139,7 +128,7 @@ const ViewDetailsModal = ({ visible, onCancel, deployment, t }) => {
   const statusConfig = getStatusConfig(deployment?.status);
 
   return (
-    <Modal
+    <ModalPro
       title={
         <div className='flex items-center gap-2'>
           <FaInfoCircle className='text-blue-500' />
@@ -594,7 +583,7 @@ const ViewDetailsModal = ({ visible, onCancel, deployment, t }) => {
           description={t('无法获取容器详情')}
         />
       )}
-    </Modal>
+    </ModalPro>
   );
 };
 

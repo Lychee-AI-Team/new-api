@@ -150,18 +150,18 @@ const UserArea = ({
           <Button
             theme='borderless'
             type='tertiary'
-            className='flex items-center justify-center !rounded-lg hover:!bg-white/40'
+            className='header-login-btn flex items-center justify-center !rounded-lg'
             style={{
               width: '64px',
               height: '32px',
-              background: 'rgba(249, 252, 255, 0.30)',
+              background: 'var(--header-btn-bg)',
             }}
           >
             <span
               style={{
                 fontSize: '12px',
                 fontWeight: 700,
-                color: 'rgba(28, 31, 35, 0.80)',
+                color: 'var(--header-login-text)',
                 fontFamily: 'Inter, sans-serif',
               }}
             >

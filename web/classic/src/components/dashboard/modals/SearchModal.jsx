@@ -18,7 +18,8 @@ For commercial licensing, please contact support@quantumnous.com
 */
 
 import React, { useRef } from 'react';
-import { Modal, Form } from '@douyinfe/semi-ui';
+import { Form } from '@douyinfe/semi-ui'
+import ModalPro from '@/components/common/ui/ModalPro';
 
 const SearchModal = ({
   searchModalVisible,
@@ -45,7 +46,7 @@ const SearchModal = ({
   const { start_timestamp, end_timestamp, username } = inputs;
 
   return (
-    <Modal
+    <ModalPro
       title={t('搜索条件')}
       visible={searchModalVisible}
       onOk={handleSearchConfirm}
@@ -96,7 +97,7 @@ const SearchModal = ({
             onChange: (value) => handleInputChange(value, 'username'),
           })}
       </Form>
-    </Modal>
+    </ModalPro>
   );
 };
 

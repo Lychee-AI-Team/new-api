@@ -82,6 +82,7 @@ const StatsCards = ({
                   </div>
                   {item.title === t('当前余额') ? (
                     <Tag
+                      className='dash-topup-tag'
                       color='white'
                       shape='circle'
                       size='large'

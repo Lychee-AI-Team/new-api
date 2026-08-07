@@ -18,20 +18,7 @@ For commercial licensing, please contact support@quantumnous.com
 */
 
 import React, { useEffect, useState, useRef } from 'react';
-import {
-  Banner,
-  Button,
-  Dropdown,
-  Form,
-  Space,
-  Spin,
-  RadioGroup,
-  Radio,
-  Table,
-  Modal,
-  Input,
-  Divider,
-} from '@douyinfe/semi-ui';
+import { Banner, Button, Dropdown, Form, Space, Spin, RadioGroup, Radio, Table, Input, Divider } from '@douyinfe/semi-ui'
 import {
   IconPlus,
   IconEdit,
@@ -49,6 +36,7 @@ import {
   verifyJSON,
 } from '../../../helpers';
 import { useTranslation } from 'react-i18next';
+import ModalPro from '@/components/common/ui/ModalPro';
 
 export default function SettingsChats(props) {
   const { t } = useTranslation();
@@ -294,7 +282,7 @@ export default function SettingsChats(props) {
           showSuccess(isEdit ? t('编辑成功') : t('添加成功'));
         })
         .catch((error) => {
-          console.error('Modal form validation error:', error);
+          console.error('ModalPro form validation error:', error);
         });
     }
   };
@@ -525,7 +513,7 @@ export default function SettingsChats(props) {
         )}
       </Space>
 
-      <Modal
+      <ModalPro
         title={isEdit ? t('编辑聊天配置') : t('添加聊天配置')}
         visible={modalVisible}
         onOk={handleModalOk}
@@ -556,7 +544,7 @@ export default function SettingsChats(props) {
             style={{ marginTop: 16 }}
           />
         </Form>
-      </Modal>
+      </ModalPro>
     </Spin>
   );
 }

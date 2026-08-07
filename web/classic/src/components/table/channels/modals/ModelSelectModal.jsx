@@ -19,17 +19,7 @@ For commercial licensing, please contact support@quantumnous.com
 
 import React, { useState, useEffect, useMemo } from 'react';
 import { useIsMobile } from '../../../../hooks/common/useIsMobile';
-import {
-  Modal,
-  Checkbox,
-  Spin,
-  Input,
-  Typography,
-  Empty,
-  Tabs,
-  Collapse,
-  Tooltip,
-} from '@douyinfe/semi-ui';
+import { Checkbox, Spin, Input, Typography, Empty, Tabs, Collapse, Tooltip } from '@douyinfe/semi-ui'
 import {
   IllustrationNoResult,
   IllustrationNoResultDark,
@@ -37,6 +27,7 @@ import {
 import { IconSearch, IconInfoCircle } from '@douyinfe/semi-icons';
 import { useTranslation } from 'react-i18next';
 import { getModelCategories } from '../../../../helpers/render';
+import ModalPro from '@/components/common/ui/ModalPro';
 
 const ModelSelectModal = ({
   visible,
@@ -343,7 +334,7 @@ const ModelSelectModal = ({
   };
 
   return (
-    <Modal
+    <ModalPro
       header={
         <div className='flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 sm:gap-4 py-4'>
           <Typography.Title heading={5} className='m-0'>
@@ -461,7 +452,7 @@ const ModelSelectModal = ({
           })()}
         </div>
       </Typography.Text>
-    </Modal>
+    </ModalPro>
   );
 };
 

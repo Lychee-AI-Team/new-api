@@ -18,17 +18,11 @@ For commercial licensing, please contact support@quantumnous.com
 */
 
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
-import {
-  Modal,
-  Button,
-  Typography,
-  Checkbox,
-  Input,
-  Space,
-} from '@douyinfe/semi-ui';
+import { Button, Typography, Checkbox, Input, Space } from '@douyinfe/semi-ui'
 import { IconAlertTriangle } from '@douyinfe/semi-icons';
 import { useIsMobile } from '../../../hooks/common/useIsMobile';
 import MarkdownRenderer from '../markdown/MarkdownRenderer';
+import ModalPro from '@/components/common/ui/ModalPro';
 
 const { Text } = Typography;
 
@@ -101,7 +95,7 @@ const RiskAcknowledgementModal = React.memo(function RiskAcknowledgementModal({
   }, []);
 
   return (
-    <Modal
+    <ModalPro
       visible={visible}
       title={
         <Space align='center'>
@@ -207,7 +201,7 @@ const RiskAcknowledgementModal = React.memo(function RiskAcknowledgementModal({
           </div>
         ) : null}
       </div>
-    </Modal>
+    </ModalPro>
   );
 });
 

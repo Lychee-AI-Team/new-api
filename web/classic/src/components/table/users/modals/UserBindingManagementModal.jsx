@@ -25,15 +25,7 @@ import {
   showSuccess,
   getOAuthProviderIcon,
 } from '../../../../helpers';
-import {
-  Modal,
-  Spin,
-  Typography,
-  Card,
-  Checkbox,
-  Tag,
-  Button,
-} from '@douyinfe/semi-ui';
+import { Spin, Typography, Card, Checkbox, Tag, Button } from '@douyinfe/semi-ui'
 import {
   IconLink,
   IconMail,
@@ -41,6 +33,7 @@ import {
   IconGithubLogo,
 } from '@douyinfe/semi-icons';
 import { SiDiscord, SiTelegram, SiWechat, SiLinux } from 'react-icons/si';
+import ModalPro from '@/components/common/ui/ModalPro';
 
 const { Text } = Typography;
 
@@ -119,7 +112,7 @@ const UserBindingManagementModal = ({
   const handleUnbindBuiltInAccount = (bindingItem) => {
     if (!userId) return;
 
-    Modal.confirm({
+    ModalPro.confirm({
       title: t('确认解绑'),
       content: t('确定要解绑 {{name}} 吗？', { name: bindingItem.name }),
       okText: t('确认'),
@@ -155,7 +148,7 @@ const UserBindingManagementModal = ({
   const handleUnbindCustomOAuthAccount = (provider) => {
     if (!userId) return;
 
-    Modal.confirm({
+    ModalPro.confirm({
       title: t('确认解绑'),
       content: t('确定要解绑 {{name}} 吗？', { name: provider.name }),
       okText: t('确认'),
@@ -326,7 +319,7 @@ const UserBindingManagementModal = ({
     : allBindingItems;
 
   return (
-    <Modal
+    <ModalPro
       centered
       visible={visible}
       onCancel={onCancel}
@@ -426,7 +419,7 @@ const UserBindingManagementModal = ({
           )}
         </div>
       </Spin>
-    </Modal>
+    </ModalPro>
   );
 };
 

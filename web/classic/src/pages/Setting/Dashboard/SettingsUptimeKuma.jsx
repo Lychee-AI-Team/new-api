@@ -18,17 +18,7 @@ For commercial licensing, please contact support@quantumnous.com
 */
 
 import React, { useEffect, useState } from 'react';
-import {
-  Button,
-  Space,
-  Table,
-  Form,
-  Typography,
-  Empty,
-  Divider,
-  Modal,
-  Switch,
-} from '@douyinfe/semi-ui';
+import { Button, Space, Table, Form, Typography, Empty, Divider, Switch } from '@douyinfe/semi-ui'
 import {
   IllustrationNoResult,
   IllustrationNoResultDark,
@@ -36,6 +26,7 @@ import {
 import { Plus, Edit, Trash2, Save, Activity } from 'lucide-react';
 import { API, showError, showSuccess } from '../../../helpers';
 import { useTranslation } from 'react-i18next';
+import ModalPro from '@/components/common/ui/ModalPro';
 
 const { Text } = Typography;
 
@@ -451,7 +442,7 @@ const SettingsUptimeKuma = ({ options, refresh }) => {
         />
       </Form.Section>
 
-      <Modal
+      <ModalPro
         title={editingGroup ? t('编辑分类') : t('添加分类')}
         visible={showUptimeModal}
         onOk={handleSaveGroup}
@@ -495,9 +486,9 @@ const SettingsUptimeKuma = ({ options, refresh }) => {
             onChange={(value) => setUptimeForm({ ...uptimeForm, slug: value })}
           />
         </Form>
-      </Modal>
+      </ModalPro>
 
-      <Modal
+      <ModalPro
         title={t('确认删除')}
         visible={showDeleteModal}
         onOk={confirmDeleteGroup}
@@ -514,7 +505,7 @@ const SettingsUptimeKuma = ({ options, refresh }) => {
         }}
       >
         <Text>{t('确定要删除此分类吗？')}</Text>
-      </Modal>
+      </ModalPro>
     </>
   );
 };

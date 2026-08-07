@@ -17,24 +17,12 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
 For commercial licensing, please contact support@quantumnous.com
 */
 import React, { useEffect, useState, useRef } from 'react';
-import {
-  Banner,
-  Button,
-  Form,
-  Row,
-  Col,
-  Typography,
-  Spin,
-  Table,
-  Modal,
-  Input,
-  InputNumber,
-  Select,
-} from '@douyinfe/semi-ui';
+import { Banner, Button, Form, Row, Col, Typography, Spin, Table, Input, InputNumber, Select } from '@douyinfe/semi-ui'
 const { Text } = Typography;
 import { API, showError, showSuccess } from '../../../helpers';
 import { useTranslation } from 'react-i18next';
 import { BookOpen, Plus, Trash2 } from 'lucide-react';
+import ModalPro from '@/components/common/ui/ModalPro';
 
 export default function SettingsPaymentGatewayCreem(props) {
   const { t } = useTranslation();
@@ -336,7 +324,7 @@ export default function SettingsPaymentGatewayCreem(props) {
       </Form>
 
       {/* 产品配置模态框 */}
-      <Modal
+      <ModalPro
         title={editingProduct ? t('编辑产品') : t('添加产品')}
         visible={showProductModal}
         onOk={saveProduct}
@@ -424,7 +412,7 @@ export default function SettingsPaymentGatewayCreem(props) {
             />
           </div>
         </div>
-      </Modal>
+      </ModalPro>
     </Spin>
   );
 }

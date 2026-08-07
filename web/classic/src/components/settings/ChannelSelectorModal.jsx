@@ -24,16 +24,9 @@ import React, {
   useImperativeHandle,
 } from 'react';
 import { useIsMobile } from '../../hooks/common/useIsMobile';
-import {
-  Modal,
-  Table,
-  Input,
-  Space,
-  Highlight,
-  Select,
-  Tag,
-} from '@douyinfe/semi-ui';
+import { Table, Input, Space, Highlight, Select, Tag } from '@douyinfe/semi-ui'
 import { IconSearch } from '@douyinfe/semi-icons';
+import ModalPro from '@/components/common/ui/ModalPro';
 
 const OFFICIAL_RATIO_PRESET_ID = -100;
 const MODELS_DEV_PRESET_ID = -101;
@@ -258,7 +251,7 @@ const ChannelSelectorModal = forwardRef(
     };
 
     return (
-      <Modal
+      <ModalPro
         visible={visible}
         onCancel={onCancel}
         onOk={onOk}
@@ -302,7 +295,7 @@ const ChannelSelectorModal = forwardRef(
             size='small'
           />
         </Space>
-      </Modal>
+      </ModalPro>
     );
   },
 );

@@ -18,7 +18,7 @@ For commercial licensing, please contact support@quantumnous.com
 */
 
 import React, { useRef } from 'react';
-import { Button, Typography, Toast, Modal, Dropdown } from '@douyinfe/semi-ui';
+import { Button, Typography, Toast, Dropdown } from '@douyinfe/semi-ui'
 import { Download, Upload, RotateCcw, Settings2 } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import {
@@ -28,6 +28,7 @@ import {
   hasStoredConfig,
   getConfigTimestamp,
 } from './configStorage';
+import ModalPro from '@/components/common/ui/ModalPro';
 
 const ConfigManager = ({
   currentConfig,
@@ -75,7 +76,7 @@ const ConfigManager = ({
     try {
       const importedConfig = await importConfig(file);
 
-      Modal.confirm({
+      ModalPro.confirm({
         title: t('确认导入配置'),
         content: t('导入的配置将覆盖当前设置，是否继续？'),
         okText: t('确定导入'),
@@ -100,7 +101,7 @@ const ConfigManager = ({
   };
 
   const handleReset = () => {
-    Modal.confirm({
+    ModalPro.confirm({
       title: t('重置配置'),
       content: t(
         '将清除所有保存的配置并恢复默认设置，此操作不可撤销。是否继续？',
@@ -112,7 +113,7 @@ const ConfigManager = ({
       },
       onOk: () => {
         // 询问是否同时重置消息
-        Modal.confirm({
+        ModalPro.confirm({
           title: t('重置选项'),
           content: t(
             '是否同时重置对话消息？选择"是"将清空所有对话记录并恢复默认示例；选择"否"将保留当前对话记录。',

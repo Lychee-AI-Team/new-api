@@ -18,20 +18,7 @@ For commercial licensing, please contact support@quantumnous.com
 */
 
 import React, { useEffect, useState, useRef } from 'react';
-import {
-  Button,
-  Space,
-  Table,
-  Form,
-  Typography,
-  Empty,
-  Divider,
-  Modal,
-  Tag,
-  Switch,
-  TextArea,
-  Tooltip,
-} from '@douyinfe/semi-ui';
+import { Button, Space, Table, Form, Typography, Empty, Divider, Tag, Switch, TextArea, Tooltip } from '@douyinfe/semi-ui'
 import {
   IllustrationNoResult,
   IllustrationNoResultDark,
@@ -45,6 +32,7 @@ import {
   formatDateTimeString,
 } from '../../../helpers';
 import { useTranslation } from 'react-i18next';
+import ModalPro from '@/components/common/ui/ModalPro';
 
 const { Text } = Typography;
 
@@ -517,7 +505,7 @@ const SettingsAnnouncements = ({ options, refresh }) => {
         />
       </Form.Section>
 
-      <Modal
+      <ModalPro
         title={editingAnnouncement ? t('编辑公告') : t('添加公告')}
         visible={showAnnouncementModal}
         onOk={handleSaveAnnouncement}
@@ -579,9 +567,9 @@ const SettingsAnnouncements = ({ options, refresh }) => {
             }
           />
         </Form>
-      </Modal>
+      </ModalPro>
 
-      <Modal
+      <ModalPro
         title={t('确认删除')}
         visible={showDeleteModal}
         onOk={confirmDeleteAnnouncement}
@@ -598,10 +586,10 @@ const SettingsAnnouncements = ({ options, refresh }) => {
         }}
       >
         <Text>{t('确定要删除此公告吗？')}</Text>
-      </Modal>
+      </ModalPro>
 
-      {/* 公告内容放大编辑 Modal */}
-      <Modal
+      {/* 公告内容放大编辑 ModalPro */}
+      <ModalPro
         title={t('编辑公告内容')}
         visible={showContentModal}
         onOk={() => {
@@ -626,7 +614,7 @@ const SettingsAnnouncements = ({ options, refresh }) => {
             setAnnouncementForm({ ...announcementForm, content: value })
           }
         />
-      </Modal>
+      </ModalPro>
     </>
   );
 };

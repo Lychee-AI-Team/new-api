@@ -18,10 +18,10 @@ For commercial licensing, please contact support@quantumnous.com
 */
 
 import React from 'react';
-import { Modal } from '@douyinfe/semi-ui';
 import { resetPricingFilters } from '../../../../helpers/utils';
 import FilterModalContent from './components/FilterModalContent';
 import FilterModalFooter from './components/FilterModalFooter';
+import ModalPro from '@/components/common/ui/ModalPro';
 
 const PricingFilterModal = ({ visible, onClose, sidebarProps, t }) => {
   const handleResetFilters = () =>
@@ -45,7 +45,7 @@ const PricingFilterModal = ({ visible, onClose, sidebarProps, t }) => {
   );
 
   return (
-    <Modal
+    <ModalPro
       title={t('筛选')}
       visible={visible}
       onCancel={onClose}
@@ -60,7 +60,7 @@ const PricingFilterModal = ({ visible, onClose, sidebarProps, t }) => {
       }}
     >
       <FilterModalContent sidebarProps={sidebarProps} t={t} />
-    </Modal>
+    </ModalPro>
   );
 };
 

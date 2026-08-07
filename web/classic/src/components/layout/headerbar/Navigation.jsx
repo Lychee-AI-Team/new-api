@@ -30,11 +30,10 @@ const Navigation = ({
 }) => {
   const renderNavLinks = () => {
     const baseClasses =
-      'flex-shrink-0 flex items-center justify-center rounded-lg transition-all duration-200 ease-in-out';
-    const hoverClasses = 'hover:bg-white/40';
+      'flex-shrink-0 flex items-center justify-center rounded-lg transition-all duration-200 ease-in-out header-nav-link';
     const spacingClasses = 'h-9 px-3';
 
-    const commonLinkClasses = `${baseClasses} ${spacingClasses} ${hoverClasses}`;
+    const commonLinkClasses = `${baseClasses} ${spacingClasses}`;
 
     return mainNavLinks.map((link) => {
       const linkContent = (
@@ -42,7 +41,7 @@ const Navigation = ({
           style={{
             fontSize: '14px',
             fontWeight: 400,
-            color: '#17171C',
+            color: 'var(--header-nav-text)',
             fontFamily: 'Inter, sans-serif',
           }}
         >

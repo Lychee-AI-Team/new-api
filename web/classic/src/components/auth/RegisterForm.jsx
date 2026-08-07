@@ -33,13 +33,7 @@ import {
   onCustomOAuthClicked,
 } from '../../helpers';
 import Turnstile from 'react-turnstile';
-import {
-  Button,
-  Checkbox,
-  Form,
-  Icon,
-  Modal,
-} from '@douyinfe/semi-ui';
+import { Button, Checkbox, Form, Icon } from '@douyinfe/semi-ui'
 import Text from '@douyinfe/semi-ui/lib/es/typography/text';
 import {
   IconGithubLogo,
@@ -61,6 +55,7 @@ import { UserContext } from '../../context/User';
 import { StatusContext } from '../../context/Status';
 import { useTranslation } from 'react-i18next';
 import { SiDiscord } from 'react-icons/si';
+import ModalPro from '@/components/common/ui/ModalPro';
 
 const RegisterForm = () => {
   let navigate = useNavigate();
@@ -466,16 +461,15 @@ const RegisterForm = () => {
           <div
             className='overflow-hidden'
             style={{
-              background:
-                'linear-gradient(180deg, rgba(235, 237, 254, 0.80) 0%, rgba(255, 255, 255, 0.80) 100%)',
+              background: 'var(--login-card-bg)',
               borderRadius: '16px',
-              border: '1px solid rgba(28, 31, 35, 0.08)',
+              border: '1px solid var(--login-card-border)',
             }}
           >
             <div className='flex justify-center pt-10 pb-2'>
               <span
                 className='text-2xl font-bold'
-                style={{ color: '#1C1F23' }}
+                style={{ color: 'var(--login-text-primary)' }}
               >
                 {t('注 册')}
               </span>
@@ -487,7 +481,7 @@ const RegisterForm = () => {
                     theme='outline'
                     className='w-full h-8 flex items-center justify-center !rounded-full'
                     style={{
-                      border: '1px solid rgba(28, 31, 35, 0.08)',
+                      border: '1px solid var(--login-btn-outline-border)',
                     }}
                     type='tertiary'
                     icon={
@@ -496,7 +490,7 @@ const RegisterForm = () => {
                     onClick={onWeChatLoginClicked}
                     loading={wechatLoading}
                   >
-                    <span className='ml-2 text-sm font-bold' style={{ color: 'rgba(28, 31, 35, 0.80)' }}>
+                    <span className='ml-2 text-sm font-bold' style={{ color: 'var(--login-text-secondary)' }}>
                       {t('使用 微信 继续')}
                     </span>
                   </Button>
@@ -507,7 +501,7 @@ const RegisterForm = () => {
                     theme='outline'
                     className='w-full h-8 flex items-center justify-center !rounded-full'
                     style={{
-                      border: '1px solid rgba(28, 31, 35, 0.08)',
+                      border: '1px solid var(--login-btn-outline-border)',
                     }}
                     type='tertiary'
                     icon={<IconGithubLogo size='large' />}
@@ -515,7 +509,7 @@ const RegisterForm = () => {
                     loading={githubLoading}
                     disabled={githubButtonDisabled}
                   >
-                    <span className='ml-2 text-sm font-bold' style={{ color: 'rgba(28, 31, 35, 0.80)' }}>
+                    <span className='ml-2 text-sm font-bold' style={{ color: 'var(--login-text-secondary)' }}>
                       {githubButtonText}
                     </span>
                   </Button>
@@ -526,7 +520,7 @@ const RegisterForm = () => {
                     theme='outline'
                     className='w-full h-8 flex items-center justify-center !rounded-full'
                     style={{
-                      border: '1px solid rgba(28, 31, 35, 0.08)',
+                      border: '1px solid var(--login-btn-outline-border)',
                     }}
                     type='tertiary'
                     icon={
@@ -541,7 +535,7 @@ const RegisterForm = () => {
                     onClick={handleDiscordClick}
                     loading={discordLoading}
                   >
-                    <span className='ml-2 text-sm font-bold' style={{ color: 'rgba(28, 31, 35, 0.80)' }}>
+                    <span className='ml-2 text-sm font-bold' style={{ color: 'var(--login-text-secondary)' }}>
                       {t('使用 Discord 继续')}
                     </span>
                   </Button>
@@ -552,14 +546,14 @@ const RegisterForm = () => {
                     theme='outline'
                     className='w-full h-8 flex items-center justify-center !rounded-full'
                     style={{
-                      border: '1px solid rgba(28, 31, 35, 0.08)',
+                      border: '1px solid var(--login-btn-outline-border)',
                     }}
                     type='tertiary'
                     icon={<OIDCIcon style={{ color: '#1877F2' }} />}
                     onClick={handleOIDCClick}
                     loading={oidcLoading}
                   >
-                    <span className='ml-2 text-sm font-bold' style={{ color: 'rgba(28, 31, 35, 0.80)' }}>
+                    <span className='ml-2 text-sm font-bold' style={{ color: 'var(--login-text-secondary)' }}>
                       {t('使用 OIDC 继续')}
                     </span>
                   </Button>
@@ -570,7 +564,7 @@ const RegisterForm = () => {
                     theme='outline'
                     className='w-full h-8 flex items-center justify-center !rounded-full'
                     style={{
-                      border: '1px solid rgba(28, 31, 35, 0.08)',
+                      border: '1px solid var(--login-btn-outline-border)',
                     }}
                     type='tertiary'
                     icon={
@@ -585,7 +579,7 @@ const RegisterForm = () => {
                     onClick={handleLinuxDOClick}
                     loading={linuxdoLoading}
                   >
-                    <span className='ml-2 text-sm font-bold' style={{ color: 'rgba(28, 31, 35, 0.80)' }}>
+                    <span className='ml-2 text-sm font-bold' style={{ color: 'var(--login-text-secondary)' }}>
                       {t('使用 LinuxDO 继续')}
                     </span>
                   </Button>
@@ -598,14 +592,14 @@ const RegisterForm = () => {
                       theme='outline'
                       className='w-full h-8 flex items-center justify-center !rounded-full'
                       style={{
-                        border: '1px solid rgba(28, 31, 35, 0.08)',
+                        border: '1px solid var(--login-btn-outline-border)',
                       }}
                       type='tertiary'
                       icon={getOAuthProviderIcon(provider.icon || '', 20)}
                       onClick={() => handleCustomOAuthClick(provider)}
                       loading={customOAuthLoading[provider.slug]}
                     >
-                      <span className='ml-2 text-sm font-bold' style={{ color: 'rgba(28, 31, 35, 0.80)' }}>
+                      <span className='ml-2 text-sm font-bold' style={{ color: 'var(--login-text-secondary)' }}>
                         {t('使用 {{name}} 继续', { name: provider.name })}
                       </span>
                     </Button>
@@ -622,11 +616,11 @@ const RegisterForm = () => {
 
                 {/* 分割线 */}
                 <div className='flex items-center my-3'>
-                  <div className='flex-1 h-px' style={{ background: 'rgba(28, 31, 35, 0.08)' }}></div>
-                  <span className='mx-3 text-sm font-bold' style={{ color: '#1C1F23' }}>
+                  <div className='flex-1 h-px' style={{ background: 'var(--login-divider-color)' }}></div>
+                  <span className='mx-3 text-sm font-bold' style={{ color: 'var(--login-text-primary)' }}>
                     {t('或')}
                   </span>
-                  <div className='flex-1 h-px' style={{ background: 'rgba(28, 31, 35, 0.08)' }}></div>
+                  <div className='flex-1 h-px' style={{ background: 'var(--login-divider-color)' }}></div>
                 </div>
 
                 <Button
@@ -648,11 +642,11 @@ const RegisterForm = () => {
               </div>
 
               <div className='mt-6 text-center text-sm'>
-                <Text style={{ color: '#1C1F23' }}>
+                <Text style={{ color: 'var(--login-text-primary)' }}>
                   {t('已有账户？')}{' '}
                   <Link
                     to='/login'
-                    style={{ color: '#0064FA' }}
+                    style={{ color: 'var(--login-link-color)' }}
                     className='font-medium'
                   >
                     {t('登录')}
@@ -673,16 +667,15 @@ const RegisterForm = () => {
           <div
             className='overflow-hidden'
             style={{
-              background:
-                'linear-gradient(180deg, rgba(235, 237, 254, 0.80) 0%, rgba(255, 255, 255, 0.80) 100%)',
+              background: 'var(--login-card-bg)',
               borderRadius: '16px',
-              border: '1px solid rgba(28, 31, 35, 0.08)',
+              border: '1px solid var(--login-card-border)',
             }}
           >
             <div className='flex justify-center pt-10 pb-2'>
               <span
                 className='text-2xl font-bold'
-                style={{ color: '#1C1F23' }}
+                style={{ color: 'var(--login-text-primary)' }}
               >
                 {t('注 册')}
               </span>
@@ -759,7 +752,7 @@ const RegisterForm = () => {
                       checked={agreedToTerms}
                       onChange={(e) => setAgreedToTerms(e.target.checked)}
                     >
-                      <Text size='small' style={{ color: 'rgba(28, 31, 35, 0.80)' }}>
+                      <Text size='small' style={{ color: 'var(--login-text-secondary)' }}>
                         {t('我已阅读并同意')}
                         {hasUserAgreement && (
                           <>
@@ -767,7 +760,7 @@ const RegisterForm = () => {
                               href='/user-agreement'
                               target='_blank'
                               rel='noopener noreferrer'
-                              style={{ color: '#0064FA' }}
+                              style={{ color: 'var(--login-link-color)' }}
                               className='mx-1'
                             >
                               {t('用户协议')}
@@ -781,7 +774,7 @@ const RegisterForm = () => {
                               href='/privacy-policy'
                               target='_blank'
                               rel='noopener noreferrer'
-                              style={{ color: '#0064FA' }}
+                              style={{ color: 'var(--login-link-color)' }}
                               className='mx-1'
                             >
                               {t('隐私政策')}
@@ -818,11 +811,11 @@ const RegisterForm = () => {
                 <>
                   {/* 分割线 */}
                   <div className='flex items-center my-3'>
-                    <div className='flex-1 h-px' style={{ background: 'rgba(28, 31, 35, 0.08)' }}></div>
-                    <span className='mx-3 text-sm font-bold' style={{ color: '#1C1F23' }}>
+                    <div className='flex-1 h-px' style={{ background: 'var(--login-divider-color)' }}></div>
+                    <span className='mx-3 text-sm font-bold' style={{ color: 'var(--login-text-primary)' }}>
                       {t('或')}
                     </span>
-                    <div className='flex-1 h-px' style={{ background: 'rgba(28, 31, 35, 0.08)' }}></div>
+                    <div className='flex-1 h-px' style={{ background: 'var(--login-divider-color)' }}></div>
                   </div>
 
                   <div className='mt-4 text-center'>
@@ -831,7 +824,7 @@ const RegisterForm = () => {
                       type='tertiary'
                       className='w-full !rounded-full'
                       style={{
-                        border: '1px solid rgba(28, 31, 35, 0.08)',
+                        border: '1px solid var(--login-btn-outline-border)',
                       }}
                       onClick={handleOtherRegisterOptionsClick}
                       loading={otherRegisterOptionsLoading}
@@ -843,11 +836,11 @@ const RegisterForm = () => {
               )}
 
               <div className='mt-6 text-center text-sm'>
-                <Text style={{ color: '#1C1F23' }}>
+                <Text style={{ color: 'var(--login-text-primary)' }}>
                   {t('已有账户？')}{' '}
                   <Link
                     to='/login'
-                    style={{ color: '#0064FA' }}
+                    style={{ color: 'var(--login-link-color)' }}
                     className='font-medium'
                   >
                     {t('登录')}
@@ -874,7 +867,7 @@ const RegisterForm = () => {
     // 新模式：动态二维码扫码登录
     if (isOffiAccountMode) {
       return (
-        <Modal
+        <ModalPro
           title={t('微信扫码登录')}
           visible={showWeChatLoginModal}
           maskClosable={true}
@@ -914,13 +907,13 @@ const RegisterForm = () => {
               </div>
             )}
           </div>
-        </Modal>
+        </ModalPro>
       );
     }
 
     // 旧模式：验证码方式
     // return (
-    //   <Modal
+    //   <ModalPro
     //     title={t('微信扫码登录')}
     //     visible={showWeChatLoginModal}
     //     maskClosable={true}
@@ -953,16 +946,15 @@ const RegisterForm = () => {
     //         }
     //       />
     //     </Form>
-    //   </Modal>
+    //   </ModalPro>
     // );
   };
 
   return (
     <div
-      className='relative overflow-hidden flex items-center justify-center min-h-screen'
+      className='login-page relative overflow-hidden flex items-center justify-center min-h-screen'
       style={{
-        background:
-          'linear-gradient(148deg, rgba(111, 130, 221, 0.50) 0%, rgba(178, 223, 247, 0.50) 50%, rgba(191, 182, 236, 0.50) 100%)',
+        background: 'var(--login-bg)',
       }}
     >
       <div className='w-full max-w-sm'>
@@ -971,7 +963,7 @@ const RegisterForm = () => {
           <img src={logo} alt='Logo' className='h-10 rounded-full' />
           <span
             className='text-2xl font-bold'
-            style={{ color: '#1C1F23' }}
+            style={{ color: 'var(--login-text-primary)' }}
           >
             {systemName}
           </span>

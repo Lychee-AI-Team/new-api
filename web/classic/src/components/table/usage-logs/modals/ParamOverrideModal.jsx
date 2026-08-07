@@ -18,15 +18,10 @@ For commercial licensing, please contact support@quantumnous.com
 */
 
 import React, { useMemo } from 'react';
-import {
-  Modal,
-  Button,
-  Empty,
-  Divider,
-  Typography,
-} from '@douyinfe/semi-ui';
+import { Button, Empty, Divider, Typography } from '@douyinfe/semi-ui'
 import { IconCopy } from '@douyinfe/semi-icons';
 import { copy, showError, showSuccess } from '../../../../helpers';
+import ModalPro from '@/components/common/ui/ModalPro';
 
 const { Text } = Typography;
 
@@ -122,7 +117,7 @@ const ParamOverrideModal = ({
   };
 
   return (
-    <Modal
+    <ModalPro
       title={t('参数覆盖详情')}
       visible={showParamOverrideModal}
       onCancel={() => setShowParamOverrideModal(false)}
@@ -265,7 +260,7 @@ const ParamOverrideModal = ({
           </div>
         )}
       </div>
-    </Modal>
+    </ModalPro>
   );
 };
 

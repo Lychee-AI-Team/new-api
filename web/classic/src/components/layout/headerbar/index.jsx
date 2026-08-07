@@ -68,8 +68,8 @@ const HeaderBar = ({ onMobileMenuToggle, drawerOpen }) => {
     <header
       className='sticky top-0 z-50 transition-colors duration-300'
       style={{
-        background: '#E8EBFE',
-        borderBottom: '1px solid #E2DAFD',
+        background: 'var(--header-bg)',
+        borderBottom: '1px solid var(--header-border)',
         backdropFilter: 'blur(12px)',
       }}
     >

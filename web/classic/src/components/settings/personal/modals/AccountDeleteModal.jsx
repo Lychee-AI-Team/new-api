@@ -18,9 +18,10 @@ For commercial licensing, please contact support@quantumnous.com
 */
 
 import React from 'react';
-import { Banner, Input, Modal, Typography } from '@douyinfe/semi-ui';
+import { Banner, Input, Typography } from '@douyinfe/semi-ui'
 import { IconDelete, IconUser } from '@douyinfe/semi-icons';
 import Turnstile from 'react-turnstile';
+import ModalPro from '@/components/common/ui/ModalPro';
 
 const AccountDeleteModal = ({
   t,
@@ -35,7 +36,7 @@ const AccountDeleteModal = ({
   setTurnstileToken,
 }) => {
   return (
-    <Modal
+    <ModalPro
       title={
         <div className='flex items-center'>
           <IconDelete className='mr-2 text-red-500' />
@@ -87,7 +88,7 @@ const AccountDeleteModal = ({
           </div>
         )}
       </div>
-    </Modal>
+    </ModalPro>
   );
 };
 

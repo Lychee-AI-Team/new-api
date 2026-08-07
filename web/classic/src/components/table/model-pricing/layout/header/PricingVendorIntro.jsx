@@ -18,16 +18,10 @@ For commercial licensing, please contact support@quantumnous.com
 */
 
 import React, { useState, useEffect, useMemo, useCallback, memo } from 'react';
-import {
-  Card,
-  Tag,
-  Avatar,
-  Typography,
-  Tooltip,
-  Modal,
-} from '@douyinfe/semi-ui';
+import { Card, Tag, Avatar, Typography, Tooltip } from '@douyinfe/semi-ui'
 import { getLobeHubIcon } from '../../../../../helpers';
 import SearchActions from './SearchActions';
+import ModalPro from '@/components/common/ui/ModalPro';
 
 const { Paragraph } = Typography;
 
@@ -50,13 +44,18 @@ const THEME_COLORS = {
 
 const COMPONENT_STYLES = {
   tag: {
-    backgroundColor: 'rgba(255,255,255,0.95)',
-    color: '#1f2937',
-    border: '1px solid rgba(255,255,255,0.8)',
+    backgroundColor: 'var(--pricing-tag-bg)',
+    color: 'var(--pricing-tag-color)',
+    border: '1px solid var(--pricing-tag-border)',
     fontWeight: '500',
   },
   avatarContainer:
-    'w-16 h-16 rounded-2xl bg-white/90 shadow-md backdrop-blur-sm flex items-center justify-center',
+    'w-16 h-16 rounded-2xl flex items-center justify-center',
+  avatarContainerStyle: {
+    background: 'var(--pricing-avatar-bg)',
+    boxShadow: 'var(--pricing-avatar-shadow)',
+    backdropFilter: 'blur(4px)',
+  },
   titleText: { color: 'white' },
   descriptionText: { color: 'rgba(255,255,255,0.9)' },
 };
@@ -85,7 +84,7 @@ const getVendorDisplayName = (vendorName, t) => {
 };
 
 const createDefaultAvatar = () => (
-  <div className={COMPONENT_STYLES.avatarContainer}>
+  <div className={COMPONENT_STYLES.avatarContainer} style={COMPONENT_STYLES.avatarContainerStyle}>
     <Avatar size='large' color='transparent'>
       AI
     </Avatar>
@@ -127,7 +126,7 @@ const renderVendorAvatar = (vendor, t, isAllVendors = false) => {
 
   return (
     <Tooltip content={displayName} position='top'>
-      <div className={COMPONENT_STYLES.avatarContainer}>{avatarContent}</div>
+      <div className={COMPONENT_STYLES.avatarContainer} style={COMPONENT_STYLES.avatarContainerStyle}>{avatarContent}</div>
     </Tooltip>
   );
 };
@@ -172,7 +171,7 @@ const PricingVendorIntro = memo(
 
     const renderDescriptionModal = useCallback(
       () => (
-        <Modal
+        <ModalPro
           title={t('供应商介绍')}
           visible={descModalVisible}
           onCancel={handleCloseDescModal}
@@ -184,7 +183,7 @@ const PricingVendorIntro = memo(
           }}
         >
           <div className='text-sm mb-4'>{descModalContent}</div>
-        </Modal>
+        </ModalPro>
       ),
       [descModalVisible, descModalContent, handleCloseDescModal, isMobile, t],
     );
@@ -262,7 +261,7 @@ const PricingVendorIntro = memo(
     const createCoverStyle = useCallback(
       (primaryColor) => ({
         '--palette-primary-darkerChannel': primaryColor,
-        backgroundImage: `linear-gradient(0deg, rgba(var(--palette-primary-darkerChannel) / 80%), rgba(var(--palette-primary-darkerChannel) / 80%)), url('/cover-4.webp')`,
+        backgroundImage: `var(--pricing-vendor-cover-gradient), url('/cover-4.webp')`,
         backgroundSize: 'cover',
         backgroundPosition: 'center',
         backgroundRepeat: 'no-repeat',

@@ -18,7 +18,8 @@ For commercial licensing, please contact support@quantumnous.com
 */
 
 import React, { useMemo } from 'react';
-import { Modal, Button, Checkbox } from '@douyinfe/semi-ui';
+import { Button, Checkbox } from '@douyinfe/semi-ui'
+import ModalPro from '@/components/common/ui/ModalPro';
 
 const ColumnSelectorModal = ({
   visible,
@@ -79,7 +80,7 @@ const ColumnSelectorModal = ({
   const handleConfirm = () => onCancel();
 
   return (
-    <Modal
+    <ModalPro
       title={t('列设置')}
       visible={visible}
       onCancel={onCancel}
@@ -120,7 +121,7 @@ const ColumnSelectorModal = ({
           </div>
         ))}
       </div>
-    </Modal>
+    </ModalPro>
   );
 };
 

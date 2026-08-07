@@ -41,13 +41,7 @@ import {
   isPasskeySupported,
 } from '../../helpers';
 import Turnstile from 'react-turnstile';
-import {
-  Button,
-  Checkbox,
-  Form,
-  Icon,
-  Modal,
-} from '@douyinfe/semi-ui';
+import { Button, Checkbox, Form, Icon } from '@douyinfe/semi-ui'
 import Text from '@douyinfe/semi-ui/lib/es/typography/text';
 import TelegramLoginButton from 'react-telegram-login';
 
@@ -63,6 +57,7 @@ import LinuxDoIcon from '../common/logo/LinuxDoIcon';
 import TwoFAVerification from './TwoFAVerification';
 import { useTranslation } from 'react-i18next';
 import { SiDiscord } from 'react-icons/si';
+import ModalPro from '@/components/common/ui/ModalPro';
 
 const LoginForm = () => {
   let navigate = useNavigate();
@@ -319,7 +314,7 @@ const LoginForm = () => {
           updateAPI();
           showSuccess('登录成功！');
           if (username === 'root' && password === '123456') {
-            Modal.error({
+            ModalPro.error({
               title: '您正在使用默认密码！',
               content: '请立刻修改默认密码！',
               centered: true,
@@ -577,16 +572,15 @@ const LoginForm = () => {
           <div
             className='overflow-hidden'
             style={{
-              background:
-                'linear-gradient(180deg, rgba(235, 237, 254, 0.80) 0%, rgba(255, 255, 255, 0.80) 100%)',
+              background: 'var(--login-card-bg)',
               borderRadius: '16px',
-              border: '1px solid rgba(28, 31, 35, 0.08)',
+              border: '1px solid var(--login-card-border)',
             }}
           >
             <div className='flex justify-center pt-10 pb-2'>
               <span
                 className='text-2xl font-bold'
-                style={{ color: '#1C1F23' }}
+                style={{ color: 'var(--login-text-primary)' }}
               >
                 {t('登 录')}
               </span>
@@ -598,7 +592,7 @@ const LoginForm = () => {
                     theme='outline'
                     className='w-full h-8 flex items-center justify-center !rounded-full'
                     style={{
-                      border: '1px solid rgba(28, 31, 35, 0.08)',
+                      border: '1px solid var(--login-btn-outline-border)',
                     }}
                     type='tertiary'
                     icon={
@@ -607,7 +601,7 @@ const LoginForm = () => {
                     onClick={onWeChatLoginClicked}
                     loading={wechatLoading}
                   >
-                    <span className='ml-2 text-sm font-bold' style={{ color: 'rgba(28, 31, 35, 0.80)' }}>
+                    <span className='ml-2 text-sm font-bold' style={{ color: 'var(--login-text-secondary)' }}>
                       {t('使用 微信 继续')}
                     </span>
                   </Button>
@@ -618,7 +612,7 @@ const LoginForm = () => {
                     theme='outline'
                     className='w-full h-8 flex items-center justify-center !rounded-full'
                     style={{
-                      border: '1px solid rgba(28, 31, 35, 0.08)',
+                      border: '1px solid var(--login-btn-outline-border)',
                     }}
                     type='tertiary'
                     icon={<IconGithubLogo size='large' />}
@@ -626,7 +620,7 @@ const LoginForm = () => {
                     loading={githubLoading}
                     disabled={githubButtonDisabled}
                   >
-                    <span className='ml-2 text-sm font-bold' style={{ color: 'rgba(28, 31, 35, 0.80)' }}>
+                    <span className='ml-2 text-sm font-bold' style={{ color: 'var(--login-text-secondary)' }}>
                       {githubButtonText}
                     </span>
                   </Button>
@@ -637,7 +631,7 @@ const LoginForm = () => {
                     theme='outline'
                     className='w-full h-8 flex items-center justify-center !rounded-full'
                     style={{
-                      border: '1px solid rgba(28, 31, 35, 0.08)',
+                      border: '1px solid var(--login-btn-outline-border)',
                     }}
                     type='tertiary'
                     icon={
@@ -652,7 +646,7 @@ const LoginForm = () => {
                     onClick={handleDiscordClick}
                     loading={discordLoading}
                   >
-                    <span className='ml-2 text-sm font-bold' style={{ color: 'rgba(28, 31, 35, 0.80)' }}>
+                    <span className='ml-2 text-sm font-bold' style={{ color: 'var(--login-text-secondary)' }}>
                       {t('使用 Discord 继续')}
                     </span>
                   </Button>
@@ -663,14 +657,14 @@ const LoginForm = () => {
                     theme='outline'
                     className='w-full h-8 flex items-center justify-center !rounded-full'
                     style={{
-                      border: '1px solid rgba(28, 31, 35, 0.08)',
+                      border: '1px solid var(--login-btn-outline-border)',
                     }}
                     type='tertiary'
                     icon={<OIDCIcon style={{ color: '#1877F2' }} />}
                     onClick={handleOIDCClick}
                     loading={oidcLoading}
                   >
-                    <span className='ml-2 text-sm font-bold' style={{ color: 'rgba(28, 31, 35, 0.80)' }}>
+                    <span className='ml-2 text-sm font-bold' style={{ color: 'var(--login-text-secondary)' }}>
                       {t('使用 OIDC 继续')}
                     </span>
                   </Button>
@@ -681,7 +675,7 @@ const LoginForm = () => {
                     theme='outline'
                     className='w-full h-8 flex items-center justify-center !rounded-full'
                     style={{
-                      border: '1px solid rgba(28, 31, 35, 0.08)',
+                      border: '1px solid var(--login-btn-outline-border)',
                     }}
                     type='tertiary'
                     icon={
@@ -696,7 +690,7 @@ const LoginForm = () => {
                     onClick={handleLinuxDOClick}
                     loading={linuxdoLoading}
                   >
-                    <span className='ml-2 text-sm font-bold' style={{ color: 'rgba(28, 31, 35, 0.80)' }}>
+                    <span className='ml-2 text-sm font-bold' style={{ color: 'var(--login-text-secondary)' }}>
                       {t('使用 LinuxDO 继续')}
                     </span>
                   </Button>
@@ -709,14 +703,14 @@ const LoginForm = () => {
                       theme='outline'
                       className='w-full h-8 flex items-center justify-center !rounded-full'
                       style={{
-                        border: '1px solid rgba(28, 31, 35, 0.08)',
+                        border: '1px solid var(--login-btn-outline-border)',
                       }}
                       type='tertiary'
                       icon={getOAuthProviderIcon(provider.icon || '', 20)}
                       onClick={() => handleCustomOAuthClick(provider)}
                       loading={customOAuthLoading[provider.slug]}
                     >
-                      <span className='ml-2 text-sm font-bold' style={{ color: 'rgba(28, 31, 35, 0.80)' }}>
+                      <span className='ml-2 text-sm font-bold' style={{ color: 'var(--login-text-secondary)' }}>
                         {t('使用 {{name}} 继续', { name: provider.name })}
                       </span>
                     </Button>
@@ -736,14 +730,14 @@ const LoginForm = () => {
                     theme='outline'
                     className='w-full h-8 flex items-center justify-center !rounded-full'
                     style={{
-                      border: '1px solid rgba(28, 31, 35, 0.08)',
+                      border: '1px solid var(--login-btn-outline-border)',
                     }}
                     type='tertiary'
                     icon={<IconKey size='large' />}
                     onClick={handlePasskeyLogin}
                     loading={passkeyLoading}
                   >
-                    <span className='ml-2 text-sm font-bold' style={{ color: 'rgba(28, 31, 35, 0.80)' }}>
+                    <span className='ml-2 text-sm font-bold' style={{ color: 'var(--login-text-secondary)' }}>
                       {t('使用 Passkey 登录')}
                     </span>
                   </Button>
@@ -751,11 +745,11 @@ const LoginForm = () => {
 
                 {/* 分割线 */}
                 <div className='flex items-center my-3'>
-                  <div className='flex-1 h-px' style={{ background: 'rgba(28, 31, 35, 0.08)' }}></div>
-                  <span className='mx-3 text-sm font-bold' style={{ color: '#1C1F23' }}>
+                  <div className='flex-1 h-px' style={{ background: 'var(--login-divider-color)' }}></div>
+                  <span className='mx-3 text-sm font-bold' style={{ color: 'var(--login-text-primary)' }}>
                     {t('或')}
                   </span>
-                  <div className='flex-1 h-px' style={{ background: 'rgba(28, 31, 35, 0.08)' }}></div>
+                  <div className='flex-1 h-px' style={{ background: 'var(--login-divider-color)' }}></div>
                 </div>
 
                 <Button
@@ -782,7 +776,7 @@ const LoginForm = () => {
                     checked={agreedToTerms}
                     onChange={(e) => setAgreedToTerms(e.target.checked)}
                   >
-                    <Text size='small' style={{ color: 'rgba(28, 31, 35, 0.80)' }}>
+                    <Text size='small' style={{ color: 'var(--login-text-secondary)' }}>
                       {t('我已阅读并同意')}
                       {hasUserAgreement && (
                         <>
@@ -790,7 +784,7 @@ const LoginForm = () => {
                             href='/user-agreement'
                             target='_blank'
                             rel='noopener noreferrer'
-                            style={{ color: '#0064FA' }}
+                            style={{ color: 'var(--login-link-color)' }}
                             className='mx-1'
                           >
                             {t('用户协议')}
@@ -804,7 +798,7 @@ const LoginForm = () => {
                             href='/privacy-policy'
                             target='_blank'
                             rel='noopener noreferrer'
-                            style={{ color: '#0064FA' }}
+                            style={{ color: 'var(--login-link-color)' }}
                             className='mx-1'
                           >
                             {t('隐私政策')}
@@ -818,11 +812,11 @@ const LoginForm = () => {
 
               {!status.self_use_mode_enabled && (
                 <div className='mt-6 text-center text-sm'>
-                  <Text style={{ color: '#1C1F23' }}>
+                  <Text style={{ color: 'var(--login-text-primary)' }}>
                     {t('没有账户？')}{' '}
                     <Link
                       to='/register'
-                      style={{ color: '#0064FA' }}
+                      style={{ color: 'var(--login-link-color)' }}
                       className='font-medium'
                     >
                       {t('注册')}
@@ -844,16 +838,15 @@ const LoginForm = () => {
           <div
             className='overflow-hidden'
             style={{
-              background:
-                'linear-gradient(180deg, rgba(235, 237, 254, 0.80) 0%, rgba(255, 255, 255, 0.80) 100%)',
+              background: 'var(--login-card-bg)',
               borderRadius: '16px',
-              border: '1px solid rgba(28, 31, 35, 0.08)',
+              border: '1px solid var(--login-card-border)',
             }}
           >
             <div className='flex justify-center pt-10 pb-2'>
               <span
                 className='text-2xl font-bold'
-                style={{ color: '#1C1F23' }}
+                style={{ color: 'var(--login-text-primary)' }}
               >
                 {t('登 录')}
               </span>
@@ -865,13 +858,13 @@ const LoginForm = () => {
                   type='tertiary'
                   className='w-full h-8 flex items-center justify-center !rounded-full mb-4'
                   style={{
-                    border: '1px solid rgba(28, 31, 35, 0.08)',
+                    border: '1px solid var(--login-btn-outline-border)',
                   }}
                   icon={<IconKey size='large' />}
                   onClick={handlePasskeyLogin}
                   loading={passkeyLoading}
                 >
-                  <span className='ml-2 text-sm font-bold' style={{ color: 'rgba(28, 31, 35, 0.80)' }}>
+                  <span className='ml-2 text-sm font-bold' style={{ color: 'var(--login-text-secondary)' }}>
                     {t('使用 Passkey 登录')}
                   </span>
                 </Button>
@@ -902,7 +895,7 @@ const LoginForm = () => {
                       checked={agreedToTerms}
                       onChange={(e) => setAgreedToTerms(e.target.checked)}
                     >
-                      <Text size='small' style={{ color: 'rgba(28, 31, 35, 0.80)' }}>
+                      <Text size='small' style={{ color: 'var(--login-text-secondary)' }}>
                         {t('我已阅读并同意')}
                         {hasUserAgreement && (
                           <>
@@ -910,7 +903,7 @@ const LoginForm = () => {
                               href='/user-agreement'
                               target='_blank'
                               rel='noopener noreferrer'
-                              style={{ color: '#0064FA' }}
+                              style={{ color: 'var(--login-link-color)' }}
                               className='mx-1'
                             >
                               {t('用户协议')}
@@ -924,7 +917,7 @@ const LoginForm = () => {
                               href='/privacy-policy'
                               target='_blank'
                               rel='noopener noreferrer'
-                              style={{ color: '#0064FA' }}
+                              style={{ color: 'var(--login-link-color)' }}
                               className='mx-1'
                             >
                               {t('隐私政策')}
@@ -971,11 +964,11 @@ const LoginForm = () => {
                 <>
                   {/* 分割线 */}
                   <div className='flex items-center my-3'>
-                    <div className='flex-1 h-px' style={{ background: 'rgba(28, 31, 35, 0.08)' }}></div>
-                    <span className='mx-3 text-sm font-bold' style={{ color: '#1C1F23' }}>
+                    <div className='flex-1 h-px' style={{ background: 'var(--login-divider-color)' }}></div>
+                    <span className='mx-3 text-sm font-bold' style={{ color: 'var(--login-text-primary)' }}>
                       {t('或')}
                     </span>
-                    <div className='flex-1 h-px' style={{ background: 'rgba(28, 31, 35, 0.08)' }}></div>
+                    <div className='flex-1 h-px' style={{ background: 'var(--login-divider-color)' }}></div>
                   </div>
 
                   <div className='mt-4 text-center'>
@@ -984,7 +977,7 @@ const LoginForm = () => {
                       type='tertiary'
                       className='w-full !rounded-full'
                       style={{
-                        border: '1px solid rgba(28, 31, 35, 0.08)',
+                        border: '1px solid var(--login-btn-outline-border)',
                       }}
                       onClick={handleOtherLoginOptionsClick}
                       loading={otherLoginOptionsLoading}
@@ -997,11 +990,11 @@ const LoginForm = () => {
 
               {!status.self_use_mode_enabled && (
                 <div className='mt-6 text-center text-sm'>
-                  <Text style={{ color: '#1C1F23' }}>
+                  <Text style={{ color: 'var(--login-text-primary)' }}>
                     {t('没有账户？')}{' '}
                     <Link
                       to='/register'
-                      style={{ color: '#0064FA' }}
+                      style={{ color: 'var(--login-link-color)' }}
                       className='font-medium'
                     >
                       {t('注册')}
@@ -1030,7 +1023,7 @@ const LoginForm = () => {
     // 新模式：动态二维码扫码登录
     if (isOffiAccountMode) {
       return (
-        <Modal
+        <ModalPro
           title={t('微信扫码登录')}
           visible={showWeChatLoginModal}
           maskClosable={true}
@@ -1070,13 +1063,13 @@ const LoginForm = () => {
               </div>
             )}
           </div>
-        </Modal>
+        </ModalPro>
       );
     }
 
     // 旧模式：验证码方式
     // return (
-    //   <Modal
+    //   <ModalPro
     //     title={t('微信扫码登录')}
     //     visible={showWeChatLoginModal}
     //     maskClosable={true}
@@ -1109,14 +1102,14 @@ const LoginForm = () => {
     //         }
     //       />
     //     </Form>
-    //   </Modal>
+    //   </ModalPro>
     // );
   };
 
   // 2FA验证弹窗
   const render2FAModal = () => {
     return (
-      <Modal
+      <ModalPro
         title={
           <div className='flex items-center'>
             <div className='w-8 h-8 rounded-full bg-green-100 dark:bg-green-900 flex items-center justify-center mr-3'>
@@ -1146,16 +1139,15 @@ const LoginForm = () => {
           onBack={handleBackToLogin}
           isModal={true}
         />
-      </Modal>
+      </ModalPro>
     );
   };
 
   return (
     <div
-      className='relative overflow-hidden flex items-center justify-center min-h-screen'
+      className='login-page relative overflow-hidden flex items-center justify-center min-h-screen'
       style={{
-        background:
-          'linear-gradient(148deg, rgba(111, 130, 221, 0.50) 0%, rgba(178, 223, 247, 0.50) 50%, rgba(191, 182, 236, 0.50) 100%)',
+        background: 'var(--login-bg)',
       }}
     >
       <div className='w-full max-w-sm'>
@@ -1164,7 +1156,7 @@ const LoginForm = () => {
           <img src={logo} alt='Logo' className='h-10 rounded-full' />
           <span
             className='text-2xl font-bold'
-            style={{ color: '#1C1F23' }}
+            style={{ color: 'var(--login-text-primary)' }}
           >
             {systemName}
           </span>

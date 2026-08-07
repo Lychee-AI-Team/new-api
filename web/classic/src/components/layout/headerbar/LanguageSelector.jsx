@@ -77,11 +77,11 @@ const LanguageSelector = ({ currentLang, onLanguageChange, t }) => {
         aria-label={t('common.changeLanguage')}
         theme='borderless'
         type='tertiary'
-        className='!p-1.5 !text-current !rounded-full hover:!bg-white/50'
+        className='header-circle-btn !p-1.5 !text-current !rounded-full'
         style={{
           width: '32px',
           height: '32px',
-          background: 'rgba(249, 252, 255, 0.30)',
+          background: 'var(--header-btn-bg)',
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',

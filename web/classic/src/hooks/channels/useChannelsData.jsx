@@ -37,8 +37,9 @@ import { useIsMobile } from '../common/useIsMobile';
 import { useTableCompactMode } from '../common/useTableCompactMode';
 import { useChannelUpstreamUpdates } from './useChannelUpstreamUpdates';
 import { parseUpstreamUpdateMeta } from './upstreamUpdateUtils';
-import { Modal, Button } from '@douyinfe/semi-ui';
+import { Button } from '@douyinfe/semi-ui'
 import { openCodexUsageModal } from '../../components/table/channels/modals/CodexUsageModal';
+import ModalPro from '@/components/common/ui/ModalPro';
 
 export const useChannelsData = () => {
   const { t } = useTranslation();
@@ -823,7 +824,7 @@ export const useChannelsData = () => {
           }
         };
 
-        Modal.info({
+        ModalPro.info({
           title: t('Ollama 版本信息'),
           content: infoMessage,
           centered: true,
@@ -835,7 +836,7 @@ export const useChannelsData = () => {
               <Button
                 type='primary'
                 theme='solid'
-                onClick={() => Modal.destroyAll()}
+                onClick={() => ModalPro.destroyAll()}
               >
                 {t('关闭')}
               </Button>

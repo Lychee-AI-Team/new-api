@@ -18,15 +18,7 @@ For commercial licensing, please contact support@quantumnous.com
 */
 
 import React, { useEffect, useState } from 'react';
-import {
-  Modal,
-  Table,
-  Spin,
-  Button,
-  Typography,
-  Empty,
-  Input,
-} from '@douyinfe/semi-ui';
+import { Table, Spin, Button, Typography, Empty, Input } from '@douyinfe/semi-ui'
 import {
   IllustrationNoResult,
   IllustrationNoResultDark,
@@ -35,6 +27,7 @@ import { IconSearch } from '@douyinfe/semi-icons';
 import { API, showError } from '../../../../helpers';
 import { MODEL_TABLE_PAGE_SIZE } from '../../../../constants';
 import { useIsMobile } from '../../../../hooks/common/useIsMobile';
+import ModalPro from '@/components/common/ui/ModalPro';
 
 const MissingModelsModal = ({ visible, onClose, onConfigureModel, t }) => {
   const [loading, setLoading] = useState(false);
@@ -110,7 +103,7 @@ const MissingModelsModal = ({ visible, onClose, onConfigureModel, t }) => {
   ];
 
   return (
-    <Modal
+    <ModalPro
       title={
         <div className='flex flex-col gap-2 w-full'>
           <div className='flex items-center gap-2'>
@@ -191,7 +184,7 @@ const MissingModelsModal = ({ visible, onClose, onConfigureModel, t }) => {
           </div>
         )}
       </Spin>
-    </Modal>
+    </ModalPro>
   );
 };
 

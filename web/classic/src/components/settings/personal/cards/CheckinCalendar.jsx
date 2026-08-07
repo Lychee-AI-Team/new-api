@@ -18,17 +18,7 @@ For commercial licensing, please contact support@quantumnous.com
 */
 
 import React, { useState, useEffect, useMemo } from 'react';
-import {
-  Card,
-  Calendar,
-  Button,
-  Typography,
-  Avatar,
-  Spin,
-  Tooltip,
-  Collapsible,
-  Modal,
-} from '@douyinfe/semi-ui';
+import { Card, Calendar, Button, Typography, Avatar, Spin, Tooltip, Collapsible } from '@douyinfe/semi-ui'
 import {
   CalendarCheck,
   Gift,
@@ -38,6 +28,7 @@ import {
 } from 'lucide-react';
 import Turnstile from 'react-turnstile';
 import { API, showError, showSuccess, renderQuota } from '../../../../helpers';
+import ModalPro from '@/components/common/ui/ModalPro';
 
 const CheckinCalendar = ({ t, status, turnstileEnabled, turnstileSiteKey }) => {
   const [loading, setLoading] = useState(false);
@@ -214,7 +205,7 @@ const CheckinCalendar = ({ t, status, turnstileEnabled, turnstileSiteKey }) => {
 
   return (
     <Card className='!rounded-2xl'>
-      <Modal
+      <ModalPro
         title='Security Check'
         visible={turnstileModalVisible}
         footer={null}
@@ -236,7 +227,7 @@ const CheckinCalendar = ({ t, status, turnstileEnabled, turnstileSiteKey }) => {
             }}
           />
         </div>
-      </Modal>
+      </ModalPro>
 
       {/* 卡片头部 */}
       <div className='flex items-center justify-between'>

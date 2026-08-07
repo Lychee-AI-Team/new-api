@@ -18,8 +18,9 @@ For commercial licensing, please contact support@quantumnous.com
 */
 
 import React from 'react';
-import { Modal, Button, Checkbox } from '@douyinfe/semi-ui';
+import { Button, Checkbox } from '@douyinfe/semi-ui'
 import { getChannelsColumns } from '../ChannelsColumnDefs';
+import ModalPro from '@/components/common/ui/ModalPro';
 
 const ColumnSelectorModal = ({
   showColumnSelector,
@@ -69,7 +70,7 @@ const ColumnSelectorModal = ({
   });
 
   return (
-    <Modal
+    <ModalPro
       title={t('列设置')}
       visible={showColumnSelector}
       onCancel={() => setShowColumnSelector(false)}
@@ -121,7 +122,7 @@ const ColumnSelectorModal = ({
           );
         })}
       </div>
-    </Modal>
+    </ModalPro>
   );
 };
 

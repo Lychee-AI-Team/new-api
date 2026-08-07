@@ -17,17 +17,7 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
 For commercial licensing, please contact support@quantumnous.com
 */
 import React, { useState, useEffect, useMemo } from 'react';
-import {
-  Modal,
-  Table,
-  Badge,
-  Typography,
-  Toast,
-  Empty,
-  Button,
-  Input,
-  Tag,
-} from '@douyinfe/semi-ui';
+import { Table, Badge, Typography, Toast, Empty, Button, Input, Tag } from '@douyinfe/semi-ui'
 import {
   IllustrationNoResult,
   IllustrationNoResultDark,
@@ -37,6 +27,7 @@ import { IconSearch } from '@douyinfe/semi-icons';
 import { API, timestamp2string } from '../../../helpers';
 import { isAdmin } from '../../../helpers/utils';
 import { useIsMobile } from '../../../hooks/common/useIsMobile';
+import ModalPro from '@/components/common/ui/ModalPro';
 const PAYMENT_METHOD_NAMES = {
   stripe: 'Stripe',
   alipay: 'Alipay',
@@ -127,7 +118,7 @@ const TopupHistoryModal = ({ visible, onCancel, t }) => {
   };
 
   const confirmAdminComplete = (tradeNo) => {
-    Modal.confirm({
+    ModalPro.confirm({
       title: t('确认补单'),
       content: t('是否将该订单标记为成功并为用户入账？'),
       onOk: () => handleAdminComplete(tradeNo),
@@ -153,7 +144,7 @@ const TopupHistoryModal = ({ visible, onCancel, t }) => {
   };
 
   const confirmRefund = (tradeNo) => {
-    Modal.confirm({
+    ModalPro.confirm({
       title: t('确认退款'),
       content: t('退款将从您的余额中扣除对应的额度，余额不足则无法退款。确认退款？'),
       onOk: () => handleRefund(tradeNo),
@@ -313,7 +304,7 @@ const TopupHistoryModal = ({ visible, onCancel, t }) => {
   }, [t, userIsAdmin]);
 
   return (
-    <Modal
+    <ModalPro
       title={t('充值账单')}
       visible={visible}
       onCancel={onCancel}
@@ -356,7 +347,7 @@ const TopupHistoryModal = ({ visible, onCancel, t }) => {
           />
         }
       />
-    </Modal>
+    </ModalPro>
   );
 };
 

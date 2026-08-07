@@ -19,11 +19,12 @@ For commercial licensing, please contact support@quantumnous.com
 
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Button, Modal } from '@douyinfe/semi-ui';
+import { Button } from '@douyinfe/semi-ui'
 import { useSecureVerification } from '../../../hooks/common/useSecureVerification';
 import { createApiCalls } from '../../../services/secureVerification';
 import SecureVerificationModal from '../modals/SecureVerificationModal';
 import ChannelKeyDisplay from '../ui/ChannelKeyDisplay';
+import ModalPro from '@/components/common/ui/ModalPro';
 
 /**
  * 渠道密钥查看组件使用示例
@@ -87,7 +88,7 @@ const ChannelKeyViewExample = ({ channelId }) => {
       />
 
       {/* 密钥显示模态框 */}
-      <Modal
+      <ModalPro
         title={t('渠道密钥信息')}
         visible={showKeyModal}
         onCancel={() => setShowKeyModal(false)}
@@ -105,7 +106,7 @@ const ChannelKeyViewExample = ({ channelId }) => {
           successText={t('密钥获取成功')}
           showWarning={true}
         />
-      </Modal>
+      </ModalPro>
     </>
   );
 };

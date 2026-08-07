@@ -49,7 +49,7 @@ const SIZES = {
 const SKELETON_STYLES = {
   cover: (primaryColor) => ({
     '--palette-primary-darkerChannel': primaryColor,
-    backgroundImage: `linear-gradient(0deg, rgba(var(--palette-primary-darkerChannel) / 80%), rgba(var(--palette-primary-darkerChannel) / 80%)), url('/cover-4.webp')`,
+    backgroundImage: `var(--pricing-vendor-cover-gradient), url('/cover-4.webp')`,
     backgroundSize: 'cover',
     backgroundPosition: 'center',
     backgroundRepeat: 'no-repeat',
@@ -153,7 +153,7 @@ const PricingVendorIntroSkeleton = memo(
                 </div>
               </div>
 
-              <div className='flex-shrink-0 w-16 h-16 rounded-2xl bg-white/90 shadow-md backdrop-blur-sm flex items-center justify-center'>
+              <div className='flex-shrink-0 w-16 h-16 rounded-2xl flex items-center justify-center' style={{ background: 'var(--pricing-avatar-bg)', boxShadow: 'var(--pricing-avatar-shadow)', backdropFilter: 'blur(4px)' }}>
                 {createSkeletonRect(
                   {
                     ...SKELETON_STYLES.avatar(isAllVendors),

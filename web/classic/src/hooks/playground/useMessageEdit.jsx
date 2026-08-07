@@ -18,7 +18,7 @@ For commercial licensing, please contact support@quantumnous.com
 */
 
 import { useCallback, useState, useRef } from 'react';
-import { Toast, Modal } from '@douyinfe/semi-ui';
+import { Toast } from '@douyinfe/semi-ui'
 import { useTranslation } from 'react-i18next';
 import {
   getTextContent,
@@ -26,6 +26,7 @@ import {
   createLoadingAssistantMessage,
 } from '../../helpers';
 import { MESSAGE_ROLES } from '../../constants/playground.constants';
+import ModalPro from '@/components/common/ui/ModalPro';
 
 export const useMessageEdit = (
   setMessage,
@@ -82,7 +83,7 @@ export const useMessageEdit = (
           prevMessages[messageIndex + 1].role === MESSAGE_ROLES.ASSISTANT;
 
         if (hasSubsequentAssistantReply) {
-          Modal.confirm({
+          ModalPro.confirm({
             title: t('消息已编辑'),
             content: t('检测到该消息后有AI回复，是否删除后续回复并重新生成？'),
             okText: t('重新生成'),

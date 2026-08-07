@@ -20,20 +20,14 @@ For commercial licensing, please contact support@quantumnous.com
 import React, { useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useIsMobile } from '../../../../hooks/common/useIsMobile';
-import {
-  Collapse,
-  Empty,
-  Input,
-  Modal,
-  Radio,
-  Typography,
-} from '@douyinfe/semi-ui';
+import { Collapse, Empty, Input, Radio, Typography } from '@douyinfe/semi-ui'
 import {
   IllustrationNoResult,
   IllustrationNoResultDark,
 } from '@douyinfe/semi-illustrations';
 import { IconSearch } from '@douyinfe/semi-icons';
 import { getModelCategories } from '../../../../helpers/render';
+import ModalPro from '@/components/common/ui/ModalPro';
 
 const SingleModelSelectModal = ({
   visible,
@@ -110,7 +104,7 @@ const SingleModelSelectModal = ({
   );
 
   return (
-    <Modal
+    <ModalPro
       header={
         <div className='flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 sm:gap-4 py-4'>
           <Typography.Title heading={5} className='m-0'>
@@ -188,7 +182,7 @@ const SingleModelSelectModal = ({
           </Radio.Group>
         )}
       </div>
-    </Modal>
+    </ModalPro>
   );
 };
 

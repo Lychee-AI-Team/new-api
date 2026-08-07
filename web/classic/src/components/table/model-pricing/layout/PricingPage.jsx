@@ -41,8 +41,9 @@ const PricingPage = () => {
 
   return (
     <div
+      className='pricing-page-wrapper'
       style={{
-        backgroundImage: 'url(/newapiBg.jpg)',
+        backgroundImage: 'var(--pricing-page-bg-image)',
         backgroundSize: 'cover',
         backgroundPosition: 'center',
         backgroundAttachment: 'fixed',

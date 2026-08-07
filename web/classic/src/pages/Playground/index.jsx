@@ -17,10 +17,10 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
 For commercial licensing, please contact support@quantumnous.com
 */
 
-import React, { useContext, useEffect, useCallback, useRef } from 'react';
+import React, { useContext, useEffect, useCallback, useRef, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { Layout, Toast, Modal } from '@douyinfe/semi-ui';
+import { Layout, Toast } from '@douyinfe/semi-ui'
 
 // Context
 import { UserContext } from '../../context/User';
@@ -60,6 +60,13 @@ import {
 import ChatArea from '../../components/playground/ChatArea';
 import FloatingButtons from '../../components/playground/FloatingButtons';
 import { PlaygroundProvider } from '../../contexts/PlaygroundContext';
+import { exportConfig, importConfig } from '../../components/playground/configStorage';
+import debugEyeIcon from '../../assets/figma-playground/1.svg';
+import headerIcon from '../../assets/figma-playground/27.svg';
+import sendIcon from '../../assets/figma-playground/26.svg';
+import exportIcon from '../../assets/figma-playground/28.svg';
+import importIcon from '../../assets/figma-playground/29.svg';
+import ModalPro from '@/components/common/ui/ModalPro';
 
 // 生成头像
 const generateAvatarDataUrl = (username) => {
@@ -457,70 +464,362 @@ const Playground = () => {
     imageEnabled: inputs.imageEnabled || false,
   };
 
+  // 底部输入栏状态
+  const [inputText, setInputText] = useState('');
+  const fileInputRef = useRef(null);
+  const isGenerating = message.some((m) => m.status === 'loading');
+
+  const handleSendInput = useCallback(() => {
+    const text = inputText.trim();
+    if (!text || isGenerating) return;
+    onMessageSend(text);
+    setInputText('');
+  }, [inputText, isGenerating, onMessageSend]);
+
+  const handleKeyDown = useCallback(
+    (e) => {
+      if (e.key === 'Enter' && !e.shiftKey) {
+        e.preventDefault();
+        handleSendInput();
+      }
+    },
+    [handleSendInput],
+  );
+
+  // 导出/导入配置（顶部操作栏）
+  const currentConfig = {
+    inputs,
+    parameterEnabled,
+    showDebugPanel,
+    customRequestMode,
+    customRequestBody,
+  };
+
+  const handleExport = useCallback(() => {
+    try {
+      localStorage.setItem('playground_config', JSON.stringify(currentConfig));
+      exportConfig(currentConfig, message);
+      Toast.success({ content: t('配置已导出到下载文件夹'), duration: 3 });
+    } catch (error) {
+      Toast.error({ content: t('导出配置失败: ') + error.message, duration: 3 });
+    }
+  }, [currentConfig, message, t]);
+
+  const handleImportClick = useCallback(() => {
+    fileInputRef.current?.click();
+  }, []);
+
+  const handleFileChange = useCallback(
+    async (event) => {
+      const file = event.target.files[0];
+      if (!file) return;
+      try {
+        const importedConfig = await importConfig(file);
+        ModalPro.confirm({
+          title: t('确认导入配置'),
+          content: t('导入的配置将覆盖当前设置，是否继续？'),
+          okText: t('确定导入'),
+          cancelText: t('取消'),
+          onOk: () => {
+            handleConfigImport(importedConfig);
+            Toast.success({ content: t('配置导入成功'), duration: 3 });
+          },
+        });
+      } catch (error) {
+        Toast.error({ content: t('导入配置失败: ') + error.message, duration: 3 });
+      } finally {
+        event.target.value = '';
+      }
+    },
+    [handleConfigImport, t],
+  );
+
+  // 粘贴图片
+  const handleInputPaste = useCallback(
+    (e) => {
+      const items = e.clipboardData?.items;
+      if (!items) return;
+      for (let i = 0; i < items.length; i++) {
+        if (items[i].type.indexOf('image') !== -1) {
+          e.preventDefault();
+          const file = items[i].getAsFile();
+          if (file) {
+            if (!inputs.imageEnabled) {
+              Toast.warning({ content: t('请先在设置中启用图片功能'), duration: 3 });
+              return;
+            }
+            const reader = new FileReader();
+            reader.onload = (ev) => handlePasteImage(ev.target.result);
+            reader.readAsDataURL(file);
+          }
+          break;
+        }
+      }
+    },
+    [inputs.imageEnabled, handlePasteImage, t],
+  );
+
   return (
     <PlaygroundProvider value={playgroundContextValue}>
       <div className='h-full'>
-        <Layout className='h-full bg-transparent flex flex-col md:flex-row'>
-          {(showSettings || !isMobile) && (
-            <Layout.Sider
-              className={`
-              bg-transparent border-r-0 flex-shrink-0 overflow-auto mt-[60px]
-              ${
-                isMobile
-                  ? 'fixed top-0 left-0 right-0 bottom-0 z-[1000] w-full h-auto bg-white shadow-lg'
-                  : 'relative z-[1] w-80 h-[calc(100vh-66px)]'
-              }
-            `}
-              width={isMobile ? '100%' : 320}
-            >
-              <OptimizedSettingsPanel
-                inputs={inputs}
-                parameterEnabled={parameterEnabled}
-                models={models}
-                groups={groups}
-                styleState={styleState}
-                showSettings={showSettings}
-                showDebugPanel={showDebugPanel}
-                customRequestMode={customRequestMode}
-                customRequestBody={customRequestBody}
-                onInputChange={handleInputChange}
-                onParameterToggle={handleParameterToggle}
-                onCloseSettings={() => setShowSettings(false)}
-                onConfigImport={handleConfigImport}
-                onConfigReset={handleConfigReset}
-                onCustomRequestModeChange={setCustomRequestMode}
-                onCustomRequestBodyChange={setCustomRequestBody}
-                previewPayload={previewPayload}
-                messages={message}
-              />
-            </Layout.Sider>
-          )}
-
+        <Layout className='h-full bg-transparent'>
           <Layout.Content className='relative flex-1 overflow-hidden'>
-            <div className='overflow-hidden flex flex-col lg:flex-row h-[calc(100vh-66px)] mt-[60px]'>
-              <div className='flex-1 flex flex-col'>
-                <ChatArea
-                  chatRef={chatRef}
-                  message={message}
-                  inputs={inputs}
-                  styleState={styleState}
-                  showDebugPanel={showDebugPanel}
-                  roleInfo={roleInfo}
-                  onMessageSend={onMessageSend}
-                  onMessageCopy={messageActions.handleMessageCopy}
-                  onMessageReset={messageActions.handleMessageReset}
-                  onMessageDelete={messageActions.handleMessageDelete}
-                  onStopGenerator={onStopGenerator}
-                  onClearMessages={handleClearMessages}
-                  onToggleDebugPanel={() => setShowDebugPanel(!showDebugPanel)}
-                  renderCustomChatContent={renderCustomChatContent}
-                  renderChatBoxAction={renderChatBoxAction}
-                />
+            <div className='flex flex-col lg:flex-row h-[calc(100vh-66px)] mt-[60px]'>
+              {/* 主区域 */}
+              <div className='flex-1 flex flex-col gap-3 min-w-0 min-h-0 p-7'>
+                {/* 顶部行：AI对话 + 模型名 ... 显示调试 + 导出 + 导入 */}
+                <div className='flex-shrink-0 flex items-center justify-between'>
+                  <div className='flex items-center gap-3'>
+                    <img
+                      src={headerIcon}
+                      alt=''
+                      style={{ width: 34, height: 34, flexShrink: 0 }}
+                    />
+                    <div>
+                      <div
+                        style={{
+                          color: 'var(--ps-text)',
+                          fontSize: '16px',
+                          fontFamily: 'Inter, sans-serif',
+                          fontWeight: 600,
+                        }}
+                      >
+                        {t('AI对话')}
+                      </div>
+                      <div
+                        style={{
+                          color: 'var(--ps-text-2)',
+                          fontSize: '13px',
+                          fontFamily: 'Inter, sans-serif',
+                          fontWeight: 400,
+                          marginTop: '2px',
+                        }}
+                      >
+                        {inputs.model || t('选择模型开始对话')}
+                      </div>
+                    </div>
+                  </div>
+                  <div className='flex items-center gap-3'>
+                    {/* 显示调试 */}
+                    <button
+                      type='button'
+                      onClick={() => setShowDebugPanel(!showDebugPanel)}
+                      style={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: '6px',
+                        border: 'none',
+                        background: 'transparent',
+                        cursor: 'pointer',
+                        padding: '4px',
+                      }}
+                    >
+                      <img src={debugEyeIcon} alt='' style={{ width: 14, height: 14 }} />
+                      <span
+                        style={{
+                          background:
+                            'linear-gradient(180deg, #635DE7 0%, #81CBFA 100%)',
+                          WebkitBackgroundClip: 'text',
+                          backgroundClip: 'text',
+                          color: 'transparent',
+                          fontSize: '16px',
+                          fontFamily: 'Inter, sans-serif',
+                          fontWeight: 600,
+                        }}
+                      >
+                        {showDebugPanel ? t('隐藏调试') : t('显示调试')}
+                      </span>
+                    </button>
+                    {/* 导出 */}
+                    <button
+                      type='button'
+                      onClick={handleExport}
+                      style={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        gap: '4px',
+                        width: '86px',
+                        height: '28px',
+                        borderRadius: '8px',
+                        background:
+                          'linear-gradient(180deg, #89BDF9 0%, #8164FF 100%)',
+                        border: 'none',
+                        color: 'white',
+                        fontSize: '12px',
+                        fontFamily: 'Inter, sans-serif',
+                        fontWeight: 600,
+                        cursor: 'pointer',
+                        flexShrink: 0,
+                      }}
+                    >
+                      <img src={exportIcon} alt='' style={{ width: 12, height: 12 }} />
+                      {t('导出')}
+                    </button>
+                    {/* 导入 */}
+                    <button
+                      type='button'
+                      onClick={handleImportClick}
+                      style={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        gap: '4px',
+                        width: '86px',
+                        height: '28px',
+                        borderRadius: '8px',
+                        background: 'var(--ps-btn-bg)',
+                        outline: '1px solid var(--ps-outline)',
+                        outlineOffset: '-1px',
+                        border: 'none',
+                        color: 'var(--ps-text)',
+                        fontSize: '12px',
+                        fontFamily: 'Inter, sans-serif',
+                        fontWeight: 600,
+                        cursor: 'pointer',
+                        flexShrink: 0,
+                      }}
+                    >
+                      <img src={importIcon} alt='' style={{ width: 12, height: 12 }} />
+                      {t('导入')}
+                    </button>
+                    <input
+                      ref={fileInputRef}
+                      type='file'
+                      accept='.json'
+                      onChange={handleFileChange}
+                      style={{ display: 'none' }}
+                    />
+                  </div>
+                </div>
+
+                {/* 聊天卡片（仅消息） */}
+                <div className='flex-1 min-h-0'>
+                  <ChatArea
+                    chatRef={chatRef}
+                    message={message}
+                    roleInfo={roleInfo}
+                    onMessageSend={onMessageSend}
+                    onMessageCopy={messageActions.handleMessageCopy}
+                    onMessageReset={messageActions.handleMessageReset}
+                    onMessageDelete={messageActions.handleMessageDelete}
+                    onStopGenerator={onStopGenerator}
+                    onClearMessages={handleClearMessages}
+                    renderCustomChatContent={renderCustomChatContent}
+                    renderChatBoxAction={renderChatBoxAction}
+                  />
+                </div>
+
+                {/* 参数面板（下）- 桌面端常驻 */}
+                {!isMobile && (
+                  <div className='flex-shrink-0 h-[300px]'>
+                    <OptimizedSettingsPanel
+                      inputs={inputs}
+                      parameterEnabled={parameterEnabled}
+                      models={models}
+                      groups={groups}
+                      styleState={styleState}
+                      showSettings={showSettings}
+                      showDebugPanel={showDebugPanel}
+                      customRequestMode={customRequestMode}
+                      customRequestBody={customRequestBody}
+                      onInputChange={handleInputChange}
+                      onParameterToggle={handleParameterToggle}
+                      onCloseSettings={() => setShowSettings(false)}
+                      onConfigImport={handleConfigImport}
+                      onConfigReset={handleConfigReset}
+                      onCustomRequestModeChange={setCustomRequestMode}
+                      onCustomRequestBodyChange={setCustomRequestBody}
+                      previewPayload={previewPayload}
+                      messages={message}
+                    />
+                  </div>
+                )}
+
+                {/* 底部输入栏 */}
+                <div
+                  className='flex-shrink-0 flex items-center gap-3 px-4'
+                  style={{
+                    height: '54px',
+                    background: 'var(--ps-bg)',
+                    boxShadow: '0px 4px 8px rgba(106,58,199,0.08)',
+                    borderRadius: '10px',
+                    outline: '1px solid var(--ps-outline)',
+                    outlineOffset: '-1px',
+                  }}
+                  onPaste={handleInputPaste}
+                >
+                  <textarea
+                    value={inputText}
+                    onChange={(e) => setInputText(e.target.value)}
+                    onKeyDown={handleKeyDown}
+                    placeholder={t('请输入您的问题...')}
+                    rows={1}
+                    style={{
+                      flex: '1 1 auto',
+                      border: 'none',
+                      outline: 'none',
+                      background: 'transparent',
+                      resize: 'none',
+                      color: 'var(--ps-text)',
+                      fontSize: '14px',
+                      fontFamily: 'Inter, sans-serif',
+                      height: '38px',
+                      lineHeight: '38px',
+                    }}
+                  />
+                  {isGenerating ? (
+                    <button
+                      type='button'
+                      onClick={onStopGenerator}
+                      style={{
+                        width: '32px',
+                        height: '32px',
+                        borderRadius: '50%',
+                        background:
+                          'linear-gradient(180deg, #89BDF9 0%, #8164FF 100%)',
+                        border: 'none',
+                        color: 'white',
+                        cursor: 'pointer',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        flexShrink: 0,
+                        fontSize: '12px',
+                      }}
+                    >
+                      ■
+                    </button>
+                  ) : (
+                    <button
+                      type='button'
+                      onClick={handleSendInput}
+                      disabled={!inputText.trim()}
+                      style={{
+                        width: '32px',
+                        height: '32px',
+                        borderRadius: '50%',
+                        background: inputText.trim()
+                          ? 'linear-gradient(180deg, #89BDF9 0%, #8164FF 100%)'
+                          : 'rgba(106,58,199,0.15)',
+                        border: 'none',
+                        cursor: inputText.trim() ? 'pointer' : 'default',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        flexShrink: 0,
+                        opacity: inputText.trim() ? 1 : 0.5,
+                      }}
+                    >
+                      <img src={sendIcon} alt='' style={{ width: 20, height: 20 }} />
+                    </button>
+                  )}
+                </div>
               </div>
 
-              {/* 调试面板 - 桌面端 */}
+              {/* 调试面板 - 桌面端右侧 */}
               {showDebugPanel && !isMobile && (
-                <div className='w-96 flex-shrink-0 h-full'>
+                <div className='w-96 flex-shrink-0 h-full pt-3 pr-3'>
                   <OptimizedDebugPanel
                     debugData={debugData}
                     activeDebugTab={activeDebugTab}
@@ -531,6 +830,32 @@ const Playground = () => {
                 </div>
               )}
             </div>
+
+            {/* 参数面板 - 移动端覆盖层 */}
+            {isMobile && showSettings && (
+              <div className='fixed top-0 left-0 right-0 bottom-0 z-[1000] bg-white overflow-auto shadow-lg'>
+                <OptimizedSettingsPanel
+                  inputs={inputs}
+                  parameterEnabled={parameterEnabled}
+                  models={models}
+                  groups={groups}
+                  styleState={styleState}
+                  showSettings={showSettings}
+                  showDebugPanel={showDebugPanel}
+                  customRequestMode={customRequestMode}
+                  customRequestBody={customRequestBody}
+                  onInputChange={handleInputChange}
+                  onParameterToggle={handleParameterToggle}
+                  onCloseSettings={() => setShowSettings(false)}
+                  onConfigImport={handleConfigImport}
+                  onConfigReset={handleConfigReset}
+                  onCustomRequestModeChange={setCustomRequestMode}
+                  onCustomRequestBodyChange={setCustomRequestBody}
+                  previewPayload={previewPayload}
+                  messages={message}
+                />
+              </div>
+            )}
 
             {/* 调试面板 - 移动端覆盖层 */}
             {showDebugPanel && isMobile && (

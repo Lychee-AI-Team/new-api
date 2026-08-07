@@ -50,7 +50,7 @@ const PricingHotRecommend = ({
       {/* 热门推荐卡片 */}
       <div
         style={{
-          background: 'linear-gradient(90deg, #8b72fc, #E5A2FD 100%)',
+          background: 'var(--pricing-hot-card-gradient)',
           borderRadius: '10px',
           paddingLeft: '32px',
           height: '93px',
@@ -78,8 +78,8 @@ const PricingHotRecommend = ({
             padding: '0 19px',
             height: '41px',
             borderRadius: '10px',
-            background: isActive ? '#6639BF' : '#ede3ff',
-            color: isActive ? '#fff' : 'rgba(28,31,35,0.8)',
+            background: isActive ? '#6639BF' : 'var(--pricing-hot-btn-inactive-bg)',
+            color: isActive ? '#fff' : 'var(--pricing-hot-btn-inactive-color)',
             cursor: 'pointer',
             fontSize: '14px',
             fontWeight: 600,
@@ -88,14 +88,14 @@ const PricingHotRecommend = ({
           }}
           onMouseEnter={(e) => {
             if (!isActive) {
-              e.currentTarget.style.background = '#6639BF';
-              e.currentTarget.style.color = '#fff';
+              e.currentTarget.style.background = 'var(--pricing-hot-btn-hover-bg)';
+              e.currentTarget.style.color = 'var(--pricing-hot-btn-hover-color)';
             }
           }}
           onMouseLeave={(e) => {
             if (!isActive) {
-              e.currentTarget.style.background = '#ede3ff';
-              e.currentTarget.style.color = 'rgba(28,31,35,0.8)';
+              e.currentTarget.style.background = 'var(--pricing-hot-btn-inactive-bg)';
+              e.currentTarget.style.color = 'var(--pricing-hot-btn-inactive-color)';
             }
           }}
         >

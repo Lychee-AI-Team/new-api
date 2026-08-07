@@ -17,20 +17,7 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
 For commercial licensing, please contact support@quantumnous.com
 */
 import { API, showError, showSuccess, showWarning } from '../../../../helpers';
-import {
-  Banner,
-  Button,
-  Card,
-  Checkbox,
-  Divider,
-  Input,
-  Modal,
-  Tag,
-  Typography,
-  Steps,
-  Space,
-  Badge,
-} from '@douyinfe/semi-ui';
+import { Banner, Button, Card, Checkbox, Divider, Input, Typography, Steps, Space, Badge } from '@douyinfe/semi-ui'
 import {
   IconShield,
   IconAlertTriangle,
@@ -40,10 +27,18 @@ import {
 import React, { useEffect, useState } from 'react';
 
 import { QRCodeSVG } from 'qrcode.react';
+import shieldIcon from '../../../../assets/personal/security/13.svg';
+import circleBg from '../../../../assets/personal/security/8.svg';
+import chevronRight from '../../../../assets/personal/security/4.svg';
+import darkCircleBg from '../../../../assets/personal/security/dark-circle-1.svg';
+import darkChevronRight from '../../../../assets/personal/security/dark-chevron-right.svg';
+import ModalPro from '@/components/common/ui/ModalPro';
 
 const { Text, Paragraph } = Typography;
 
-const TwoFASetting = ({ t }) => {
+const TwoFASetting = ({ t, isDark = false }) => {
+  const _circleBg = isDark ? darkCircleBg : circleBg;
+  const _chevronRight = isDark ? darkChevronRight : chevronRight;
   const [loading, setLoading] = useState(false);
   const [status, setStatus] = useState({
     enabled: false,
@@ -366,94 +361,159 @@ const TwoFASetting = ({ t }) => {
 
   return (
     <>
-      <Card className='!rounded-xl w-full'>
-        <div className='flex flex-col sm:flex-row items-start sm:justify-between gap-4'>
-          <div className='flex items-start w-full sm:w-auto'>
-            <div className='w-12 h-12 rounded-full bg-slate-100 dark:bg-slate-700 flex items-center justify-center mr-4 flex-shrink-0'>
-              <IconShield
-                size='large'
-                className='text-slate-600 dark:text-slate-300'
-              />
+      {/* 两步验证设置 - 行内容 */}
+      <div className='py-6 px-4 md:py-[36px] md:pl-[66px] md:pr-[57px]'>
+        <div className='flex flex-col md:flex-row md:items-center md:justify-between gap-3 md:gap-4'>
+          {/* 左侧：图标 + 标题 + 描述 */}
+          <div className='flex items-center gap-3 flex-1 min-w-0 md:ml-[20px]'>
+            {/* 图标 */}
+            <div className='relative flex-shrink-0' style={{ width: '48px', height: '48px' }}>
+              <img src={_circleBg} alt='' style={{ width: '48px', height: '48px' }} />
+              <div className='absolute inset-0 flex items-center justify-center'>
+                <img src={shieldIcon} alt='' style={{ width: '32px', height: '32px' }} />
+              </div>
             </div>
-            <div className='flex-1'>
-              <div className='flex items-center gap-2 mb-1'>
-                <Typography.Title heading={6} className='mb-0'>
+
+            {/* 标题 + 描述 */}
+            <div className='flex-1 min-w-0'>
+              <div className='flex items-center gap-2 flex-wrap'>
+                <span
+                  style={{
+                    color: 'var(--ps-text)',
+                    fontSize: '16px',
+                    fontFamily: 'Inter, sans-serif',
+                    fontWeight: 600,
+                  }}
+                  className='md:!text-[20px]'
+                >
                   {t('两步验证设置')}
-                </Typography.Title>
-                {status.enabled ? (
-                  <Tag color='green' shape='circle' size='small'>
-                    {t('已启用')}
-                  </Tag>
-                ) : (
-                  <Tag color='red' shape='circle' size='small'>
-                    {t('未启用')}
-                  </Tag>
+                </span>
+                {status.enabled && (
+                  <span
+                    className='inline-flex items-center justify-center'
+                    style={{
+                      height: '26px',
+                      padding: '0 10px',
+                      borderRadius: '8px',
+                      background: '#EFFAF4',
+                      color: '#30C26C',
+                      fontSize: '14px',
+                      fontFamily: 'Inter, sans-serif',
+                      fontWeight: 500,
+                      whiteSpace: 'nowrap',
+                    }}
+                  >
+                    {t('已开启')}
+                  </span>
                 )}
                 {status.locked && (
-                  <Tag color='orange' shape='circle' size='small'>
+                  <span
+                    className='inline-flex items-center justify-center'
+                    style={{
+                      height: '26px',
+                      padding: '0 10px',
+                      borderRadius: '8px',
+                      background: '#FFF7E6',
+                      color: '#FA8C16',
+                      fontSize: '14px',
+                      fontFamily: 'Inter, sans-serif',
+                      fontWeight: 500,
+                      whiteSpace: 'nowrap',
+                    }}
+                  >
                     {t('账户已锁定')}
-                  </Tag>
+                  </span>
                 )}
               </div>
-              <Typography.Text type='tertiary' className='text-sm'>
+              <div
+                className='mt-1 md:mt-2'
+                style={{
+                  color: 'var(--ps-text-2)',
+                  fontSize: '14px',
+                  fontFamily: 'Inter, sans-serif',
+                  fontWeight: 500,
+                  maxWidth: '803px',
+                }}
+                className='md:!text-[16px]'
+              >
                 {t(
                   '两步验证（2FA）为您的账户提供额外的安全保护。启用后，登录时需要输入密码和验证器应用生成的验证码。',
                 )}
-              </Typography.Text>
-              {status.enabled && (
-                <div className='mt-2'>
-                  <Text size='small' type='secondary'>
-                    {t('剩余备用码：')}
-                    {status.backup_codes_remaining || 0}
-                    {t('个')}
-                  </Text>
-                </div>
-              )}
+              </div>
             </div>
           </div>
-          <div className='flex flex-col space-y-2 w-full sm:w-auto'>
+
+          {/* 右侧：操作按钮 */}
+          <div className='flex-shrink-0 md:ml-auto'>
             {!status.enabled ? (
-              <Button
-                type='primary'
-                theme='solid'
-                size='default'
+              <button
                 onClick={handleSetup2FA}
-                loading={loading}
-                className='!rounded-lg !bg-slate-600 hover:!bg-slate-700'
-                icon={<IconShield />}
+                disabled={loading}
+                className='flex items-center justify-center gap-1 transition-all duration-200 hover:opacity-80 disabled:opacity-50 w-full md:!w-[166px]'
+                style={{
+                  height: '50px',
+                  background: 'var(--ps-btn-bg)',
+                  borderRadius: '10px',
+                  outline: '1px solid var(--ps-outline)',
+                  outlineOffset: '-1px',
+                  color: 'var(--ps-btn-text)',
+                  fontSize: '16px',
+                  fontFamily: 'Inter, sans-serif',
+                  fontWeight: 400,
+                  cursor: loading ? 'not-allowed' : 'pointer',
+                }}
               >
-                {t('启用验证')}
-              </Button>
+                <span>{t('启用验证')}</span>
+                <img src={_chevronRight} alt='' style={{ width: '16px', height: '16px' }} />
+              </button>
             ) : (
-              <div className='flex flex-col space-y-2'>
-                <Button
-                  type='danger'
-                  theme='solid'
-                  size='default'
+              <div className='flex md:flex-col gap-2'>
+                <button
                   onClick={() => setDisableModalVisible(true)}
-                  className='!rounded-lg !bg-slate-500 hover:!bg-slate-600'
-                  icon={<IconAlertTriangle />}
+                  className='flex items-center justify-center gap-1 transition-all duration-200 hover:opacity-80 flex-1 md:flex-none md:!w-[166px]'
+                  style={{
+                    height: '50px',
+                    background: 'var(--ps-btn-bg)',
+                    borderRadius: '10px',
+                    outline: '1px solid var(--ps-outline)',
+                    outlineOffset: '-1px',
+                    color: 'var(--ps-btn-text)',
+                    fontSize: '16px',
+                    fontFamily: 'Inter, sans-serif',
+                    fontWeight: 400,
+                    cursor: 'pointer',
+                  }}
                 >
-                  {t('禁用两步验证')}
-                </Button>
-                <Button
-                  type='primary'
-                  theme='solid'
-                  size='default'
+                  <span>{t('禁用验证')}</span>
+                  <img src={_chevronRight} alt='' style={{ width: '16px', height: '16px' }} />
+                </button>
+                <button
                   onClick={() => setBackupModalVisible(true)}
-                  className='!rounded-lg'
-                  icon={<IconRefresh />}
+                  className='flex items-center justify-center gap-1 transition-all duration-200 hover:opacity-80 flex-1 md:flex-none md:!w-[166px]'
+                  style={{
+                    height: '50px',
+                    background: 'var(--ps-btn-bg)',
+                    borderRadius: '10px',
+                    outline: '1px solid var(--ps-outline)',
+                    outlineOffset: '-1px',
+                    color: 'var(--ps-btn-text)',
+                    fontSize: '16px',
+                    fontFamily: 'Inter, sans-serif',
+                    fontWeight: 400,
+                    cursor: 'pointer',
+                  }}
                 >
-                  {t('重新生成备用码')}
-                </Button>
+                  <span>{t('重新生成备用码')}</span>
+                  <img src={_chevronRight} alt='' style={{ width: '16px', height: '16px' }} />
+                </button>
               </div>
             )}
           </div>
         </div>
-      </Card>
+      </div>
 
       {/* 2FA设置模态框 */}
-      <Modal
+      <ModalPro
         title={
           <div className='flex items-center'>
             <IconShield className='mr-2 text-slate-600' />
@@ -541,10 +601,10 @@ const TwoFASetting = ({ t }) => {
             </div>
           </div>
         )}
-      </Modal>
+      </ModalPro>
 
       {/* 禁用2FA模态框 */}
-      <Modal
+      <ModalPro
         title={
           <div className='flex items-center'>
             <IconAlertTriangle className='mr-2 text-red-500' />
@@ -635,10 +695,10 @@ const TwoFASetting = ({ t }) => {
             </div>
           </div>
         </div>
-      </Modal>
+      </ModalPro>
 
       {/* 重新生成备用码模态框 */}
-      <Modal
+      <ModalPro
         title={
           <div className='flex items-center'>
             <IconRefresh className='mr-2 text-slate-600' />
@@ -715,7 +775,7 @@ const TwoFASetting = ({ t }) => {
             </>
           )}
         </div>
-      </Modal>
+      </ModalPro>
     </>
   );
 };

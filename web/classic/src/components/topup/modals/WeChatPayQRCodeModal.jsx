@@ -1,9 +1,10 @@
 import React, { useEffect, useState, useRef } from 'react';
-import { Modal, Typography, Button, Space } from '@douyinfe/semi-ui';
+import { Typography, Button, Space } from '@douyinfe/semi-ui'
 import { QRCodeSVG } from 'qrcode.react';
 import { API, showError, showSuccess } from '../../../helpers';
 import { useTranslation } from 'react-i18next';
 import { CheckCircle, Clock, XCircle } from 'lucide-react';
+import ModalPro from '@/components/common/ui/ModalPro';
 
 const { Text } = Typography;
 
@@ -160,7 +161,7 @@ const WeChatPayQRCodeModal = ({
   };
 
   return (
-    <Modal
+    <ModalPro
       title={t('微信支付')}
       visible={visible}
       onCancel={handleClose}
@@ -186,7 +187,7 @@ const WeChatPayQRCodeModal = ({
       maskClosable={status === 'success' || status === 'expired'}
     >
       {renderContent()}
-    </Modal>
+    </ModalPro>
   );
 };
 
