@@ -66,6 +66,8 @@ const ColumnSelectorModal = ({
             {t('取 消')}
           </Button>
           <Button
+            theme='solid'
+            type='primary'
             className='column-selector-btn-primary'
             onClick={() => setShowColumnSelector(false)}
           >

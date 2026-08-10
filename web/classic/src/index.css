@@ -2840,6 +2840,10 @@ html.dark .modal-pro-bg .semi-modal-content {
   font-weight: 600;
   color: #3C3C43;
 }
+/* 必填字段 * 号颜色 */
+.token-edit-modal-pro .semi-form-field-label-required .semi-form-field-label-text::after {
+  color: #F93920 !important;
+}
 .token-edit-modal-pro .token-quota-toggle {
   color: var(--semi-color-text-2);
 }
@@ -3049,6 +3053,42 @@ html.dark .column-selector-btn-secondary {
   background: linear-gradient(180deg, rgba(60, 54, 136, 0.50) 0%, rgba(22.23, 42.81, 87.22, 0.40) 100%) !important;
   border: 1px solid #594699 !important;
   color: #FCFCFC !important;
+}
+
+/* ==================== ModalPro footer 按钮统一样式 ==================== */
+/* 适用于所有 ModalPro 弹窗底部按钮，自动识别主/次按钮 */
+
+/* 次按钮（取消/重置/关闭等）：非 primary/danger/warning/borderless/outline 的按钮 */
+.modal-pro-bg .semi-modal-footer .semi-button:not(.semi-button-primary):not(.semi-button-borderless):not(.semi-button-outline):not(.semi-button-danger):not(.semi-button-warning),
+/* light primary 按钮也用次按钮样式（如 theme='light' type='primary' 的取消按钮） */
+.modal-pro-bg .semi-modal-footer .semi-button-primary.semi-button-light {
+  background: #F7F4FE !important;
+  border: 1px solid #E2DAFD !important;
+  border-radius: 8px !important;
+  color: #635DE7 !important;
+  font-weight: 500;
+}
+
+/* 主按钮（确认/提交等）：solid primary 按钮用渐变主按钮样式 */
+.modal-pro-bg .semi-modal-footer .semi-button-primary:not(.semi-button-light):not(.semi-button-borderless):not(.semi-button-outline) {
+  background: linear-gradient(180deg, #89BDF9 0%, #8164FF 100%) !important;
+  border: none !important;
+  border-radius: 8px !important;
+  color: #fff !important;
+  font-weight: 500;
+}
+
+/* 深色模式 */
+html.dark .modal-pro-bg .semi-modal-footer .semi-button:not(.semi-button-primary):not(.semi-button-borderless):not(.semi-button-outline):not(.semi-button-danger):not(.semi-button-warning),
+html.dark .modal-pro-bg .semi-modal-footer .semi-button-primary.semi-button-light {
+  background: linear-gradient(180deg, rgba(60, 54, 136, 0.50) 0%, rgba(22.23, 42.81, 87.22, 0.40) 100%) !important;
+  border: 1px solid #594699 !important;
+  color: #FCFCFC !important;
+}
+/* 深色模式主按钮渐变不变 */
+html.dark .modal-pro-bg .semi-modal-footer .semi-button-primary:not(.semi-button-light):not(.semi-button-borderless):not(.semi-button-outline) {
+  background: linear-gradient(180deg, #89BDF9 0%, #8164FF 100%) !important;
+  color: #fff !important;
 }
 
 /* ==================== 全局 Checkbox 选中/半选统一样式 ==================== */

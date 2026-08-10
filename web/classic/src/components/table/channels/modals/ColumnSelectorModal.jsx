@@ -75,13 +75,26 @@ const ColumnSelectorModal = ({
       visible={showColumnSelector}
       onCancel={() => setShowColumnSelector(false)}
       footer={
-        <div className='flex justify-end'>
-          <Button onClick={() => initDefaultColumns()}>{t('重置')}</Button>
-          <Button onClick={() => setShowColumnSelector(false)}>
-            {t('取消')}
+        <div className='flex justify-end gap-3'>
+          <Button
+            className='column-selector-btn-secondary'
+            onClick={() => initDefaultColumns()}
+          >
+            {t('重 置')}
           </Button>
-          <Button onClick={() => setShowColumnSelector(false)}>
-            {t('确定')}
+          <Button
+            className='column-selector-btn-secondary'
+            onClick={() => setShowColumnSelector(false)}
+          >
+            {t('取 消')}
+          </Button>
+          <Button
+            theme='solid'
+            type='primary'
+            className='column-selector-btn-primary'
+            onClick={() => setShowColumnSelector(false)}
+          >
+            {t('确 认')}
           </Button>
         </div>
       }

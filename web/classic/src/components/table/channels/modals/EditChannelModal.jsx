@@ -2164,6 +2164,7 @@ const EditChannelModal = (props) => {
           <div className='flex justify-end items-center gap-2'>
             <Button
               theme='solid'
+              type='primary'
               onClick={() => formApiRef.current?.submitForm()}
               icon={<IconSave />}
             >

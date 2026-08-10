@@ -351,7 +351,6 @@ const EditTokenModal = (props) => {
                       label={
                         <span className='token-field-label'>
                           {t('名称')}
-                          <span style={{ color: '#F93920' }}>*</span>
                         </span>
                       }
                       placeholder={t('请输入名称')}
@@ -367,7 +366,6 @@ const EditTokenModal = (props) => {
                           label={
                             <span className='token-field-label'>
                               {t('过期时间')}
-                              <span style={{ color: '#F93920' }}>*</span>
                             </span>
                           }
                           type='dateTime'
@@ -505,7 +503,6 @@ const EditTokenModal = (props) => {
                         label={
                           <span className='token-field-label'>
                             {t('新建数量')}
-                            <span style={{ color: '#F93920' }}>*</span>
                           </span>
                         }
                         min={1}
@@ -571,7 +568,6 @@ const EditTokenModal = (props) => {
                           label={
                             <span className='token-field-label'>
                               {t('额度')}
-                              <span style={{ color: '#F93920' }}>*</span>
                             </span>
                           }
                           placeholder={t('输入额度')}
