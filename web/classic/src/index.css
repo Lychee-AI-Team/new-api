@@ -2087,6 +2087,7 @@ html.dark {
   --header-border: #E2DAFD;
   --header-nav-text: #17171C;
   --header-nav-hover-bg: rgba(255, 255, 255, 0.4);
+  --header-nav-active-bg: #D3DFFF;
   --header-btn-bg: rgba(249, 252, 255, 0.30);
   --header-btn-hover-bg: rgba(255, 255, 255, 0.5);
   --header-system-name: #1C1F23;
@@ -2138,6 +2139,7 @@ html.dark {
   --header-border: rgba(176, 210, 255, 0.08);
   --header-nav-text: #FCFCFC;
   --header-nav-hover-bg: rgba(255, 255, 255, 0.1);
+  --header-nav-active-bg: rgba(129, 100, 255, 0.15);
   --header-btn-bg: rgba(249, 252, 255, 0.30);
   --header-btn-hover-bg: rgba(255, 255, 255, 0.15);
   --header-system-name: #FCFCFC;
@@ -2211,8 +2213,28 @@ html.dark .semi-table-tbody > .semi-table-row:hover .semi-table-cell-fixed-right
 }
 
 /* ==================== 顶部导航栏交互样式 ==================== */
+.header-nav-link {
+  position: relative;
+}
+
 .header-nav-link:hover {
   background: var(--header-nav-hover-bg);
+}
+
+.header-nav-link.active {
+  background: var(--header-nav-active-bg);
+}
+
+.header-nav-link.active::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 12px;
+  right: 12px;
+  height: 2px;
+  border-radius: 1px;
+  background: var(--btn-gradient-primary);
+  pointer-events: none;
 }
 
 .header-circle-btn:hover {

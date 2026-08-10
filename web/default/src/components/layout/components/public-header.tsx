@@ -143,13 +143,16 @@ export function PublicHeader(props: PublicHeaderProps) {
                     key={i}
                     to={link.href}
                     className={cn(
-                      'rounded-lg px-3 py-1.5 text-[13px] font-medium transition-colors duration-200',
+                      'relative rounded-lg px-3 py-1.5 text-[13px] font-medium transition-colors duration-200',
                       isActive
-                        ? 'text-foreground'
+                        ? 'bg-[#D3DFFF] text-foreground dark:bg-[#8164FF]/15'
                         : 'text-muted-foreground hover:text-foreground'
                     )}
                   >
                     {t(link.title)}
+                    {isActive && (
+                      <span className='pointer-events-none absolute -bottom-px inset-x-3 h-0.5 rounded-full bg-linear-to-b from-[#89BDF9] to-[#8164FF]' />
+                    )}
                   </Link>
                 )
               })}

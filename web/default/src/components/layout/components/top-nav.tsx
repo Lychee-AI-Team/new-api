@@ -1,5 +1,5 @@
 import { useMemo } from 'react'
-import { Link } from '@tanstack/react-router'
+import { Link, useRouterState } from '@tanstack/react-router'
 import { Menu } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { Button } from '@/components/ui/button'
@@ -20,16 +20,18 @@ type TopNavProps = React.HTMLAttributes<HTMLElement> & {
  * 在大屏幕显示水平导航，在小屏幕显示下拉菜单
  */
 export function TopNav({ className, links, ...props }: TopNavProps) {
+  const pathname = useRouterState({ select: (s) => s.location.pathname })
+
   // 规范化链接，确保所有可选属性都有默认值
   const normalizedLinks = useMemo(
     () =>
       links.map((link) => ({
-        isActive: false,
+        isActive: pathname === link.href,
         disabled: false,
         external: false,
         ...link,
       })),
-    [links]
+    [links, pathname]
   )
 
   return (
@@ -86,7 +88,7 @@ export function TopNav({ className, links, ...props }: TopNavProps) {
               href={href}
               target='_blank'
               rel='noopener noreferrer'
-              className={`hover:text-primary text-sm font-medium transition-colors ${isActive ? '' : 'text-muted-foreground'}`}
+              className='rounded-lg px-3 py-1.5 text-sm font-normal text-muted-foreground transition-colors duration-200 hover:text-foreground'
             >
               {title}
             </a>
@@ -95,9 +97,17 @@ export function TopNav({ className, links, ...props }: TopNavProps) {
               key={`${title}-${href}`}
               to={href}
               disabled={disabled}
-              className={`hover:text-primary text-sm font-medium transition-colors ${isActive ? '' : 'text-muted-foreground'}`}
+              className={cn(
+                'relative rounded-lg px-3 py-1.5 text-sm font-normal transition-colors duration-200',
+                isActive
+                  ? 'bg-[#D3DFFF] text-foreground dark:bg-[#8164FF]/15'
+                  : 'text-muted-foreground hover:text-foreground'
+              )}
             >
               {title}
+              {isActive && (
+                <span className='pointer-events-none absolute -bottom-px inset-x-3 h-0.5 rounded-full bg-linear-to-b from-[#89BDF9] to-[#8164FF]' />
+              )}
             </Link>
           )
         )}
