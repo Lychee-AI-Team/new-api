@@ -116,22 +116,31 @@ const ActionButton = ({ children, onClick, disabled, loading, chevronIcon = chev
   <button
     onClick={onClick}
     disabled={disabled || loading}
-    className='flex items-center justify-center gap-1 transition-all duration-200 hover:opacity-80 disabled:opacity-50 w-full md:!w-[166px]'
+    className='flex w-full md:!w-[166px] transition-all duration-200 hover:opacity-80 disabled:opacity-50'
     style={{
       height: '50px',
       background: 'var(--ps-btn-bg)',
       borderRadius: '10px',
-      outline: '1px solid var(--ps-outline)',
-      outlineOffset: '-1px',
+      border: '1px solid var(--ps-outline)',
       color: 'var(--ps-btn-text)',
       fontSize: '16px',
       fontFamily: 'Inter, sans-serif',
       fontWeight: 400,
+      lineHeight: '20px',
       cursor: disabled || loading ? 'not-allowed' : 'pointer',
     }}
   >
-    <span>{children}</span>
-    <img src={chevronIcon} alt='' style={{ width: '16px', height: '16px' }} />
+    {/* 左侧：文字在剩余空间内水平居中 */}
+    <span className='flex flex-1 min-w-0 items-center justify-center'>
+      {children}
+    </span>
+    {/* 右侧：图标固定贴右，32px 区域内 16×16 居中 */}
+    <span
+      className='flex flex-shrink-0 items-center justify-center'
+      style={{ width: '32px' }}
+    >
+      <img src={chevronIcon} alt='' style={{ width: '16px', height: '16px' }} />
+    </span>
   </button>
 );
 

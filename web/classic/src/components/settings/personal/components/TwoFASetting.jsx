@@ -36,6 +36,39 @@ import ModalPro from '@/components/common/ui/ModalPro';
 
 const { Text, Paragraph } = Typography;
 
+// 可复用的操作按钮（与 SecurityPage 的 ActionButton 样式一致）
+const ActionButton = ({ children, onClick, disabled, loading, chevronIcon, className = 'w-full md:!w-[166px]' }) => (
+  <button
+    onClick={onClick}
+    disabled={disabled || loading}
+    className={`flex transition-all duration-200 hover:opacity-80 disabled:opacity-50 ${className}`}
+    style={{
+      height: '50px',
+      background: 'var(--ps-btn-bg)',
+      borderRadius: '10px',
+      border: '1px solid var(--ps-outline)',
+      color: 'var(--ps-btn-text)',
+      fontSize: '16px',
+      fontFamily: 'Inter, sans-serif',
+      fontWeight: 400,
+      lineHeight: '20px',
+      cursor: disabled || loading ? 'not-allowed' : 'pointer',
+    }}
+  >
+    {/* 左侧：文字在剩余空间内水平居中 */}
+    <span className='flex flex-1 min-w-0 items-center justify-center'>
+      {children}
+    </span>
+    {/* 右侧：图标固定贴右，32px 区域内 16×16 居中 */}
+    <span
+      className='flex flex-shrink-0 items-center justify-center'
+      style={{ width: '32px' }}
+    >
+      <img src={chevronIcon} alt='' style={{ width: '16px', height: '16px' }} />
+    </span>
+  </button>
+);
+
 const TwoFASetting = ({ t, isDark = false }) => {
   const _circleBg = isDark ? darkCircleBg : circleBg;
   const _chevronRight = isDark ? darkChevronRight : chevronRight;
@@ -426,7 +459,7 @@ const TwoFASetting = ({ t, isDark = false }) => {
                 )}
               </div>
               <div
-                className='mt-1 md:mt-2'
+                className='mt-1 md:mt-2 md:!text-[16px]'
                 style={{
                   color: 'var(--ps-text-2)',
                   fontSize: '14px',
@@ -434,7 +467,6 @@ const TwoFASetting = ({ t, isDark = false }) => {
                   fontWeight: 500,
                   maxWidth: '803px',
                 }}
-                className='md:!text-[16px]'
               >
                 {t(
                   '两步验证（2FA）为您的账户提供额外的安全保护。启用后，登录时需要输入密码和验证器应用生成的验证码。',
@@ -446,66 +478,29 @@ const TwoFASetting = ({ t, isDark = false }) => {
           {/* 右侧：操作按钮 */}
           <div className='flex-shrink-0 md:ml-auto'>
             {!status.enabled ? (
-              <button
+              <ActionButton
                 onClick={handleSetup2FA}
-                disabled={loading}
-                className='flex items-center justify-center gap-1 transition-all duration-200 hover:opacity-80 disabled:opacity-50 w-full md:!w-[166px]'
-                style={{
-                  height: '50px',
-                  background: 'var(--ps-btn-bg)',
-                  borderRadius: '10px',
-                  outline: '1px solid var(--ps-outline)',
-                  outlineOffset: '-1px',
-                  color: 'var(--ps-btn-text)',
-                  fontSize: '16px',
-                  fontFamily: 'Inter, sans-serif',
-                  fontWeight: 400,
-                  cursor: loading ? 'not-allowed' : 'pointer',
-                }}
+                loading={loading}
+                chevronIcon={_chevronRight}
               >
-                <span>{t('启用验证')}</span>
-                <img src={_chevronRight} alt='' style={{ width: '16px', height: '16px' }} />
-              </button>
+                {t('启用验证')}
+              </ActionButton>
             ) : (
               <div className='flex md:flex-col gap-2'>
-                <button
+                <ActionButton
                   onClick={() => setDisableModalVisible(true)}
-                  className='flex items-center justify-center gap-1 transition-all duration-200 hover:opacity-80 flex-1 md:flex-none md:!w-[166px]'
-                  style={{
-                    height: '50px',
-                    background: 'var(--ps-btn-bg)',
-                    borderRadius: '10px',
-                    outline: '1px solid var(--ps-outline)',
-                    outlineOffset: '-1px',
-                    color: 'var(--ps-btn-text)',
-                    fontSize: '16px',
-                    fontFamily: 'Inter, sans-serif',
-                    fontWeight: 400,
-                    cursor: 'pointer',
-                  }}
+                  chevronIcon={_chevronRight}
+                  className='flex-1 md:flex-none md:!w-[166px]'
                 >
-                  <span>{t('禁用验证')}</span>
-                  <img src={_chevronRight} alt='' style={{ width: '16px', height: '16px' }} />
-                </button>
-                <button
+                  {t('禁用验证')}
+                </ActionButton>
+                <ActionButton
                   onClick={() => setBackupModalVisible(true)}
-                  className='flex items-center justify-center gap-1 transition-all duration-200 hover:opacity-80 flex-1 md:flex-none md:!w-[166px]'
-                  style={{
-                    height: '50px',
-                    background: 'var(--ps-btn-bg)',
-                    borderRadius: '10px',
-                    outline: '1px solid var(--ps-outline)',
-                    outlineOffset: '-1px',
-                    color: 'var(--ps-btn-text)',
-                    fontSize: '16px',
-                    fontFamily: 'Inter, sans-serif',
-                    fontWeight: 400,
-                    cursor: 'pointer',
-                  }}
+                  chevronIcon={_chevronRight}
+                  className='flex-1 md:flex-none md:!w-[166px]'
                 >
-                  <span>{t('重新生成备用码')}</span>
-                  <img src={_chevronRight} alt='' style={{ width: '16px', height: '16px' }} />
-                </button>
+                  {t('重新生成备用码')}
+                </ActionButton>
               </div>
             )}
           </div>

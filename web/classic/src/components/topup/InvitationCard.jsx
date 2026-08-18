@@ -31,6 +31,7 @@ import registerIcon from '../../assets/figma-invite/7.svg';
 import moreRewardIcon from '../../assets/figma-invite/8.svg';
 import autoCreditIcon from '../../assets/figma-invite/9.svg';
 import statsBg from '../../assets/figma-invite/10.png';
+import { useActualTheme } from '../../context/Theme';
 
 const { Text } = Typography;
 
@@ -72,6 +73,10 @@ const InvitationCard = ({
   handleAffLinkClick,
 }) => {
   const canTransfer = (userState?.user?.aff_quota || 0) > 0;
+  // 深色主题下标题/说明文字统一使用 #93A0C5，亮色保持视觉稿原色（JS 控制，随主题切换即时生效）
+  const actualTheme = useActualTheme();
+  const isDark = actualTheme === 'dark';
+  const rewardDescColor = isDark ? '#93A0C5' : '#6D6D78';
 
   const rewardItems = [
     {
@@ -350,7 +355,7 @@ const InvitationCard = ({
                   position: 'absolute',
                   left: '118px',
                   top: '50px',
-                  color: '#6D6D78',
+                  color: rewardDescColor,
                   fontSize: '14px',
                   fontFamily: 'Inter, sans-serif',
                   fontWeight: 400,

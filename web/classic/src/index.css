@@ -695,6 +695,28 @@ html.dark .sbg-variant-green {
   background-color: transparent !important;
 }
 
+/** 固定列虚化背景：防止横向滚动时内容穿透固定列 */
+.semi-table-tbody>.semi-table-row .semi-table-cell-fixed-left,
+.semi-table-tbody>.semi-table-row .semi-table-cell-fixed-right {
+  background-color: #ecf5fe !important;
+}
+
+/* 固定列表头同样虚化处理 */
+.semi-table-thead .semi-table-row-head.semi-table-cell-fixed-left,
+.semi-table-thead .semi-table-row-head.semi-table-cell-fixed-right {
+  background-color: #ecf5fe !important;
+}
+
+html.dark .semi-table-tbody>.semi-table-row .semi-table-cell-fixed-left,
+html.dark .semi-table-tbody>.semi-table-row .semi-table-cell-fixed-right {
+  background-color: #1f204f !important;
+}
+
+html.dark .semi-table-thead .semi-table-row-head.semi-table-cell-fixed-left,
+html.dark .semi-table-thead .semi-table-row-head.semi-table-cell-fixed-right {
+  background-color: #1f204f !important;
+}
+
 /** 表格行 hover 样式 */
 .semi-table-tbody>.semi-table-row:hover {
   background: #FFFFFF80 !important;
@@ -703,11 +725,10 @@ html.dark .sbg-variant-green {
 .semi-table-tbody>.semi-table-row:hover>.semi-table-row-cell {
   background: transparent !important;
 }
-/* 置顶列 hover 同样效果 */
+/* 固定列 hover 背景色保持不变 */
 .semi-table-tbody>.semi-table-row:hover .semi-table-cell-fixed-left,
 .semi-table-tbody>.semi-table-row:hover .semi-table-cell-fixed-right {
-  background: #FFFFFF80 !important;
-  backdrop-filter: blur(12px);
+  background: #ecf5fe !important;
 }
 /* 侧边抽屉滚动条样式 */
 .semi-sidesheet-body::-webkit-scrollbar {
@@ -2236,8 +2257,7 @@ html.dark .semi-table-tbody > .semi-table-row:hover > .semi-table-row-cell {
 
 html.dark .semi-table-tbody > .semi-table-row:hover .semi-table-cell-fixed-left,
 html.dark .semi-table-tbody > .semi-table-row:hover .semi-table-cell-fixed-right {
-  background: var(--pricing-table-hover) !important;
-  backdrop-filter: blur(12px);
+  background: #1f204f !important;
 }
 
 /* ==================== 顶部导航栏交互样式 ==================== */

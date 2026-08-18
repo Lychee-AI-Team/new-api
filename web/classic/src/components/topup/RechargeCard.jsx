@@ -37,15 +37,61 @@ import coinIcon2 from '../../assets/figma-wallet/8.svg';
 import coinIcon3 from '../../assets/figma-wallet/9.svg';
 import wechatPayIcon from '../../assets/figma-wallet/4.svg';
 import alipayIcon from '../../assets/figma-wallet/5.svg';
-import stepperUpIcon from '../../assets/figma-wallet/2.svg';
-import stepperDownIcon from '../../assets/figma-wallet/3.svg';
-import redemptionIcon from '../../assets/figma-wallet/1.svg';
 import ModalPro from '@/components/common/ui/ModalPro';
 
 const { Text } = Typography;
 
 // 预设卡片金币图标（对应视觉稿 100 / 200 / 500）
 const PRESET_COIN_ICONS = [coinIcon1, coinIcon2, coinIcon3];
+
+// 主题自适应图标：颜色跟随 --ps-text-label（亮色为深色、深色为白色）
+const StepperUpIcon = () => (
+  <svg width='8' height='8' viewBox='0 0 8 8' fill='none' aria-hidden='true'>
+    <path
+      d='M4 1.83337C4.18907 1.83337 4.36964 1.9084 4.50325 2.04202L6.62467 4.16344C6.82891 4.36768 6.82891 4.69927 6.62467 4.90351C6.42044 5.10775 6.08885 5.10775 5.88461 4.90351L4 3.0189L2.11539 4.90351C1.91115 5.10775 1.57956 5.10775 1.37533 4.90351C1.17109 4.69927 1.17109 4.36768 1.37533 4.16344L3.49675 2.04202C3.63036 1.9084 3.81093 1.83337 4 1.83337Z'
+      fill='var(--ps-text-label)'
+    />
+  </svg>
+);
+
+const StepperDownIcon = () => (
+  <svg width='8' height='8' viewBox='0 0 8 8' fill='none' aria-hidden='true'>
+    <path
+      d='M4 6.16663C3.81093 6.16663 3.63036 6.0916 3.49675 5.95798L1.37533 3.83656C1.17109 3.63232 1.17109 3.30073 1.37533 3.09649C1.57956 2.89225 1.91115 2.89225 2.11539 3.09649L4 4.9811L5.88461 3.09649C6.08885 2.89225 6.42044 2.89225 6.62467 3.09649C6.82891 3.30073 6.82891 3.63232 6.62467 3.83656L4.50325 5.95798C4.36964 6.0916 4.18907 6.16663 4 6.16663Z'
+      fill='var(--ps-text-label)'
+    />
+  </svg>
+);
+
+const RedemptionIcon = () => (
+  <svg width='16' height='16' viewBox='0 0 16 16' fill='none' aria-hidden='true'>
+    <path
+      d='M13.3334 6H2.66675C2.29856 6 2.00008 6.29848 2.00008 6.66667V13.3333C2.00008 13.7015 2.29856 14 2.66675 14H13.3334C13.7016 14 14.0001 13.7015 14.0001 13.3333V6.66667C14.0001 6.29848 13.7016 6 13.3334 6Z'
+      stroke='var(--ps-text-label)'
+      strokeWidth='1.33333'
+    />
+    <path
+      d='M1.33341 4.00002C1.33341 3.63635 1.61194 3.33336 2.00008 3.33336H14.0001C14.3882 3.33336 14.6667 3.63635 14.6667 4.00002V6.00002H1.33341V4.00002Z'
+      stroke='var(--ps-text-label)'
+      strokeWidth='1.33333'
+    />
+    <path
+      d='M8.00008 3.33336V14'
+      stroke='var(--ps-text-label)'
+      strokeWidth='1.33333'
+    />
+    <path
+      d='M8.00053 3.33331C7.91243 2.63875 7.42885 1.33331 6.00053 1.33331C4.86986 1.33331 4.46684 2.25912 4.70134 2.94299C4.93584 3.62686 5.83734 4.15673 8.00053 3.33331Z'
+      stroke='var(--ps-text-label)'
+      strokeWidth='1.33333'
+    />
+    <path
+      d='M7.99964 3.33331C8.08774 2.63875 8.57132 1.33331 9.99964 1.33331C11.1303 1.33331 11.5333 2.25912 11.2988 2.94299C11.0643 3.62686 10.1632 4.15673 7.99964 3.33331Z'
+      stroke='var(--ps-text-label)'
+      strokeWidth='1.33333'
+    />
+  </svg>
+);
 
 // 钱包管理页主题色
 const WALLET_PRIMARY = '#635DE7';
@@ -458,7 +504,7 @@ const RechargeCard = ({
                   padding: 0,
                 }}
               >
-                <img src={stepperUpIcon} alt='+' style={{ width: 8, height: 8 }} />
+                <StepperUpIcon />
               </button>
               <button
                 type='button'
@@ -475,7 +521,7 @@ const RechargeCard = ({
                   padding: 0,
                 }}
               >
-                <img src={stepperDownIcon} alt='-' style={{ width: 8, height: 8 }} />
+                <StepperDownIcon />
               </button>
             </div>
           </div>
@@ -672,7 +718,7 @@ const RechargeCard = ({
         }}
       >
         <div className='flex items-center gap-2 mb-4'>
-          <img src={redemptionIcon} alt='' style={{ width: 16, height: 16 }} />
+          <RedemptionIcon />
           <Text strong style={{ color: 'var(--ps-text-label)', fontSize: '16px' }}>
             {t('兑换码充值')}
           </Text>
