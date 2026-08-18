@@ -168,7 +168,13 @@ const PricingCardView = ({
       );
     } else if (record.quota_type === 0) {
       billingTag = (
-        <Tag key='billing' shape='circle' color='violet' size='small'>
+        <Tag
+          key='billing'
+          shape='circle'
+          color='violet'
+          size='small'
+          className='pricing-billing-tag'
+        >
           {t('按量计费')}
         </Tag>
       );
@@ -267,10 +273,10 @@ const PricingCardView = ({
                   <div className='flex items-start space-x-3 flex-1 min-w-0'>
                     {getModelIcon(model)}
                     <div className='flex-1 min-w-0'>
-                      <h3 className='text-lg font-bold truncate' style={{ color: 'var(--semi-color-text-0)' }}>
+                      <h3 className='text-lg font-bold truncate pricing-card-title' style={{ color: 'var(--semi-color-text-0)' }}>
                         {model.model_name}
                       </h3>
-                      <div className='flex flex-col gap-1 text-xs mt-1'>
+                      <div className='flex flex-col gap-1 text-xs mt-1 pricing-card-price-info'>
                         {priceData.isDynamicPricing ? (
                           formatDynamicPriceSummary(priceData.billingExpr, t, priceData.usedGroupRatio)
                         ) : (

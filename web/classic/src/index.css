@@ -212,7 +212,7 @@ code {
 }
 
 .sidebar-nav-item-selected {
-  background-color: var(--sidebar-item-active-bg);
+  background: var(--sidebar-item-active-bg);
   color: var(--sidebar-item-active-color);
   font-weight: 600;
 }
@@ -251,7 +251,7 @@ code {
 .sidebar-nav .semi-navigation-item-selected:hover,
 .sidebar-nav .semi-navigation-item-normal:hover.semi-navigation-item-selected,
 .sidebar-nav .semi-navigation-item-normal:active.semi-navigation-item-selected {
-  background-color: var(--sidebar-item-active-bg) !important;
+  background: var(--sidebar-item-active-bg) !important;
   color: var(--sidebar-item-active-color) !important;
 }
 
@@ -264,6 +264,12 @@ code {
 /* 选中项文字加粗 */
 .sidebar-nav .semi-navigation-item-selected .semi-navigation-item-text {
   font-weight: 600 !important;
+}
+
+/* 暗色模式 - 选中项文字不加粗，与视觉稿一致 */
+html.dark .sidebar-nav .semi-navigation-item-selected .semi-navigation-item-text,
+html.dark .sidebar-nav-item-selected {
+  font-weight: 400 !important;
 }
 
 /* 移除 Semi UI 选中项左侧指示条 */
@@ -325,11 +331,19 @@ code {
   padding: 7px 12px;
   margin-top: auto;
   cursor: pointer;
-  background-color: var(--sidebar-bg);
+  background: transparent;
   position: sticky;
   bottom: 0;
   z-index: 10;
-  backdrop-filter: blur(31.50px);
+}
+
+/* 深色主题 - 收起按钮 1:1 还原视觉稿（透明背景、无边框） */
+html.dark .sidebar-collapse-button .semi-button.semi-button-tertiary,
+html.dark .sidebar-collapse-button .semi-button.semi-button-tertiary:not(.semi-button-disabled):hover,
+html.dark .sidebar-collapse-button .semi-button.semi-button-tertiary:not(.semi-button-disabled):active {
+  background: transparent !important;
+  border: none !important;
+  color: var(--sidebar-collapse-text) !important;
 }
 
 .sidebar-collapse-button-inner {
@@ -364,7 +378,7 @@ code {
   }
 
   .sidebar-collapse-button {
-    background-color: var(--sidebar-bg);
+    background: transparent;
   }
 }
 
@@ -2109,7 +2123,7 @@ html.dark {
 }
 
 html.dark {
-  --pricing-card-bg: linear-gradient(180deg, rgba(60, 54, 136, 0.50) 0%, rgba(22, 42, 87, 0.40) 100%);
+  --pricing-card-bg: linear-gradient(180deg, rgba(60, 54, 136, 0.40) 0%, rgba(22, 43, 87, 0.28) 100%);
   --pricing-card-border: #594699;
   --pricing-card-shadow: 0px 4px 8px rgba(106, 58, 199, 0.08);
   --pricing-card-inset-shadow: inset -4px -4px 4px rgba(255, 255, 255, 0.25), inset 0px 4px 4px rgba(255, 255, 255, 0.25);
@@ -2194,6 +2208,20 @@ html.dark .pricing-page-wrapper > * {
 
 .pricing-model-card:hover {
   border-color: var(--pricing-card-hover-border) !important;
+}
+
+/* 深色模式下模型卡片文字 1:1 还原设计稿（#FCFCFC） */
+html.dark .pricing-model-card .pricing-card-title,
+html.dark .pricing-model-card .pricing-card-price-info,
+html.dark .pricing-model-card .pricing-card-price-info span {
+  color: #FCFCFC !important;
+}
+
+/* 深色模式下计费标签 1:1 还原设计稿（Pay as you go 徽章） */
+html.dark .pricing-model-card .pricing-billing-tag {
+  background: rgba(106, 58, 199, 0.15) !important;
+  border-color: transparent !important;
+  color: #9F90CF !important;
 }
 
 /* Table hover */
@@ -2416,11 +2444,11 @@ html.dark {
   --dash-card-bg: linear-gradient(180deg, rgba(60, 54, 136, 0.50) 0%, rgba(22, 42, 87, 0.40) 100%);
   /* 侧边栏主题变量 - 暗色模式 */
   --sidebar-bg: linear-gradient(180deg, rgba(60, 54, 136, 0.50) 0%, rgba(22, 42, 87, 0.40) 100%);
-  --sidebar-item-active-bg: rgba(99, 93, 231, 0.25);
-  --sidebar-item-active-color: #7C94FF;
+  --sidebar-item-active-bg: linear-gradient(180deg, rgba(60, 54, 136, 0.50) 0%, rgba(22.23, 42.81, 87.22, 0.40) 100%);
+  --sidebar-item-active-color: #635DE7;
   --sidebar-item-text: #FCFCFC;
   --sidebar-item-hover-bg: rgba(255, 255, 255, 0.08);
-  --sidebar-item-hover-color: #7C94FF;
+  --sidebar-item-hover-color: #635DE7;
   --sidebar-border: rgba(249, 249, 249, 0.08);
   --sidebar-group-label: rgba(252, 252, 252, 0.50);
   --sidebar-collapse-shadow: rgba(60, 54, 136, 0.50);

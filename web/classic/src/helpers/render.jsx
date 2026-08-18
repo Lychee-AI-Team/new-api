@@ -118,7 +118,7 @@ export function getLucideIcon(key, selected = false) {
   const commonProps = {
     size,
     strokeWidth,
-    className: `transition-colors duration-200 ${selected ? 'transition-transform duration-200 scale-105' : ''}`,
+    className: `transition-colors duration-200`,
   };
 
   // 根据不同的key返回不同的图标
