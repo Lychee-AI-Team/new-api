@@ -19,9 +19,8 @@ For commercial licensing, please contact support@quantumnous.com
 
 import React from 'react';
 import { Modal } from '@douyinfe/semi-ui';
-
-const MODAL_BG_URL = `${import.meta.env.BASE_URL}modal-bg.jpg`;
-const MODAL_DARK_BG_URL = `${import.meta.env.BASE_URL}modal-dark-bg.jpg`;
+import MODAL_BG_URL from '@/assets/modal-bg.jpg';
+import MODAL_DARK_BG_URL from '@/assets/modal-dark-bg.jpg';
 
 // 用 CSS 自定义属性传递 URL，CSS 中在 .semi-modal-content 上应用背景图
 const modalBgStyle = {
