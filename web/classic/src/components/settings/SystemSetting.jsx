@@ -18,20 +18,7 @@ For commercial licensing, please contact support@quantumnous.com
 */
 
 import React, { useEffect, useState, useRef } from 'react';
-import {
-  Button,
-  Form,
-  Row,
-  Col,
-  Typography,
-  Modal,
-  Banner,
-  TagInput,
-  Spin,
-  Card,
-  Radio,
-  Select,
-} from '@douyinfe/semi-ui';
+import { Button, Form, Row, Col, Typography, Banner, TagInput, Spin, Card, Radio, Select } from '@douyinfe/semi-ui'
 const { Text } = Typography;
 import {
   API,
@@ -43,6 +30,7 @@ import {
 import axios from 'axios';
 import { useTranslation } from 'react-i18next';
 import CustomOAuthSetting from './CustomOAuthSetting';
+import ModalPro from '@/components/common/ui/ModalPro';
 
 const SystemSetting = () => {
   const { t } = useTranslation();
@@ -1635,7 +1623,7 @@ const SystemSetting = () => {
                 </Form.Section>
               </Card>
 
-              <Modal
+              <ModalPro
                 title={t('确认取消密码登录')}
                 visible={showPasswordLoginConfirmModal}
                 onOk={handlePasswordLoginConfirm}
@@ -1651,7 +1639,7 @@ const SystemSetting = () => {
                     '您确定要取消密码登录功能吗？这可能会影响用户的登录方式。',
                   )}
                 </p>
-              </Modal>
+              </ModalPro>
             </div>
           )}
         </Form>

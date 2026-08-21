@@ -18,19 +18,7 @@ For commercial licensing, please contact support@quantumnous.com
 */
 
 import React, { useEffect, useState, useRef } from 'react';
-import {
-  Banner,
-  Button,
-  Form,
-  Row,
-  Col,
-  Typography,
-  Spin,
-  Table,
-  Modal,
-  Input,
-  Space,
-} from '@douyinfe/semi-ui';
+import { Banner, Button, Form, Row, Col, Typography, Spin, Table, Input, Space } from '@douyinfe/semi-ui'
 import {
   API,
   removeTrailingSlash,
@@ -39,6 +27,7 @@ import {
 } from '../../../helpers';
 import { useTranslation } from 'react-i18next';
 import { BookOpen, TriangleAlert } from 'lucide-react';
+import ModalPro from '@/components/common/ui/ModalPro';
 
 const { Text } = Typography;
 const toBoolean = (value) => value === true || value === 'true';
@@ -580,7 +569,7 @@ export default function SettingsPaymentGatewayWaffo(props) {
       </Form>
 
       {/* 新增/编辑支付方式弹窗 */}
-      <Modal
+      <ModalPro
         title={
           editingPayMethodIndex === -1 ? t('新增支付方式') : t('编辑支付方式')
         }
@@ -695,7 +684,7 @@ export default function SettingsPaymentGatewayWaffo(props) {
             </Text>
           </div>
         </div>
-      </Modal>
+      </ModalPro>
     </Spin>
   );
 }

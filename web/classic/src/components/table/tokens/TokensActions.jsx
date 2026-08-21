@@ -63,8 +63,7 @@ const TokensActions = ({
     <>
       <div className='flex flex-wrap gap-2 w-full md:w-auto order-2 md:order-1'>
         <Button
-          type='primary'
-          className='flex-1 md:flex-initial'
+          className='btn-gradient-primary flex-1 md:flex-initial'
           onClick={() => {
             setEditingToken({
               id: undefined,
@@ -86,8 +85,7 @@ const TokensActions = ({
         </Button>
 
         <Button
-          type='danger'
-          className='w-full md:w-auto'
+          className='btn-light-danger w-full md:w-auto'
           onClick={handleDeleteSelectedTokens}
           size='small'
         >

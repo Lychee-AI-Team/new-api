@@ -19,23 +19,7 @@ For commercial licensing, please contact support@quantumnous.com
 
 import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import {
-  Modal,
-  Button,
-  Typography,
-  Card,
-  List,
-  Space,
-  Input,
-  Spin,
-  Popconfirm,
-  Tag,
-  Empty,
-  Row,
-  Col,
-  Progress,
-  Checkbox,
-} from '@douyinfe/semi-ui';
+import { Button, Typography, Card, List, Space, Input, Spin, Popconfirm, Tag, Empty, Row, Col, Progress, Checkbox } from '@douyinfe/semi-ui'
 import {
   IconDownload,
   IconDelete,
@@ -50,6 +34,7 @@ import {
   showError,
   showSuccess,
 } from '../../../../helpers';
+import ModalPro from '@/components/common/ui/ModalPro';
 
 const { Text, Title } = Typography;
 
@@ -528,7 +513,7 @@ const OllamaModelModal = ({
   };
 
   return (
-    <Modal
+    <ModalPro
       title={t('Ollama 模型管理')}
       visible={visible}
       onCancel={onCancel}
@@ -771,7 +756,7 @@ const OllamaModelModal = ({
           </Spin>
         </Card>
       </Space>
-    </Modal>
+    </ModalPro>
   );
 };
 

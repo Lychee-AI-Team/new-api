@@ -18,20 +18,12 @@ For commercial licensing, please contact support@quantumnous.com
 */
 
 import React, { useEffect, useMemo, useState, useCallback } from 'react';
-import {
-  Modal,
-  Table,
-  Checkbox,
-  Typography,
-  Empty,
-  Tag,
-  Popover,
-  Input,
-} from '@douyinfe/semi-ui';
+import { Table, Checkbox, Typography, Empty, Tag, Popover, Input } from '@douyinfe/semi-ui'
 import { MousePointerClick } from 'lucide-react';
 import { useIsMobile } from '../../../../hooks/common/useIsMobile';
 import { MODEL_TABLE_PAGE_SIZE } from '../../../../constants';
 import { IconSearch } from '@douyinfe/semi-icons';
+import ModalPro from '@/components/common/ui/ModalPro';
 
 const { Text } = Typography;
 
@@ -263,7 +255,7 @@ const UpstreamConflictModal = ({
   };
 
   return (
-    <Modal
+    <ModalPro
       title={t('选择要覆盖的冲突项')}
       visible={visible}
       onCancel={onClose}
@@ -317,7 +309,7 @@ const UpstreamConflictModal = ({
           )}
         </>
       )}
-    </Modal>
+    </ModalPro>
   );
 };
 

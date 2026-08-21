@@ -18,8 +18,9 @@ For commercial licensing, please contact support@quantumnous.com
 */
 
 import React, { useEffect, useState } from 'react';
-import { Modal, RadioGroup, Radio, Steps, Button } from '@douyinfe/semi-ui';
+import { RadioGroup, Radio, Steps, Button } from '@douyinfe/semi-ui'
 import { useIsMobile } from '../../../../hooks/common/useIsMobile';
+import ModalPro from '@/components/common/ui/ModalPro';
 
 const SyncWizardModal = ({ visible, onClose, onConfirm, loading, t }) => {
   const [step, setStep] = useState(0);
@@ -36,7 +37,7 @@ const SyncWizardModal = ({ visible, onClose, onConfirm, loading, t }) => {
   }, [visible]);
 
   return (
-    <Modal
+    <ModalPro
       title={t('同步向导')}
       visible={visible}
       onCancel={onClose}
@@ -128,7 +129,7 @@ const SyncWizardModal = ({ visible, onClose, onConfirm, loading, t }) => {
           </div>
         </div>
       )}
-    </Modal>
+    </ModalPro>
   );
 };
 

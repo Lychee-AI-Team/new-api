@@ -18,21 +18,12 @@ For commercial licensing, please contact support@quantumnous.com
 */
 
 import React from 'react';
-import {
-  Modal,
-  Button,
-  Input,
-  Table,
-  Tag,
-  Typography,
-  Select,
-  Switch,
-  Banner,
-} from '@douyinfe/semi-ui';
+import { Button, Input, Table, Tag, Typography, Select, Switch, Banner } from '@douyinfe/semi-ui'
 import { IconSearch, IconInfoCircle } from '@douyinfe/semi-icons';
 import { Settings } from 'lucide-react';
 import { copy, showError, showInfo, showSuccess } from '../../../../helpers';
 import { MODEL_TABLE_PAGE_SIZE } from '../../../../constants';
+import ModalPro from '@/components/common/ui/ModalPro';
 
 const ModelTestModal = ({
   showModelTestModal,
@@ -248,7 +239,7 @@ const ModelTestModal = ({
   })();
 
   return (
-    <Modal
+    <ModalPro
       title={
         hasChannel ? (
           <div className='flex flex-col gap-2 w-full'>
@@ -389,7 +380,7 @@ const ModelTestModal = ({
           />
         </div>
       )}
-    </Modal>
+    </ModalPro>
   );
 };
 

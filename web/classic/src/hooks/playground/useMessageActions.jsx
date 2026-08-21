@@ -18,10 +18,11 @@ For commercial licensing, please contact support@quantumnous.com
 */
 
 import { useCallback } from 'react';
-import { Toast, Modal } from '@douyinfe/semi-ui';
+import { Toast } from '@douyinfe/semi-ui'
 import { useTranslation } from 'react-i18next';
 import { getTextContent } from '../../helpers';
 import { ERROR_MESSAGES } from '../../constants/playground.constants';
+import ModalPro from '@/components/common/ui/ModalPro';
 
 export const useMessageActions = (
   message,
@@ -176,7 +177,7 @@ export const useMessageActions = (
   // 删除消息
   const handleMessageDelete = useCallback(
     (targetMessage) => {
-      Modal.confirm({
+      ModalPro.confirm({
         title: t('确认删除'),
         content: t('确定要删除这条消息吗？'),
         okText: t('确定'),

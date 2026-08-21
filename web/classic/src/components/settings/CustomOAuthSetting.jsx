@@ -18,22 +18,7 @@ For commercial licensing, please contact support@quantumnous.com
 */
 
 import React, { useEffect, useState } from 'react';
-import {
-  Button,
-  Form,
-  Row,
-  Col,
-  Typography,
-  Modal,
-  Banner,
-  Card,
-  Collapse,
-  Switch,
-  Table,
-  Tag,
-  Popconfirm,
-  Space,
-} from '@douyinfe/semi-ui';
+import { Button, Form, Row, Col, Typography, Banner, Card, Collapse, Switch, Table, Tag, Popconfirm, Space } from '@douyinfe/semi-ui'
 import {
   IconPlus,
   IconEdit,
@@ -42,6 +27,7 @@ import {
 } from '@douyinfe/semi-icons';
 import { API, showError, showSuccess, getOAuthProviderIcon } from '../../helpers';
 import { useTranslation } from 'react-i18next';
+import ModalPro from '@/components/common/ui/ModalPro';
 
 const { Text } = Typography;
 
@@ -631,7 +617,7 @@ const CustomOAuthSetting = ({ serverAddress }) => {
           empty={t('暂无自定义 OAuth 提供商')}
         />
 
-        <Modal
+        <ModalPro
           title={editingProvider ? t('编辑 OAuth 提供商') : t('添加 OAuth 提供商')}
           visible={modalVisible}
           onCancel={closeModal}
@@ -1044,7 +1030,7 @@ const CustomOAuthSetting = ({ serverAddress }) => {
               </Collapse.Panel>
             </Collapse>
           </Form>
-        </Modal>
+        </ModalPro>
       </Form.Section>
     </Card>
   );

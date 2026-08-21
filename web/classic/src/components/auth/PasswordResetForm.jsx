@@ -27,12 +27,11 @@ import {
   getSystemName,
 } from '../../helpers';
 import Turnstile from 'react-turnstile';
-import { Button, Card, Form, Typography } from '@douyinfe/semi-ui';
+import { Button, Form } from '@douyinfe/semi-ui';
+import Text from '@douyinfe/semi-ui/lib/es/typography/text';
 import { IconMail } from '@douyinfe/semi-icons';
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-
-const { Text, Title } = Typography;
 
 const PasswordResetForm = () => {
   const { t } = useTranslation();
@@ -104,33 +103,43 @@ const PasswordResetForm = () => {
   }
 
   return (
-    <div className='relative overflow-hidden bg-gray-100 flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8'>
-      {/* 背景模糊晕染球 */}
-      <div
-        className='blur-ball blur-ball-indigo'
-        style={{ top: '-80px', right: '-80px', transform: 'none' }}
-      />
-      <div
-        className='blur-ball blur-ball-teal'
-        style={{ top: '50%', left: '-120px' }}
-      />
-      <div className='w-full max-w-sm mt-[60px]'>
-        <div className='flex flex-col items-center'>
-          <div className='w-full max-w-md'>
-            <div className='flex items-center justify-center mb-6 gap-2'>
-              <img src={logo} alt='Logo' className='h-10 rounded-full' />
-              <Title heading={3} className='!text-gray-800'>
-                {systemName}
-              </Title>
-            </div>
+    <div
+      className='login-page relative overflow-hidden flex items-center justify-center min-h-screen'
+      style={{
+        background: 'var(--login-bg)',
+      }}
+    >
+      <div className='w-full max-w-sm'>
+        {/* Logo 和系统名称 */}
+        <div className='flex items-center justify-center mb-6 gap-2'>
+          <img src={logo} alt='Logo' className='h-10 rounded-full' />
+          <span
+            className='text-2xl font-bold'
+            style={{ color: 'var(--login-text-primary)' }}
+          >
+            {systemName}
+          </span>
+        </div>
 
-            <Card className='border-0 !rounded-2xl overflow-hidden'>
-              <div className='flex justify-center pt-6 pb-2'>
-                <Title heading={3} className='text-gray-800 dark:text-gray-200'>
+        <div className='flex flex-col items-center'>
+          <div className='w-full max-w-[384px]'>
+            <div
+              className='overflow-hidden'
+              style={{
+                background: 'var(--login-card-bg)',
+                borderRadius: '16px',
+                border: '1px solid var(--login-card-border)',
+              }}
+            >
+              <div className='flex justify-center pt-10 pb-2'>
+                <span
+                  className='text-2xl font-bold'
+                  style={{ color: 'var(--login-text-primary)' }}
+                >
                   {t('密码重置')}
-                </Title>
+                </span>
               </div>
-              <div className='px-2 py-8'>
+              <div className='px-5 py-6'>
                 <Form className='space-y-3'>
                   <Form.Input
                     field='email'
@@ -151,6 +160,11 @@ const PasswordResetForm = () => {
                       onClick={handleSubmit}
                       loading={loading}
                       disabled={disableButton}
+                      style={{
+                        background:
+                          'linear-gradient(180deg, #89BDF9 0%, #8164FF 100%)',
+                        color: 'white',
+                      }}
                     >
                       {disableButton
                         ? `${t('重试')} (${countdown})`
@@ -160,31 +174,32 @@ const PasswordResetForm = () => {
                 </Form>
 
                 <div className='mt-6 text-center text-sm'>
-                  <Text>
+                  <Text style={{ color: 'var(--login-text-primary)' }}>
                     {t('想起来了？')}{' '}
                     <Link
                       to='/login'
-                      className='text-blue-600 hover:text-blue-800 font-medium'
+                      style={{ color: 'var(--login-link-color)' }}
+                      className='font-medium'
                     >
                       {t('登录')}
                     </Link>
                   </Text>
                 </div>
               </div>
-            </Card>
-
-            {turnstileEnabled && (
-              <div className='flex justify-center mt-6'>
-                <Turnstile
-                  sitekey={turnstileSiteKey}
-                  onVerify={(token) => {
-                    setTurnstileToken(token);
-                  }}
-                />
-              </div>
-            )}
+            </div>
           </div>
         </div>
+
+        {turnstileEnabled && (
+          <div className='flex justify-center mt-6'>
+            <Turnstile
+              sitekey={turnstileSiteKey}
+              onVerify={(token) => {
+                setTurnstileToken(token);
+              }}
+            />
+          </div>
+        )}
       </div>
     </div>
   );

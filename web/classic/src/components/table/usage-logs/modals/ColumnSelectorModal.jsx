@@ -18,8 +18,9 @@ For commercial licensing, please contact support@quantumnous.com
 */
 
 import React from 'react';
-import { Modal, Button, Checkbox, RadioGroup, Radio } from '@douyinfe/semi-ui';
+import { Button, Checkbox } from '@douyinfe/semi-ui';
 import { getLogsColumns } from '../UsageLogsColumnDefs';
+import ModalPro from '@/components/common/ui/ModalPro';
 
 const ColumnSelectorModal = ({
   showColumnSelector,
@@ -36,15 +37,10 @@ const ColumnSelectorModal = ({
   showUserInfoFunc,
   t,
 }) => {
-  const handleBillingDisplayModeChange = (eventOrValue) => {
-    setBillingDisplayMode(eventOrValue?.target?.value ?? eventOrValue);
-  };
-
   const isTokensDisplay =
     typeof localStorage !== 'undefined' &&
     localStorage.getItem('quota_display_type') === 'TOKENS';
 
-  // Get all columns for display in selector
   const allColumns = getLogsColumns({
     t,
     COLUMN_KEYS,
@@ -55,55 +51,74 @@ const ColumnSelectorModal = ({
   });
 
   return (
-    <Modal
-      title={t('列设置')}
+    <ModalPro
+      className='column-selector-modal'
+      title={<span className='column-selector-title'>{t('列设置')}</span>}
       visible={showColumnSelector}
       onCancel={() => setShowColumnSelector(false)}
+      width={543}
+      style={{ maxWidth: 'calc(100vw - 32px)' }}
       footer={
-        <div className='flex justify-end'>
-          <Button onClick={() => initDefaultColumns()}>{t('重置')}</Button>
-          <Button onClick={() => setShowColumnSelector(false)}>
-            {t('取消')}
+        <div className='flex justify-end gap-3'>
+          <Button
+            className='column-selector-btn-secondary'
+            onClick={() => initDefaultColumns()}
+          >
+            {t('重 置')}
           </Button>
-          <Button onClick={() => setShowColumnSelector(false)}>
-            {t('确定')}
+          <Button
+            className='column-selector-btn-secondary'
+            onClick={() => setShowColumnSelector(false)}
+          >
+            {t('取 消')}
+          </Button>
+          <Button
+            theme='solid'
+            type='primary'
+            className='column-selector-btn-primary'
+            onClick={() => setShowColumnSelector(false)}
+          >
+            {t('确 认')}
           </Button>
         </div>
       }
     >
+      {/* 计费显示模式 */}
       <div style={{ marginBottom: 20 }}>
-        <div style={{ marginBottom: 16 }}>
-          <div style={{ marginBottom: 8, fontWeight: 600 }}>{t('计费显示模式')}</div>
-          <RadioGroup
-            type='button'
-            value={billingDisplayMode}
-            onChange={handleBillingDisplayModeChange}
-          >
-            <Radio value='price'>
-              {isTokensDisplay ? t('价格模式') : t('价格模式（默认）')}
-            </Radio>
-            <Radio value='ratio'>
-              {isTokensDisplay ? t('倍率模式（默认）') : t('倍率模式')}
-            </Radio>
-          </RadioGroup>
+        <div className='column-selector-section-label' style={{ marginBottom: 12 }}>
+          {t('计费显示模式')}
         </div>
-        <Checkbox
-          checked={Object.values(visibleColumns).every((v) => v === true)}
-          indeterminate={
-            Object.values(visibleColumns).some((v) => v === true) &&
-            !Object.values(visibleColumns).every((v) => v === true)
-          }
-          onChange={(e) => handleSelectAll(e.target.checked)}
-        >
-          {t('全选')}
-        </Checkbox>
+        <div className='column-selector-tabs'>
+          <div
+            className={`column-selector-tab ${billingDisplayMode === 'price' ? 'active' : ''}`}
+            onClick={() => setBillingDisplayMode('price')}
+          >
+            {isTokensDisplay ? t('价格模式') : t('价格模式（默认）')}
+          </div>
+          <div
+            className={`column-selector-tab ${billingDisplayMode === 'ratio' ? 'active' : ''}`}
+            onClick={() => setBillingDisplayMode('ratio')}
+          >
+            {isTokensDisplay ? t('倍率模式（默认）') : t('倍率模式')}
+          </div>
+        </div>
       </div>
-      <div
-        className='flex flex-wrap max-h-96 overflow-y-auto rounded-lg p-4'
-        style={{ border: '1px solid var(--semi-color-border)' }}
+
+      {/* 全选 */}
+      <Checkbox
+        checked={Object.values(visibleColumns).every((v) => v === true)}
+        indeterminate={
+          Object.values(visibleColumns).some((v) => v === true) &&
+          !Object.values(visibleColumns).every((v) => v === true)
+        }
+        onChange={(e) => handleSelectAll(e.target.checked)}
       >
+        {t('全选')}
+      </Checkbox>
+
+      {/* 列选择框 */}
+      <div className='column-selector-box' style={{ marginTop: 12 }}>
         {allColumns.map((column) => {
-          // Skip admin-only columns for non-admin users
           if (
             !isAdminUser &&
             (column.key === COLUMN_KEYS.CHANNEL ||
@@ -114,7 +129,7 @@ const ColumnSelectorModal = ({
           }
 
           return (
-            <div key={column.key} className='w-1/2 mb-4 pr-2'>
+            <div key={column.key} className='column-selector-item'>
               <Checkbox
                 checked={!!visibleColumns[column.key]}
                 onChange={(e) =>
@@ -127,7 +142,7 @@ const ColumnSelectorModal = ({
           );
         })}
       </div>
-    </Modal>
+    </ModalPro>
   );
 };
 

@@ -18,7 +18,7 @@ For commercial licensing, please contact support@quantumnous.com
 */
 
 import React from 'react';
-import { Modal } from '@douyinfe/semi-ui';
+import ModalPro from '@/components/common/ui/ModalPro';
 
 const EnableDisableUserModal = ({
   visible,
@@ -31,7 +31,7 @@ const EnableDisableUserModal = ({
   const isDisable = action === 'disable';
 
   return (
-    <Modal
+    <ModalPro
       title={isDisable ? t('确定要禁用此用户吗？') : t('确定要启用此用户吗？')}
       visible={visible}
       onCancel={onCancel}
@@ -39,7 +39,7 @@ const EnableDisableUserModal = ({
       type='warning'
     >
       {isDisable ? t('此操作将禁用用户账户') : t('此操作将启用用户账户')}
-    </Modal>
+    </ModalPro>
   );
 };
 

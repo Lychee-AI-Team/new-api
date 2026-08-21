@@ -18,11 +18,11 @@ For commercial licensing, please contact support@quantumnous.com
 */
 
 import React from 'react';
-import { Modal } from '@douyinfe/semi-ui';
+import ModalPro from '@/components/common/ui/ModalPro';
 
 const PromoteUserModal = ({ visible, onCancel, onConfirm, user, t }) => {
   return (
-    <Modal
+    <ModalPro
       title={t('确定要提升此用户吗？')}
       visible={visible}
       onCancel={onCancel}
@@ -30,7 +30,7 @@ const PromoteUserModal = ({ visible, onCancel, onConfirm, user, t }) => {
       type='warning'
     >
       {t('此操作将提升用户的权限级别')}
-    </Modal>
+    </ModalPro>
   );
 };
 

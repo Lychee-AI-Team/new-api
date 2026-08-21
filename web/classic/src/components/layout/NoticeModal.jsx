@@ -18,14 +18,7 @@ For commercial licensing, please contact support@quantumnous.com
 */
 
 import React, { useEffect, useState, useContext, useMemo } from 'react';
-import {
-  Button,
-  Modal,
-  Empty,
-  Tabs,
-  TabPane,
-  Timeline,
-} from '@douyinfe/semi-ui';
+import { Button, Empty, Tabs, TabPane, Timeline } from '@douyinfe/semi-ui'
 import { useTranslation } from 'react-i18next';
 import { API, showError, getRelativeTime } from '../../helpers';
 import { marked } from 'marked';
@@ -35,6 +28,7 @@ import {
 } from '@douyinfe/semi-illustrations';
 import { StatusContext } from '../../context/Status';
 import { Bell, Megaphone } from 'lucide-react';
+import ModalPro from '@/components/common/ui/ModalPro';
 
 const NoticeModal = ({
   visible,
@@ -209,7 +203,7 @@ const NoticeModal = ({
   };
 
   return (
-    <Modal
+    <ModalPro
       title={
         <div className='flex items-center justify-between w-full'>
           <span>{t('系统公告')}</span>
@@ -248,7 +242,7 @@ const NoticeModal = ({
       size={isMobile ? 'full-width' : 'large'}
     >
       {renderBody()}
-    </Modal>
+    </ModalPro>
   );
 };
 

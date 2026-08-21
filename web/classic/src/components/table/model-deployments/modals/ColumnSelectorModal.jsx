@@ -18,7 +18,8 @@ For commercial licensing, please contact support@quantumnous.com
 */
 
 import React, { useMemo } from 'react';
-import { Modal, Button, Checkbox } from '@douyinfe/semi-ui';
+import { Button, Checkbox } from '@douyinfe/semi-ui'
+import ModalPro from '@/components/common/ui/ModalPro';
 
 const ColumnSelectorModal = ({
   visible,
@@ -79,16 +80,31 @@ const ColumnSelectorModal = ({
   const handleConfirm = () => onCancel();
 
   return (
-    <Modal
+    <ModalPro
       title={t('列设置')}
       visible={visible}
       onCancel={onCancel}
       footer={
-        <div className='flex justify-end gap-2'>
-          <Button onClick={handleReset}>{t('重置')}</Button>
-          <Button onClick={onCancel}>{t('取消')}</Button>
-          <Button type='primary' onClick={handleConfirm}>
-            {t('确定')}
+        <div className='flex justify-end gap-3'>
+          <Button
+            className='column-selector-btn-secondary'
+            onClick={handleReset}
+          >
+            {t('重 置')}
+          </Button>
+          <Button
+            className='column-selector-btn-secondary'
+            onClick={onCancel}
+          >
+            {t('取 消')}
+          </Button>
+          <Button
+            theme='solid'
+            type='primary'
+            className='column-selector-btn-primary'
+            onClick={handleConfirm}
+          >
+            {t('确 认')}
           </Button>
         </div>
       }
@@ -120,7 +136,7 @@ const ColumnSelectorModal = ({
           </div>
         ))}
       </div>
-    </Modal>
+    </ModalPro>
   );
 };
 

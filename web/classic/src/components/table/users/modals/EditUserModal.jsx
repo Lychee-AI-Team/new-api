@@ -31,23 +31,7 @@ import {
   displayAmountToQuota,
 } from '../../../../helpers/quota';
 import { useIsMobile } from '../../../../hooks/common/useIsMobile';
-import {
-  Button,
-  Modal,
-  SideSheet,
-  Space,
-  Spin,
-  Typography,
-  Card,
-  Tag,
-  Form,
-  Avatar,
-  Row,
-  Col,
-  InputNumber,
-  RadioGroup,
-  Radio,
-} from '@douyinfe/semi-ui';
+import { Button, SideSheet, Space, Spin, Typography, Card, Tag, Form, Avatar, Row, Col, InputNumber, RadioGroup, Radio } from '@douyinfe/semi-ui'
 import {
   IconUser,
   IconSave,
@@ -57,6 +41,7 @@ import {
   IconEdit,
 } from '@douyinfe/semi-icons';
 import UserBindingManagementModal from './UserBindingManagementModal';
+import ModalPro from '@/components/common/ui/ModalPro';
 
 const { Text, Title } = Typography;
 
@@ -245,6 +230,7 @@ const EditUserModal = (props) => {
             <Space>
               <Button
                 theme='solid'
+                type='primary'
                 onClick={() => formApiRef.current?.submitForm()}
                 icon={<IconSave />}
                 loading={loading}
@@ -461,7 +447,7 @@ const EditUserModal = (props) => {
       />
 
       {/* 调整额度模态框 */}
-      <Modal
+      <ModalPro
         centered
         visible={adjustModalOpen}
         onOk={adjustQuota}
@@ -563,7 +549,7 @@ const EditUserModal = (props) => {
             step={500000}
           />
         </div>
-      </Modal>
+      </ModalPro>
     </>
   );
 };

@@ -55,12 +55,16 @@ const HeaderLogo = ({
             width={120}
             height={24}
           >
-            <Typography.Title
-              heading={4}
-              className='!text-lg !font-semibold !mb-0'
+            <span
+              style={{
+                fontSize: '18px',
+                fontWeight: 700,
+                color: 'var(--header-system-name)',
+                fontFamily: 'Inter, sans-serif',
+              }}
             >
               {systemName}
-            </Typography.Title>
+            </span>
           </SkeletonWrapper>
           {(isSelfUseMode || isDemoSiteMode) && !isLoading && (
             <Tag

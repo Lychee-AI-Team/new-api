@@ -18,26 +18,7 @@ For commercial licensing, please contact support@quantumnous.com
 */
 
 import React, { useState, useEffect, useMemo, useRef } from 'react';
-import {
-  Modal,
-  Form,
-  Input,
-  Select,
-  InputNumber,
-  Switch,
-  Collapse,
-  Card,
-  Divider,
-  Button,
-  Typography,
-  Space,
-  Spin,
-  Tag,
-  Row,
-  Col,
-  Tooltip,
-  Radio,
-} from '@douyinfe/semi-ui';
+import { Form, Input, Select, InputNumber, Switch, Collapse, Card, Divider, Button, Typography, Space, Spin, Tag, Row, Col, Tooltip, Radio } from '@douyinfe/semi-ui'
 import {
   IconPlus,
   IconMinus,
@@ -46,6 +27,7 @@ import {
 } from '@douyinfe/semi-icons';
 import { API } from '../../../../helpers';
 import { showError, showSuccess, copy } from '../../../../helpers';
+import ModalPro from '@/components/common/ui/ModalPro';
 
 const { Text, Title } = Typography;
 const { Option } = Select;
@@ -834,7 +816,7 @@ const CreateDeploymentModal = ({ visible, onCancel, onSuccess, t }) => {
   }, [maxAvailableReplicas, replicaCount, visible, formApi]);
 
   return (
-    <Modal
+    <ModalPro
       title={t('新建容器部署')}
       visible={visible}
       onCancel={onCancel}
@@ -1504,7 +1486,7 @@ const CreateDeploymentModal = ({ visible, onCancel, onSuccess, t }) => {
           </Card>
         </div>
       </Form>
-    </Modal>
+    </ModalPro>
   );
 };
 

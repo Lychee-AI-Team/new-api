@@ -18,23 +18,7 @@ For commercial licensing, please contact support@quantumnous.com
 */
 
 import React, { useEffect, useMemo, useRef, useState } from 'react';
-import {
-  Banner,
-  Button,
-  Col,
-  Collapse,
-  Divider,
-  Form,
-  Input,
-  Modal,
-  Row,
-  Select,
-  Space,
-  Spin,
-  Table,
-  Tag,
-  Typography,
-} from '@douyinfe/semi-ui';
+import { Banner, Button, Col, Collapse, Divider, Form, Input, Row, Select, Space, Spin, Table, Tag, Typography } from '@douyinfe/semi-ui'
 import {
   IconClose,
   IconCode,
@@ -59,6 +43,7 @@ import {
   cloneChannelAffinityTemplate,
 } from '../../../constants/channel-affinity-template.constants';
 import ParamOverrideEditorModal from '../../../components/table/channels/modals/ParamOverrideEditorModal';
+import ModalPro from '@/components/common/ui/ModalPro';
 
 const KEY_ENABLED = 'channel_affinity_setting.enabled';
 const KEY_SWITCH_ON_SUCCESS = 'channel_affinity_setting.switch_on_success';
@@ -344,7 +329,7 @@ export default function SettingsChannelAffinity(props) {
       showWarning(t('该规则未设置参数覆盖模板'));
       return;
     }
-    Modal.info({
+    ModalPro.info({
       title: t('参数覆盖模板预览'),
       content: (
         <div style={{ marginTop: 6, paddingBottom: 10 }}>
@@ -389,7 +374,7 @@ export default function SettingsChannelAffinity(props) {
   };
 
   const confirmClearAllCache = () => {
-    Modal.confirm({
+    ModalPro.confirm({
       title: t('确认清空全部渠道亲和性缓存'),
       content: (
         <div style={{ lineHeight: '1.6' }}>
@@ -420,7 +405,7 @@ export default function SettingsChannelAffinity(props) {
       );
       return;
     }
-    Modal.confirm({
+    ModalPro.confirm({
       title: t('确认清空该规则缓存'),
       content: (
         <div style={{ lineHeight: '1.6' }}>
@@ -506,7 +491,7 @@ export default function SettingsChannelAffinity(props) {
       return;
     }
 
-    Modal.confirm({
+    ModalPro.confirm({
       title: t('填充 Codex CLI / Claude CLI 模版'),
       content: (
         <div style={{ lineHeight: '1.6' }}>
@@ -1068,7 +1053,7 @@ export default function SettingsChannelAffinity(props) {
         </Form>
       </Spin>
 
-      <Modal
+      <ModalPro
         title={isEdit ? t('编辑规则') : t('新增规则')}
         visible={modalVisible}
         onCancel={() => {
@@ -1396,7 +1381,7 @@ export default function SettingsChannelAffinity(props) {
             size='small'
           />
         </Form>
-      </Modal>
+      </ModalPro>
 
       <ParamOverrideEditorModal
         visible={paramTemplateEditorVisible}

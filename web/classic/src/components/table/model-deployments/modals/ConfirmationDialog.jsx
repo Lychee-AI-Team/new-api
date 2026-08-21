@@ -18,7 +18,8 @@ For commercial licensing, please contact support@quantumnous.com
 */
 
 import React, { useState, useEffect } from 'react';
-import { Modal, Typography, Input } from '@douyinfe/semi-ui';
+import { Typography, Input } from '@douyinfe/semi-ui'
+import ModalPro from '@/components/common/ui/ModalPro';
 
 const { Text } = Typography;
 
@@ -56,7 +57,7 @@ const ConfirmationDialog = ({
   };
 
   return (
-    <Modal
+    <ModalPro
       title={title}
       visible={visible}
       onCancel={handleCancel}
@@ -92,7 +93,7 @@ const ConfirmationDialog = ({
           </Text>
         )}
       </div>
-    </Modal>
+    </ModalPro>
   );
 };
 

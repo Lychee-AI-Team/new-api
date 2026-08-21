@@ -19,27 +19,14 @@ For commercial licensing, please contact support@quantumnous.com
 
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import {
-  Button,
-  Card,
-  Col,
-  Collapse,
-  Input,
-  Modal,
-  Row,
-  Select,
-  Space,
-  Switch,
-  Tag,
-  TextArea,
-  Typography,
-} from '@douyinfe/semi-ui';
+import { Button, Card, Col, Collapse, Input, Row, Select, Space, Switch, Tag, TextArea, Typography } from '@douyinfe/semi-ui'
 import { IconDelete, IconMenu, IconPlus } from '@douyinfe/semi-icons';
 import { copy, showError, showSuccess, verifyJSON } from '../../../../helpers';
 import {
   CLAUDE_CLI_HEADER_PASSTHROUGH_TEMPLATE,
   CODEX_CLI_HEADER_PASSTHROUGH_TEMPLATE,
 } from '../../../../constants/channel-affinity-template.constants';
+import ModalPro from '@/components/common/ui/ModalPro';
 
 const { Text } = Typography;
 
@@ -1891,7 +1878,7 @@ const ParamOverrideEditorModal = ({ visible, value, onSave, onCancel }) => {
 
   return (
     <>
-      <Modal
+      <ModalPro
       title={t('参数覆盖')}
       visible={visible}
       width={1120}
@@ -3324,9 +3311,9 @@ const ParamOverrideEditorModal = ({ visible, value, onSave, onCancel }) => {
           </div>
         )}
       </Space>
-      </Modal>
+      </ModalPro>
 
-      <Modal
+      <ModalPro
         title={t('anthropic-beta JSON 示例')}
         visible={headerValueExampleVisible}
         width={760}
@@ -3345,9 +3332,9 @@ const ParamOverrideEditorModal = ({ visible, value, onSave, onCancel }) => {
             style={{ marginBottom: 8 }}
           />
         </Space>
-      </Modal>
+      </ModalPro>
 
-      <Modal
+      <ModalPro
         title={null}
         visible={fieldGuideVisible}
         width={860}
@@ -3503,7 +3490,7 @@ const ParamOverrideEditorModal = ({ visible, value, onSave, onCancel }) => {
             </div>
           )}
         </Space>
-      </Modal>
+      </ModalPro>
     </>
   );
 };

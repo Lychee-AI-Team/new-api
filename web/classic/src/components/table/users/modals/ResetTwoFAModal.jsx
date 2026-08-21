@@ -18,11 +18,11 @@ For commercial licensing, please contact support@quantumnous.com
 */
 
 import React from 'react';
-import { Modal } from '@douyinfe/semi-ui';
+import ModalPro from '@/components/common/ui/ModalPro';
 
 const ResetTwoFAModal = ({ visible, onCancel, onConfirm, user, t }) => {
   return (
-    <Modal
+    <ModalPro
       title={t('确认重置两步验证')}
       visible={visible}
       onCancel={onCancel}
@@ -35,7 +35,7 @@ const ResetTwoFAModal = ({ visible, onCancel, onConfirm, user, t }) => {
       {user?.username
         ? t('目标用户：{{username}}', { username: user.username })
         : ''}
-    </Modal>
+    </ModalPro>
   );
 };
 

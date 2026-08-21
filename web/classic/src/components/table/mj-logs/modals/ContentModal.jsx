@@ -18,7 +18,8 @@ For commercial licensing, please contact support@quantumnous.com
 */
 
 import React from 'react';
-import { Modal, ImagePreview } from '@douyinfe/semi-ui';
+import { ImagePreview } from '@douyinfe/semi-ui'
+import ModalPro from '@/components/common/ui/ModalPro';
 
 const ContentModal = ({
   isModalOpen,
@@ -30,8 +31,8 @@ const ContentModal = ({
 }) => {
   return (
     <>
-      {/* Text Content Modal */}
-      <Modal
+      {/* Text Content ModalPro */}
+      <ModalPro
         visible={isModalOpen}
         onOk={() => setIsModalOpen(false)}
         onCancel={() => setIsModalOpen(false)}
@@ -40,9 +41,9 @@ const ContentModal = ({
         width={800}
       >
         <p style={{ whiteSpace: 'pre-line' }}>{modalContent}</p>
-      </Modal>
+      </ModalPro>
 
-      {/* Image Preview Modal */}
+      {/* Image Preview ModalPro */}
       <ImagePreview
         src={modalImageUrl}
         visible={isModalOpenurl}

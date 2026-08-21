@@ -18,21 +18,7 @@ For commercial licensing, please contact support@quantumnous.com
 */
 
 import React from 'react';
-import {
-  Button,
-  Dropdown,
-  Space,
-  SplitButtonGroup,
-  Tag,
-  AvatarGroup,
-  Avatar,
-  Tooltip,
-  Progress,
-  Popover,
-  Typography,
-  Input,
-  Modal,
-} from '@douyinfe/semi-ui';
+import { Button, Dropdown, Space, SplitButtonGroup, Tag, AvatarGroup, Avatar, Tooltip, Progress, Popover, Typography, Input } from '@douyinfe/semi-ui'
 import {
   timestamp2string,
   renderGroup,
@@ -46,6 +32,7 @@ import {
   IconEyeOpened,
   IconEyeClosed,
 } from '@douyinfe/semi-icons';
+import ModalPro from '@/components/common/ui/ModalPro';
 
 // progress color helper
 const getProgressColor = (pct) => {
@@ -448,7 +435,7 @@ const renderOperations = (
         type='danger'
         size='small'
         onClick={() => {
-          Modal.confirm({
+          ModalPro.confirm({
             title: t('确定是否要删除此令牌？'),
             content: t('此修改将不可逆'),
             onOk: () => {

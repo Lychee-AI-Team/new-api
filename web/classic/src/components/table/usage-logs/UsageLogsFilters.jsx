@@ -154,7 +154,7 @@ const LogsFilters = ({
 
           <div className='flex gap-2 w-full sm:w-auto justify-end'>
             <Button
-              type='tertiary'
+              className='btn-gradient-primary'
               htmlType='submit'
               loading={loading}
               size='small'

@@ -17,17 +17,10 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
 For commercial licensing, please contact support@quantumnous.com
 */
 import React, { useState, useEffect, useMemo } from 'react';
-import {
-  Modal,
-  RadioGroup,
-  Radio,
-  Select,
-  Input,
-  Toast,
-  Typography,
-} from '@douyinfe/semi-ui';
+import { RadioGroup, Radio, Select, Input, Toast, Typography } from '@douyinfe/semi-ui'
 import { useTranslation } from 'react-i18next';
 import { selectFilter } from '../../../../helpers';
+import ModalPro from '@/components/common/ui/ModalPro';
 
 const APP_CONFIGS = {
   claude: {
@@ -131,7 +124,7 @@ export default function CCSwitchModal({
   );
 
   return (
-    <Modal
+    <ModalPro
       title={t('填入 CC Switch')}
       visible={visible}
       onCancel={onClose}
@@ -189,6 +182,6 @@ export default function CCSwitchModal({
           </div>
         ))}
       </div>
-    </Modal>
+    </ModalPro>
   );
 }

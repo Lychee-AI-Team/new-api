@@ -32,27 +32,14 @@ import {
   displayAmountToQuota,
 } from '../../../../helpers/quota';
 import { useIsMobile } from '../../../../hooks/common/useIsMobile';
-import {
-  Button,
-  Modal,
-  SideSheet,
-  Space,
-  Spin,
-  Typography,
-  Card,
-  Tag,
-  Form,
-  Avatar,
-  Row,
-  Col,
-  InputNumber,
-} from '@douyinfe/semi-ui';
+import { Button, SideSheet, Space, Spin, Typography, Card, Tag, Form, Avatar, Row, Col, InputNumber } from '@douyinfe/semi-ui'
 import {
   IconCreditCard,
   IconSave,
   IconClose,
   IconGift,
 } from '@douyinfe/semi-icons';
+import ModalPro from '@/components/common/ui/ModalPro';
 
 const { Text, Title } = Typography;
 
@@ -157,7 +144,7 @@ const EditRedemptionModal = (props) => {
       for (let i = 0; i < data.length; i++) {
         text += data[i] + '\n';
       }
-      Modal.confirm({
+      ModalPro.confirm({
         title: t('兑换码创建成功'),
         content: (
           <div>

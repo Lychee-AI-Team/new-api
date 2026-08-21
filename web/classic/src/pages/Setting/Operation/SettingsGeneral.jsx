@@ -18,17 +18,7 @@ For commercial licensing, please contact support@quantumnous.com
 */
 
 import React, { useEffect, useState, useRef, useMemo } from 'react';
-import {
-  Banner,
-  Button,
-  Col,
-  Form,
-  Row,
-  Spin,
-  Modal,
-  Input,
-  Typography,
-} from '@douyinfe/semi-ui';
+import { Banner, Button, Col, Form, Row, Spin, Input, Typography } from '@douyinfe/semi-ui'
 import {
   compareObjects,
   API,
@@ -37,6 +27,7 @@ import {
   showWarning,
 } from '../../../helpers';
 import { useTranslation } from 'react-i18next';
+import ModalPro from '@/components/common/ui/ModalPro';
 
 const { Text } = Typography;
 
@@ -413,7 +404,7 @@ export default function GeneralSettings(props) {
         </Form>
       </Spin>
 
-      <Modal
+      <ModalPro
         title={t('警告')}
         visible={showQuotaWarning}
         onOk={() => setShowQuotaWarning(false)}
@@ -430,7 +421,7 @@ export default function GeneralSettings(props) {
           fullMode={false}
           closeIcon={null}
         />
-      </Modal>
+      </ModalPro>
     </>
   );
 }

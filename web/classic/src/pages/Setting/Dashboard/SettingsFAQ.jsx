@@ -18,18 +18,7 @@ For commercial licensing, please contact support@quantumnous.com
 */
 
 import React, { useEffect, useState } from 'react';
-import {
-  Button,
-  Space,
-  Table,
-  Form,
-  Typography,
-  Empty,
-  Divider,
-  Modal,
-  Switch,
-  Tooltip,
-} from '@douyinfe/semi-ui';
+import { Button, Space, Table, Form, Typography, Empty, Divider, Switch, Tooltip } from '@douyinfe/semi-ui'
 import {
   IllustrationNoResult,
   IllustrationNoResultDark,
@@ -37,6 +26,7 @@ import {
 import { Plus, Edit, Trash2, Save, HelpCircle } from 'lucide-react';
 import { API, showError, showSuccess } from '../../../helpers';
 import { useTranslation } from 'react-i18next';
+import ModalPro from '@/components/common/ui/ModalPro';
 
 const { Text } = Typography;
 
@@ -430,7 +420,7 @@ const SettingsFAQ = ({ options, refresh }) => {
         />
       </Form.Section>
 
-      <Modal
+      <ModalPro
         title={editingFaq ? t('编辑问答') : t('添加问答')}
         visible={showFaqModal}
         onOk={handleSaveFaq}
@@ -463,9 +453,9 @@ const SettingsFAQ = ({ options, refresh }) => {
             onChange={(value) => setFaqForm({ ...faqForm, answer: value })}
           />
         </Form>
-      </Modal>
+      </ModalPro>
 
-      <Modal
+      <ModalPro
         title={t('确认删除')}
         visible={showDeleteModal}
         onOk={confirmDeleteFaq}
@@ -482,7 +472,7 @@ const SettingsFAQ = ({ options, refresh }) => {
         }}
       >
         <Text>{t('确定要删除此问答吗？')}</Text>
-      </Modal>
+      </ModalPro>
     </>
   );
 };

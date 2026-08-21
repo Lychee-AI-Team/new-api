@@ -18,7 +18,8 @@ For commercial licensing, please contact support@quantumnous.com
 */
 
 import React from 'react';
-import { Modal, Button, Space } from '@douyinfe/semi-ui';
+import { Button, Space } from '@douyinfe/semi-ui'
+import ModalPro from '@/components/common/ui/ModalPro';
 
 const CopyTokensModal = ({
   visible,
@@ -39,7 +40,7 @@ const CopyTokensModal = ({
   };
 
   return (
-    <Modal
+    <ModalPro
       title={t('复制令牌')}
       icon={null}
       visible={visible}
@@ -54,7 +55,7 @@ const CopyTokensModal = ({
       }
     >
       {t('请选择你的复制方式')}
-    </Modal>
+    </ModalPro>
   );
 };
 

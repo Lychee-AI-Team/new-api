@@ -28,28 +28,7 @@ import {
 } from '../../../../helpers';
 import { useIsMobile } from '../../../../hooks/common/useIsMobile';
 import { CHANNEL_OPTIONS, MODEL_FETCHABLE_CHANNEL_TYPES } from '../../../../constants';
-import {
-  SideSheet,
-  Space,
-  Spin,
-  Button,
-  Typography,
-  Checkbox,
-  Banner,
-  Modal,
-  ImagePreview,
-  Card,
-  Tag,
-  Avatar,
-  Form,
-  Row,
-  Col,
-  Highlight,
-  Input,
-  Tooltip,
-  Collapse,
-  Dropdown,
-} from '@douyinfe/semi-ui';
+import { SideSheet, Space, Spin, Button, Typography, Checkbox, Banner, ImagePreview, Card, Tag, Avatar, Form, Row, Col, Highlight, Input, Tooltip, Collapse, Dropdown } from '@douyinfe/semi-ui'
 import {
   getChannelModels,
   copy,
@@ -85,6 +64,7 @@ import {
   IconSearch,
   IconChevronDown,
 } from '@douyinfe/semi-icons';
+import ModalPro from '@/components/common/ui/ModalPro';
 
 const { Text, Title } = Typography;
 
@@ -617,7 +597,7 @@ const EditChannelModal = (props) => {
     }
 
     if (name === 'base_url' && value.endsWith('/v1')) {
-      Modal.confirm({
+      ModalPro.confirm({
         title: '警告',
         content:
           '不需要在末尾加/v1，New API会自动处理，添加后可能导致请求失败，是否继续？',
@@ -1453,7 +1433,7 @@ const EditChannelModal = (props) => {
 
   const confirmMissingModelMappings = (missingModels) =>
     new Promise((resolve) => {
-      const modal = Modal.confirm({
+      const modal = ModalPro.confirm({
         title: t('模型未加入列表，可能无法调用'),
         content: (
           <div className='text-sm leading-6'>
@@ -1989,7 +1969,7 @@ const EditChannelModal = (props) => {
             const checked = e.target.checked;
 
             if (!checked && vertexFileList.length > 1) {
-              Modal.confirm({
+              ModalPro.confirm({
                 title: t('切换为单密钥模式'),
                 content: t(
                   '将仅保留第一个密钥文件，其余文件将被移除，是否继续？',
@@ -2184,6 +2164,7 @@ const EditChannelModal = (props) => {
           <div className='flex justify-end items-center gap-2'>
             <Button
               theme='solid'
+              type='primary'
               onClick={() => formApiRef.current?.submitForm()}
               icon={<IconSave />}
             >
@@ -3805,7 +3786,7 @@ const EditChannelModal = (props) => {
       />
 
       {/* 使用ChannelKeyDisplay组件显示密钥 */}
-      <Modal
+      <ModalPro
         title={
           <div className='flex items-center'>
             <div className='w-8 h-8 rounded-full bg-green-100 dark:bg-green-900 flex items-center justify-center mr-3'>
@@ -3843,7 +3824,7 @@ const EditChannelModal = (props) => {
             '请妥善保管密钥信息，不要泄露给他人。如有安全疑虑，请及时更换密钥。',
           )}
         />
-      </Modal>
+      </ModalPro>
 
       <ParamOverrideEditorModal
         visible={paramOverrideEditorVisible}

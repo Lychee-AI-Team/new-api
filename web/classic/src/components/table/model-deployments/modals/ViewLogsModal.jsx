@@ -18,22 +18,7 @@ For commercial licensing, please contact support@quantumnous.com
 */
 
 import React, { useState, useEffect, useRef } from 'react';
-import {
-  Modal,
-  Button,
-  Typography,
-  Select,
-  Input,
-  Space,
-  Spin,
-  Card,
-  Tag,
-  Empty,
-  Switch,
-  Divider,
-  Tooltip,
-  Radio,
-} from '@douyinfe/semi-ui';
+import { Button, Typography, Select, Input, Space, Spin, Card, Tag, Empty, Switch, Divider, Tooltip, Radio } from '@douyinfe/semi-ui'
 import {
   FaCopy,
   FaSearch,
@@ -51,6 +36,7 @@ import {
   copy,
   timestamp2string,
 } from '../../../../helpers';
+import ModalPro from '@/components/common/ui/ModalPro';
 
 const { Text } = Typography;
 
@@ -391,7 +377,7 @@ const ViewLogsModal = ({ visible, onCancel, deployment, t }) => {
   );
 
   return (
-    <Modal
+    <ModalPro
       title={
         <div className='flex items-center gap-2'>
           <FaTerminal className='text-blue-500' />
@@ -716,7 +702,7 @@ const ViewLogsModal = ({ visible, onCancel, deployment, t }) => {
           )}
         </div>
       </div>
-    </Modal>
+    </ModalPro>
   );
 };
 

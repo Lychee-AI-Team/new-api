@@ -18,16 +18,7 @@ For commercial licensing, please contact support@quantumnous.com
 */
 
 import React, { useEffect, useMemo, useState } from 'react';
-import {
-  Button,
-  Empty,
-  Modal,
-  Select,
-  SideSheet,
-  Space,
-  Tag,
-  Typography,
-} from '@douyinfe/semi-ui';
+import { Button, Empty, Select, SideSheet, Space, Tag, Typography } from '@douyinfe/semi-ui'
 import { IconPlusCircle } from '@douyinfe/semi-icons';
 import {
   IllustrationNoResult,
@@ -37,6 +28,7 @@ import { API, showError, showSuccess } from '../../../../helpers';
 import { convertUSDToCurrency } from '../../../../helpers/render';
 import { useIsMobile } from '../../../../hooks/common/useIsMobile';
 import CardTable from '../../../common/ui/CardTable';
+import ModalPro from '@/components/common/ui/ModalPro';
 
 const { Text } = Typography;
 
@@ -195,7 +187,7 @@ const UserSubscriptionsModal = ({ visible, onCancel, user, t, onSuccess }) => {
   };
 
   const invalidateSubscription = (subId) => {
-    Modal.confirm({
+    ModalPro.confirm({
       title: t('确认作废'),
       content: t('作废后该订阅将立即失效，历史记录不受影响。是否继续？'),
       centered: true,
@@ -220,7 +212,7 @@ const UserSubscriptionsModal = ({ visible, onCancel, user, t, onSuccess }) => {
   };
 
   const deleteSubscription = (subId) => {
-    Modal.confirm({
+    ModalPro.confirm({
       title: t('确认删除'),
       content: t('删除会彻底移除该订阅记录（含权益明细）。是否继续？'),
       centered: true,

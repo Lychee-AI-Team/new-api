@@ -18,9 +18,10 @@ For commercial licensing, please contact support@quantumnous.com
 */
 
 import React, { useState, useEffect } from 'react';
-import { Modal, Button, Typography, Spin } from '@douyinfe/semi-ui';
+import { Button, Typography, Spin } from '@douyinfe/semi-ui'
 import { IconExternalOpen, IconCopy } from '@douyinfe/semi-icons';
 import { useTranslation } from 'react-i18next';
+import ModalPro from '@/components/common/ui/ModalPro';
 
 const { Text } = Typography;
 
@@ -242,7 +243,7 @@ const ContentModal = ({
   const isMediaModal = isVideo || isImage;
 
   return (
-    <Modal
+    <ModalPro
       visible={isModalOpen}
       onOk={() => setIsModalOpen(false)}
       onCancel={() => setIsModalOpen(false)}
@@ -264,7 +265,7 @@ const ContentModal = ({
       ) : (
         <p style={{ whiteSpace: 'pre-line' }}>{modalContent}</p>
       )}
-    </Modal>
+    </ModalPro>
   );
 };
 

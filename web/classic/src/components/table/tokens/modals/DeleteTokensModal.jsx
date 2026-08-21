@@ -18,7 +18,7 @@ For commercial licensing, please contact support@quantumnous.com
 */
 
 import React from 'react';
-import { Modal } from '@douyinfe/semi-ui';
+import ModalPro from '@/components/common/ui/ModalPro';
 
 const DeleteTokensModal = ({
   visible,
@@ -28,7 +28,7 @@ const DeleteTokensModal = ({
   t,
 }) => {
   return (
-    <Modal
+    <ModalPro
       title={t('批量删除令牌')}
       visible={visible}
       onCancel={onCancel}
@@ -40,7 +40,7 @@ const DeleteTokensModal = ({
           count: selectedKeys.length,
         })}
       </div>
-    </Modal>
+    </ModalPro>
   );
 };
 

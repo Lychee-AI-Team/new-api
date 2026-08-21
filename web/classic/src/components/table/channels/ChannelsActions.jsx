@@ -18,15 +18,9 @@ For commercial licensing, please contact support@quantumnous.com
 */
 
 import React from 'react';
-import {
-  Button,
-  Dropdown,
-  Modal,
-  Switch,
-  Typography,
-  Select,
-} from '@douyinfe/semi-ui';
+import { Button, Dropdown, Switch, Typography, Select } from '@douyinfe/semi-ui'
 import CompactModeToggle from '../../common/ui/CompactModeToggle';
+import ModalPro from '@/components/common/ui/ModalPro';
 
 const ChannelsActions = ({
   enableBatchDelete,
@@ -70,7 +64,7 @@ const ChannelsActions = ({
             type='danger'
             className='w-full md:w-auto'
             onClick={() => {
-              Modal.confirm({
+              ModalPro.confirm({
                 title: t('确定是否要删除所选通道？'),
                 content: t('此修改将不可逆'),
                 onOk: () => batchDeleteChannels(),
@@ -103,7 +97,7 @@ const ChannelsActions = ({
                     loading={detectAllUpstreamUpdatesLoading}
                     disabled={detectAllUpstreamUpdatesLoading}
                     onClick={() => {
-                      Modal.confirm({
+                      ModalPro.confirm({
                         title: t('确定？'),
                         content: t('确定要测试所有未手动禁用渠道吗？'),
                         onOk: () => testAllChannels(),
@@ -120,7 +114,7 @@ const ChannelsActions = ({
                     size='small'
                     className='w-full'
                     onClick={() => {
-                      Modal.confirm({
+                      ModalPro.confirm({
                         title: t('确定是否要修复数据库一致性？'),
                         content: t(
                           '进行该操作时，可能导致渠道访问错误，请仅在数据库出现问题时使用',
@@ -140,7 +134,7 @@ const ChannelsActions = ({
                     type='secondary'
                     className='w-full'
                     onClick={() => {
-                      Modal.confirm({
+                      ModalPro.confirm({
                         title: t('确定？'),
                         content: t('确定要更新所有已启用通道余额吗？'),
                         onOk: () => updateAllChannelsBalance(),
@@ -158,7 +152,7 @@ const ChannelsActions = ({
                     type='tertiary'
                     className='w-full'
                     onClick={() => {
-                      Modal.confirm({
+                      ModalPro.confirm({
                         title: t('确定？'),
                         content: t(
                           '确定要仅检测全部渠道上游模型更新吗？（不执行新增/删除）',
@@ -180,7 +174,7 @@ const ChannelsActions = ({
                     loading={applyAllUpstreamUpdatesLoading}
                     disabled={applyAllUpstreamUpdatesLoading}
                     onClick={() => {
-                      Modal.confirm({
+                      ModalPro.confirm({
                         title: t('确定？'),
                         content: t('确定要对全部渠道执行上游模型更新吗？'),
                         onOk: () => applyAllUpstreamUpdates(),
@@ -198,7 +192,7 @@ const ChannelsActions = ({
                     type='danger'
                     className='w-full'
                     onClick={() => {
-                      Modal.confirm({
+                      ModalPro.confirm({
                         title: t('确定是否要删除禁用通道？'),
                         content: t('此修改将不可逆'),
                         onOk: () => deleteAllDisabledChannels(),

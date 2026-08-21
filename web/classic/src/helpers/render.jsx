@@ -18,7 +18,7 @@ For commercial licensing, please contact support@quantumnous.com
 */
 
 import i18next from 'i18next';
-import { Modal, Tag, Typography, Avatar } from '@douyinfe/semi-ui';
+import { Tag, Typography, Avatar } from '@douyinfe/semi-ui'
 import { copy, showSuccess } from './utils';
 import { MOBILE_BREAKPOINT } from '../hooks/common/useIsMobile';
 import {
@@ -80,6 +80,7 @@ import {
   Package,
   Server,
   CalendarClock,
+  UserPlus,
 } from 'lucide-react';
 import {
   SiAtlassian,
@@ -106,17 +107,18 @@ import {
   SiWechat,
   SiX,
 } from 'react-icons/si';
+import ModalPro from '@/components/common/ui/ModalPro';
 
 // 获取侧边栏Lucide图标组件
 export function getLucideIcon(key, selected = false) {
   const size = 16;
   const strokeWidth = 2;
-  const SELECTED_COLOR = 'var(--semi-color-primary)';
+  const SELECTED_COLOR = 'var(--sidebar-item-active-color)';
   const iconColor = selected ? SELECTED_COLOR : 'currentColor';
   const commonProps = {
     size,
     strokeWidth,
-    className: `transition-colors duration-200 ${selected ? 'transition-transform duration-200 scale-105' : ''}`,
+    className: `transition-colors duration-200`,
   };
 
   // 根据不同的key返回不同的图标
@@ -137,6 +139,8 @@ export function getLucideIcon(key, selected = false) {
       return <CheckSquare {...commonProps} color={iconColor} />;
     case 'topup':
       return <CreditCard {...commonProps} color={iconColor} />;
+    case 'invite':
+      return <UserPlus {...commonProps} color={iconColor} />;
     case 'channel':
       return <Layers {...commonProps} color={iconColor} />;
     case 'redemption':
@@ -813,7 +817,7 @@ export function renderGroup(group) {
             if (await copy(group)) {
               showSuccess(i18next.t('已复制：') + group);
             } else {
-              Modal.error({
+              ModalPro.error({
                 title: i18next.t('无法复制到剪贴板，请手动复制'),
                 content: group,
               });

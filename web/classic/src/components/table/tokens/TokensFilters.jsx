@@ -64,6 +64,7 @@ const TokensFilters = ({
             showClear
             pure
             size='small'
+            className='input-search-light'
           />
         </div>
 
@@ -75,15 +76,15 @@ const TokensFilters = ({
             showClear
             pure
             size='small'
+            className='input-search-light'
           />
         </div>
 
         <div className='flex gap-2 w-full md:w-auto'>
           <Button
-            type='tertiary'
+            className='btn-gradient-primary flex-1 md:flex-initial md:w-auto'
             htmlType='submit'
             loading={loading || searching}
-            className='flex-1 md:flex-initial md:w-auto'
             size='small'
           >
             {t('查询')}

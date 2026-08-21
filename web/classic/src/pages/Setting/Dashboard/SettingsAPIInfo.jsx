@@ -18,19 +18,7 @@ For commercial licensing, please contact support@quantumnous.com
 */
 
 import React, { useEffect, useState } from 'react';
-import {
-  Button,
-  Space,
-  Table,
-  Form,
-  Typography,
-  Empty,
-  Divider,
-  Avatar,
-  Modal,
-  Tag,
-  Switch,
-} from '@douyinfe/semi-ui';
+import { Button, Space, Table, Form, Typography, Empty, Divider, Avatar, Tag, Switch } from '@douyinfe/semi-ui'
 import {
   IllustrationNoResult,
   IllustrationNoResultDark,
@@ -38,6 +26,7 @@ import {
 import { Plus, Edit, Trash2, Save, Settings } from 'lucide-react';
 import { API, showError, showSuccess } from '../../../helpers';
 import { useTranslation } from 'react-i18next';
+import ModalPro from '@/components/common/ui/ModalPro';
 
 const { Text } = Typography;
 
@@ -439,7 +428,7 @@ const SettingsAPIInfo = ({ options, refresh }) => {
         />
       </Form.Section>
 
-      <Modal
+      <ModalPro
         title={editingApi ? t('编辑API') : t('添加API')}
         visible={showApiModal}
         onOk={handleSaveApi}
@@ -487,9 +476,9 @@ const SettingsAPIInfo = ({ options, refresh }) => {
             )}
           />
         </Form>
-      </Modal>
+      </ModalPro>
 
-      <Modal
+      <ModalPro
         title={t('确认删除')}
         visible={showDeleteModal}
         onOk={confirmDeleteApi}
@@ -506,7 +495,7 @@ const SettingsAPIInfo = ({ options, refresh }) => {
         }}
       >
         <Text>{t('确定要删除此API信息吗？')}</Text>
-      </Modal>
+      </ModalPro>
     </>
   );
 };

@@ -18,9 +18,10 @@ For commercial licensing, please contact support@quantumnous.com
 */
 
 import React from 'react';
-import { Input, Modal, Typography } from '@douyinfe/semi-ui';
+import { Input, Typography } from '@douyinfe/semi-ui'
 import { IconLock } from '@douyinfe/semi-icons';
 import Turnstile from 'react-turnstile';
+import ModalPro from '@/components/common/ui/ModalPro';
 
 const ChangePasswordModal = ({
   t,
@@ -34,7 +35,7 @@ const ChangePasswordModal = ({
   setTurnstileToken,
 }) => {
   return (
-    <Modal
+    <ModalPro
       title={
         <div className='flex items-center'>
           <IconLock className='mr-2 text-orange-500' />
@@ -110,7 +111,7 @@ const ChangePasswordModal = ({
           </div>
         )}
       </div>
-    </Modal>
+    </ModalPro>
   );
 };
 

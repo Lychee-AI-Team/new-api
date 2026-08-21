@@ -18,22 +18,7 @@ For commercial licensing, please contact support@quantumnous.com
 */
 
 import React, { useCallback, useMemo, useState } from 'react';
-import {
-  Banner,
-  Button,
-  Card,
-  Checkbox,
-  Empty,
-  Input,
-  Modal,
-  Radio,
-  RadioGroup,
-  Space,
-  Switch,
-  Table,
-  Tag,
-  Typography,
-} from '@douyinfe/semi-ui';
+import { Banner, Button, Card, Checkbox, Empty, Input, Radio, RadioGroup, Space, Switch, Table, Tag, Typography } from '@douyinfe/semi-ui'
 import {
   IconDelete,
   IconPlus,
@@ -50,6 +35,7 @@ import {
 } from '../hooks/useModelPricingEditorState';
 import { useIsMobile } from '../../../../hooks/common/useIsMobile';
 import TieredPricingEditor from './TieredPricingEditor';
+import ModalPro from '@/components/common/ui/ModalPro';
 
 const { Text } = Typography;
 const EMPTY_CANDIDATE_MODEL_NAMES = [];
@@ -730,7 +716,7 @@ export default function ModelPricingEditor({
       </Space>
 
       {allowAddModel ? (
-        <Modal
+        <ModalPro
           title={t('添加模型')}
           visible={addVisible}
           onCancel={() => {
@@ -744,10 +730,10 @@ export default function ModelPricingEditor({
             placeholder={t('输入模型名称，例如 gpt-4.1')}
             onChange={(value) => setNewModelName(value)}
           />
-        </Modal>
+        </ModalPro>
       ) : null}
 
-      <Modal
+      <ModalPro
         title={t('批量应用当前模型价格')}
         visible={batchVisible}
         onCancel={() => setBatchVisible(false)}
@@ -775,7 +761,7 @@ export default function ModelPricingEditor({
             )}
           </div>
         ) : null}
-      </Modal>
+      </ModalPro>
     </>
   );
 }

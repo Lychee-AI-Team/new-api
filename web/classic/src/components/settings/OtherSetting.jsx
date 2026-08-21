@@ -18,21 +18,13 @@ For commercial licensing, please contact support@quantumnous.com
 */
 
 import React, { useContext, useEffect, useRef, useState } from 'react';
-import {
-  Banner,
-  Button,
-  Col,
-  Form,
-  Row,
-  Modal,
-  Space,
-  Card,
-} from '@douyinfe/semi-ui';
+import { Banner, Button, Col, Form, Row, Space, Card } from '@douyinfe/semi-ui'
 import { API, showError, showSuccess, timestamp2string } from '../../helpers';
 import { marked } from 'marked';
 import { useTranslation } from 'react-i18next';
 import { StatusContext } from '../../context/Status';
 import Text from '@douyinfe/semi-ui/lib/es/typography/text';
+import ModalPro from '@/components/common/ui/ModalPro';
 
 const LEGAL_USER_AGREEMENT_KEY = 'legal.user_agreement';
 const LEGAL_PRIVACY_POLICY_KEY = 'legal.privacy_policy';
@@ -542,7 +534,7 @@ const OtherSetting = () => {
           </Card>
         </Form>
       </Col>
-      <Modal
+      <ModalPro
         title={t('新版本') + '：' + updateData.tag_name}
         visible={showUpdateModal}
         onCancel={() => setShowUpdateModal(false)}
@@ -560,7 +552,7 @@ const OtherSetting = () => {
         ]}
       >
         <div dangerouslySetInnerHTML={{ __html: updateData.content }}></div>
-      </Modal>
+      </ModalPro>
     </Row>
   );
 };

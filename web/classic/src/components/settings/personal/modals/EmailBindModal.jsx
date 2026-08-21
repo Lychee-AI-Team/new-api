@@ -18,9 +18,10 @@ For commercial licensing, please contact support@quantumnous.com
 */
 
 import React from 'react';
-import { Button, Input, Modal } from '@douyinfe/semi-ui';
+import { Button, Input } from '@douyinfe/semi-ui'
 import { IconMail, IconKey } from '@douyinfe/semi-icons';
 import Turnstile from 'react-turnstile';
+import ModalPro from '@/components/common/ui/ModalPro';
 
 const EmailBindModal = ({
   t,
@@ -38,7 +39,7 @@ const EmailBindModal = ({
   setTurnstileToken,
 }) => {
   return (
-    <Modal
+    <ModalPro
       title={
         <div className='flex items-center'>
           <IconMail className='mr-2 text-blue-500' />
@@ -101,7 +102,7 @@ const EmailBindModal = ({
           </div>
         )}
       </div>
-    </Modal>
+    </ModalPro>
   );
 };
 

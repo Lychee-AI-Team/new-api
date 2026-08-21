@@ -17,10 +17,11 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
 For commercial licensing, please contact support@quantumnous.com
 */
 import React, { useEffect, useState } from 'react';
-import { Modal, Typography, Button, Space } from '@douyinfe/semi-ui';
+import { Typography, Button, Space } from '@douyinfe/semi-ui'
 import { API, showError, showSuccess } from '../../../helpers';
 import { useTranslation } from 'react-i18next';
 import { CheckCircle, ExternalLink } from 'lucide-react';
+import ModalPro from '@/components/common/ui/ModalPro';
 
 const { Text } = Typography;
 
@@ -151,7 +152,7 @@ const AliPayRedirectModal = ({
   };
 
   return (
-    <Modal
+    <ModalPro
       title={t('支付宝支付')}
       visible={visible}
       onCancel={handleClose}
@@ -182,7 +183,7 @@ const AliPayRedirectModal = ({
       maskClosable={status === 'success' || status === 'expired'}
     >
       {renderContent()}
-    </Modal>
+    </ModalPro>
   );
 };
 

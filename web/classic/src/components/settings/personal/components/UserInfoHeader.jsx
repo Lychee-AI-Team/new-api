@@ -19,20 +19,12 @@ For commercial licensing, please contact support@quantumnous.com
 
 import React from 'react';
 import {
-  Avatar,
-  Card,
-  Tag,
-  Divider,
-  Typography,
-  Badge,
-} from '@douyinfe/semi-ui';
-import {
   isRoot,
   isAdmin,
   renderQuota,
   stringToColor,
 } from '../../../../helpers';
-import { Coins, BarChart2, Users } from 'lucide-react';
+import headerBg from '../../../../assets/personal/11.png';
 
 const UserInfoHeader = ({ t, userState }) => {
   const getUsername = () => {
@@ -51,169 +43,264 @@ const UserInfoHeader = ({ t, userState }) => {
     return 'NA';
   };
 
+  const getRoleLabel = () => {
+    if (isRoot()) return t('超级管理员');
+    if (isAdmin()) return t('管理员');
+    return t('普通用户');
+  };
+
   return (
-    <Card
-      className='!rounded-2xl overflow-hidden'
-      cover={
-        <div
-          className='relative h-32'
-          style={{
-            '--palette-primary-darkerChannel': '0 75 80',
-            backgroundImage: `linear-gradient(0deg, rgba(var(--palette-primary-darkerChannel) / 80%), rgba(var(--palette-primary-darkerChannel) / 80%)), url('/cover-4.webp')`,
-            backgroundSize: 'cover',
-            backgroundPosition: 'center',
-            backgroundRepeat: 'no-repeat',
-          }}
-        >
-          {/* 用户信息内容 */}
-          <div className='relative z-10 h-full flex flex-col justify-end p-6'>
-            <div className='flex items-center'>
-              <div className='flex items-stretch gap-3 sm:gap-4 flex-1 min-w-0'>
-                <Avatar size='large' color={stringToColor(getUsername())}>
-                  {getAvatarText()}
-                </Avatar>
-                <div className='flex-1 min-w-0 flex flex-col justify-between'>
-                  <div
-                    className='text-3xl font-bold truncate'
-                    style={{ color: 'white' }}
-                  >
-                    {getUsername()}
-                  </div>
-                  <div className='flex flex-wrap items-center gap-2'>
-                    {isRoot() ? (
-                      <Tag
-                        size='large'
-                        shape='circle'
-                        style={{ color: 'white' }}
-                      >
-                        {t('超级管理员')}
-                      </Tag>
-                    ) : isAdmin() ? (
-                      <Tag
-                        size='large'
-                        shape='circle'
-                        style={{ color: 'white' }}
-                      >
-                        {t('管理员')}
-                      </Tag>
-                    ) : (
-                      <Tag
-                        size='large'
-                        shape='circle'
-                        style={{ color: 'white' }}
-                      >
-                        {t('普通用户')}
-                      </Tag>
-                    )}
-                    <Tag size='large' shape='circle' style={{ color: 'white' }}>
-                      ID: {userState?.user?.id}
-                    </Tag>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      }
+    <div
+      className='relative w-full overflow-hidden'
+      style={{
+        borderRadius: '16px',
+        outline: '1px solid var(--ps-outline)',
+        outlineOffset: '-1px',
+      }}
     >
-      {/* 当前余额和桌面版统计信息 */}
-      <div className='flex items-start justify-between gap-6'>
-        {/* 当前余额显示 */}
-        <Badge count={t('当前余额')} position='rightTop' type='danger'>
-          <div className='text-2xl sm:text-3xl md:text-4xl font-bold tracking-wide'>
-            {renderQuota(userState?.user?.quota)}
-          </div>
-        </Badge>
-
-        {/* 桌面版统计信息（Semi UI 卡片） */}
-        <div className='hidden lg:block flex-shrink-0'>
-          <Card
-            size='small'
-            className='!rounded-xl'
-            bodyStyle={{ padding: '12px 16px' }}
+      {/* 上半部分：渐变背景 + 用户信息 */}
+      <div
+        className='relative w-full'
+        style={{
+          height: '128px',
+          backgroundImage: `linear-gradient(180deg, rgba(111,125,248,0.40) 0%, rgba(96,186,228,0.40) 100%), url(${headerBg})`,
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+        }}
+      >
+        <div className='absolute flex items-center gap-3' style={{ left: '24px', top: '32px' }}>
+          {/* 头像 */}
+          <div
+            className='flex items-center justify-center flex-shrink-0'
+            style={{
+              width: '72px',
+              height: '72px',
+              borderRadius: '36px',
+              background: 'linear-gradient(180deg, #89BDF9 0%, #8164FF 100%)',
+              overflow: 'hidden',
+            }}
           >
-            <div className='flex items-center gap-4'>
-              <div className='flex items-center gap-2'>
-                <Coins size={16} />
-                <Typography.Text size='small' type='tertiary'>
-                  {t('历史消耗')}
-                </Typography.Text>
-                <Typography.Text size='small' type='tertiary' strong>
-                  {renderQuota(userState?.user?.used_quota)}
-                </Typography.Text>
-              </div>
-              <Divider layout='vertical' />
-              <div className='flex items-center gap-2'>
-                <BarChart2 size={16} />
-                <Typography.Text size='small' type='tertiary'>
-                  {t('请求次数')}
-                </Typography.Text>
-                <Typography.Text size='small' type='tertiary' strong>
-                  {userState.user?.request_count || 0}
-                </Typography.Text>
-              </div>
-              <Divider layout='vertical' />
-              <div className='flex items-center gap-2'>
-                <Users size={16} />
-                <Typography.Text size='small' type='tertiary'>
-                  {t('用户分组')}
-                </Typography.Text>
-                <Typography.Text size='small' type='tertiary' strong>
-                  {userState?.user?.group || t('默认')}
-                </Typography.Text>
-              </div>
+            <span
+              style={{
+                color: 'white',
+                fontSize: '32px',
+                fontFamily: 'Inter, sans-serif',
+                fontWeight: 600,
+                lineHeight: 1,
+              }}
+            >
+              {getAvatarText()}
+            </span>
+          </div>
+
+          {/* 用户名 + 标签 */}
+          <div className='flex flex-col gap-3 min-w-0'>
+            <div
+              className='truncate'
+              style={{
+                color: 'white',
+                fontSize: '30px',
+                fontFamily: '"Helvetica Neue", Helvetica, Arial, sans-serif',
+                fontWeight: 700,
+                lineHeight: 1.2,
+              }}
+            >
+              {getUsername()}
             </div>
-          </Card>
+            <div className='flex items-center gap-2'>
+              <span
+                className='inline-flex items-center justify-center'
+                style={{
+                  height: '24px',
+                  padding: '0 8px',
+                  borderRadius: '9999px',
+                  background: 'rgba(255,255,255,0.15)',
+                  color: 'white',
+                  fontSize: '12px',
+                  fontFamily: 'Inter, sans-serif',
+                  fontWeight: 400,
+                  whiteSpace: 'nowrap',
+                }}
+              >
+                {getRoleLabel()}
+              </span>
+              <span
+                className='inline-flex items-center justify-center'
+                style={{
+                  height: '24px',
+                  padding: '0 8px',
+                  borderRadius: '9999px',
+                  background: 'rgba(255,255,255,0.15)',
+                  color: 'white',
+                  fontSize: '12px',
+                  fontFamily: 'Inter, sans-serif',
+                  fontWeight: 400,
+                  whiteSpace: 'nowrap',
+                }}
+              >
+                ID: {userState?.user?.id}
+              </span>
+            </div>
+          </div>
         </div>
       </div>
 
-      {/* 移动端和中等屏幕统计信息卡片 */}
-      <div className='lg:hidden mt-2'>
-        <Card
-          size='small'
-          className='!rounded-xl'
-          bodyStyle={{ padding: '12px 16px' }}
-        >
-          <div className='space-y-3'>
-            <div className='flex items-center justify-between'>
-              <div className='flex items-center gap-2'>
-                <Coins size={16} />
-                <Typography.Text size='small' type='tertiary'>
-                  {t('历史消耗')}
-                </Typography.Text>
-              </div>
-              <Typography.Text size='small' type='tertiary' strong>
+      {/* 下半部分：余额和统计信息 */}
+      <div
+        className='relative w-full'
+        style={{
+          background: 'var(--ps-bottom-bg)',
+          padding: '25px',
+        }}
+      >
+        <div className='flex flex-wrap items-center justify-between gap-4'>
+          {/* 左侧：账户余额 */}
+          <div className='flex flex-col gap-2'>
+            <span
+              style={{
+                color: 'var(--ps-text-label)',
+                fontSize: '16px',
+                fontFamily: 'Inter, sans-serif',
+                fontWeight: 600,
+              }}
+            >
+              {t('账户余额（元）')}
+            </span>
+            <span
+              style={{
+                background:
+                  'linear-gradient(90deg, rgba(99,93,231,1) 0%, rgba(129,203,250,1) 100%)',
+                WebkitBackgroundClip: 'text',
+                backgroundClip: 'text',
+                WebkitTextFillColor: 'transparent',
+                color: 'transparent',
+                fontSize: '36px',
+                fontFamily: '"Helvetica Neue", Helvetica, Arial, sans-serif',
+                fontWeight: 700,
+                letterSpacing: '0.90px',
+              }}
+            >
+              {renderQuota(userState?.user?.quota)}
+            </span>
+          </div>
+
+          {/* 右侧：历史消耗 | 请求次数 | 用户分组 */}
+          <div className='flex items-center gap-4 md:gap-10 mr-[10px]'>
+            {/* 历史消耗 */}
+            <div className='flex flex-col gap-2'>
+              <span
+                style={{
+                  color: 'var(--ps-text-label)',
+                  fontSize: '16px',
+                  fontFamily: 'Inter, sans-serif',
+                  fontWeight: 600,
+                }}
+              >
+                {t('历史消耗')}
+              </span>
+              <span
+                style={{
+                  background:
+                    'linear-gradient(90deg, rgba(99,93,231,1) 0%, rgba(129,203,250,1) 100%)',
+                  WebkitBackgroundClip: 'text',
+                  backgroundClip: 'text',
+                  WebkitTextFillColor: 'transparent',
+                  color: 'transparent',
+                  fontSize: '20px',
+                  fontFamily: '"Helvetica Neue", Helvetica, Arial, sans-serif',
+                  fontWeight: 700,
+                  letterSpacing: '0.90px',
+                }}
+              >
                 {renderQuota(userState?.user?.used_quota)}
-              </Typography.Text>
+              </span>
             </div>
-            <Divider margin='8px' />
-            <div className='flex items-center justify-between'>
-              <div className='flex items-center gap-2'>
-                <BarChart2 size={16} />
-                <Typography.Text size='small' type='tertiary'>
-                  {t('请求次数')}
-                </Typography.Text>
-              </div>
-              <Typography.Text size='small' type='tertiary' strong>
+
+            {/* 分隔线 */}
+            <div
+              className='hidden sm:block'
+              style={{
+                width: '1px',
+                height: '48px',
+                background: 'var(--ps-divider)',
+                flexShrink: 0,
+              }}
+            />
+
+            {/* 请求次数 */}
+            <div className='flex flex-col gap-2'>
+              <span
+                style={{
+                  color: 'var(--ps-text-label)',
+                  fontSize: '16px',
+                  fontFamily: 'Inter, sans-serif',
+                  fontWeight: 600,
+                }}
+              >
+                {t('请求次数')}
+              </span>
+              <span
+                style={{
+                  background:
+                    'linear-gradient(90deg, rgba(99,93,231,1) 0%, rgba(129,203,250,1) 100%)',
+                  WebkitBackgroundClip: 'text',
+                  backgroundClip: 'text',
+                  WebkitTextFillColor: 'transparent',
+                  color: 'transparent',
+                  fontSize: '20px',
+                  fontFamily: '"Helvetica Neue", Helvetica, Arial, sans-serif',
+                  fontWeight: 700,
+                  letterSpacing: '0.90px',
+                }}
+              >
                 {userState.user?.request_count || 0}
-              </Typography.Text>
+              </span>
             </div>
-            <Divider margin='8px' />
-            <div className='flex items-center justify-between'>
-              <div className='flex items-center gap-2'>
-                <Users size={16} />
-                <Typography.Text size='small' type='tertiary'>
-                  {t('用户分组')}
-                </Typography.Text>
-              </div>
-              <Typography.Text size='small' type='tertiary' strong>
-                {userState?.user?.group || t('默认')}
-              </Typography.Text>
+
+            {/* 分隔线 */}
+            <div
+              className='hidden sm:block'
+              style={{
+                width: '1px',
+                height: '48px',
+                background: 'var(--ps-divider)',
+                flexShrink: 0,
+              }}
+            />
+
+            {/* 用户分组 */}
+            <div className='flex flex-col gap-2'>
+              <span
+                style={{
+                  color: 'var(--ps-text-label)',
+                  fontSize: '16px',
+                  fontFamily: 'Inter, sans-serif',
+                  fontWeight: 600,
+                }}
+              >
+                {t('用户分组')}
+              </span>
+              <span
+                style={{
+                  background:
+                    'linear-gradient(90deg, rgba(99,93,231,1) 0%, rgba(129,203,250,1) 100%)',
+                  WebkitBackgroundClip: 'text',
+                  backgroundClip: 'text',
+                  WebkitTextFillColor: 'transparent',
+                  color: 'transparent',
+                  fontSize: '20px',
+                  fontFamily: '"Helvetica Neue", Helvetica, Arial, sans-serif',
+                  fontWeight: 700,
+                  letterSpacing: '0.90px',
+                }}
+              >
+                {userState?.user?.group || t('default')}
+              </span>
             </div>
           </div>
-        </Card>
+        </div>
       </div>
-    </Card>
+    </div>
   );
 };
 

@@ -18,18 +18,10 @@ For commercial licensing, please contact support@quantumnous.com
 */
 
 import React, { useCallback, useEffect, useRef, useState } from 'react';
-import {
-  Modal,
-  Button,
-  Progress,
-  Typography,
-  Spin,
-  Tag,
-  Descriptions,
-  Collapse,
-} from '@douyinfe/semi-ui';
+import { Button, Progress, Typography, Spin, Tag, Descriptions, Collapse } from '@douyinfe/semi-ui'
 import { API, showError } from '../../../../helpers';
 import { MOBILE_BREAKPOINT } from '../../../../hooks/common/useIsMobile';
+import ModalPro from '@/components/common/ui/ModalPro';
 
 const { Text } = Typography;
 
@@ -648,7 +640,7 @@ export const openCodexUsageModal = ({ t, record, payload, onCopy }) => {
   const tt = typeof t === 'function' ? t : (v) => v;
   const layout = getCodexUsageModalLayout();
 
-  Modal.info({
+  ModalPro.info({
     title: tt('Codex 帐号与用量'),
     centered: false,
     width: layout.width,
@@ -664,7 +656,7 @@ export const openCodexUsageModal = ({ t, record, payload, onCopy }) => {
     ),
     footer: (
       <div className='flex justify-end gap-2'>
-        <Button type='primary' theme='solid' onClick={() => Modal.destroyAll()}>
+        <Button type='primary' theme='solid' onClick={() => ModalPro.destroyAll()}>
           {tt('关闭')}
         </Button>
       </div>

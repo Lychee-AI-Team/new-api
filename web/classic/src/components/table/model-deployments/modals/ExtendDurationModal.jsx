@@ -18,19 +18,7 @@ For commercial licensing, please contact support@quantumnous.com
 */
 
 import React, { useEffect, useRef, useState } from 'react';
-import {
-  Modal,
-  Form,
-  InputNumber,
-  Typography,
-  Card,
-  Space,
-  Divider,
-  Button,
-  Tag,
-  Banner,
-  Spin,
-} from '@douyinfe/semi-ui';
+import { Form, InputNumber, Typography, Card, Space, Divider, Button, Tag, Banner, Spin } from '@douyinfe/semi-ui'
 import {
   FaClock,
   FaCalculator,
@@ -38,6 +26,7 @@ import {
   FaExclamationTriangle,
 } from 'react-icons/fa';
 import { API, showError, showSuccess } from '../../../../helpers';
+import ModalPro from '@/components/common/ui/ModalPro';
 
 const { Text } = Typography;
 
@@ -292,7 +281,7 @@ const ExtendDurationModal = ({
   const containers = deploymentDetails?.total_containers || 0;
 
   return (
-    <Modal
+    <ModalPro
       title={
         <div className='flex items-center gap-2'>
           <FaClock className='text-blue-500' />
@@ -535,7 +524,7 @@ const ExtendDurationModal = ({
           </div>
         </div>
       </div>
-    </Modal>
+    </ModalPro>
   );
 };
 

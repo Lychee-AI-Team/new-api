@@ -22,12 +22,20 @@ import { Button } from '@douyinfe/semi-ui';
 
 const FilterModalFooter = ({ onReset, onConfirm, t }) => {
   return (
-    <div className='flex justify-end'>
-      <Button theme='outline' type='tertiary' onClick={onReset}>
-        {t('重置')}
+    <div className='flex justify-end gap-3'>
+      <Button
+        className='column-selector-btn-secondary'
+        onClick={onReset}
+      >
+        {t('重 置')}
       </Button>
-      <Button theme='solid' type='primary' onClick={onConfirm}>
-        {t('确定')}
+      <Button
+        theme='solid'
+        type='primary'
+        className='column-selector-btn-primary'
+        onClick={onConfirm}
+      >
+        {t('确 认')}
       </Button>
     </div>
   );

@@ -18,7 +18,7 @@ For commercial licensing, please contact support@quantumnous.com
 */
 
 import React, { useState } from 'react';
-import { Banner, Button, Modal } from '@douyinfe/semi-ui';
+import { Banner, Button } from '@douyinfe/semi-ui'
 import { IconAlertTriangle, IconClose } from '@douyinfe/semi-icons';
 import CardPro from '../../common/ui/CardPro';
 import ModelsTable from './ModelsTable';
@@ -30,6 +30,7 @@ import EditVendorModal from './modals/EditVendorModal';
 import { useModelsData } from '../../../hooks/models/useModelsData';
 import { useIsMobile } from '../../../hooks/common/useIsMobile';
 import { createCardProPagination } from '../../../helpers/utils';
+import ModalPro from '@/components/common/ui/ModalPro';
 
 const MARKETPLACE_DISPLAY_NOTICE_STORAGE_KEY =
   'models_marketplace_display_notice_dismissed';
@@ -88,7 +89,7 @@ const ModelsPage = () => {
     });
 
   const confirmCloseMarketplaceDisplayNotice = () => {
-    Modal.confirm({
+    ModalPro.confirm({
       title: t('确认关闭提示'),
       content: t(
         '关闭后将不再显示此提示（仅对当前浏览器生效）。确定要关闭吗？',

@@ -18,6 +18,44 @@
   --sidebar-width: 180px;
   --sidebar-width-collapsed: 60px;
   --sidebar-current-width: var(--sidebar-width);
+  /* 侧边栏主题变量 - 亮色模式 */
+  --sidebar-bg: rgba(246, 246, 247, 0.50);
+  --sidebar-item-active-bg: #DDDEFA;
+  --sidebar-item-active-color: #635DE7;
+  --sidebar-item-text: rgba(28, 31, 35, 0.80);
+  --sidebar-item-hover-bg: rgba(221, 222, 250, 0.50);
+  --sidebar-item-hover-color: #635DE7;
+  --sidebar-border: #E2DAFD;
+  --sidebar-group-label: rgba(28, 31, 35, 0.50);
+  --sidebar-collapse-shadow: rgba(246, 246, 247, 0.50);
+  --sidebar-btn-outline: #E2DAFD;
+  --sidebar-collapse-text: rgba(28, 31, 35, 0.80);
+
+  /* 个人设置页面主题变量 - 亮色模式 */
+  --ps-bg: rgba(255, 255, 255, 0.50);
+  --ps-outline: #E2DAFD;
+  --ps-text: #3C3C43;
+  --ps-text-2: #67676C;
+  --ps-text-label: rgba(28, 31, 35, 0.62);
+  --ps-divider: #E2DAFD;
+  --ps-input-bg: #FBF9FF;
+  --ps-bottom-bg: linear-gradient(180deg, rgba(247,235,254,0.50) 0%, rgba(255,255,255,0.50) 100%);
+  --ps-btn-bg: rgba(247, 244, 254, 0.50);
+  --ps-btn-text: #1C1F23;
+}
+
+/* 个人设置页面主题变量 - 深色模式 */
+.dark {
+  --ps-bg: linear-gradient(180deg, rgba(60, 54, 136, 0.50) 0%, rgba(22.23, 42.81, 87.22, 0.40) 100%);
+  --ps-outline: #594699;
+  --ps-text: #FCFCFC;
+  --ps-text-2: #93A0C5;
+  --ps-text-label: #FCFCFC;
+  --ps-divider: #594699;
+  --ps-input-bg: linear-gradient(180deg, rgba(60, 54, 136, 0.50) 0%, rgba(22.23, 42.81, 87.22, 0.40) 100%);
+  --ps-bottom-bg: linear-gradient(180deg, rgba(60, 54, 136, 0.50) 0%, rgba(22.23, 42.81, 87.22, 0.40) 100%);
+  --ps-btn-bg: linear-gradient(180deg, rgba(60, 54, 136, 0.50) 0%, rgba(22.23, 42.81, 87.22, 0.40) 100%);
+  --ps-btn-text: #FCFCFC;
 }
 
 body.sidebar-collapsed {
@@ -41,6 +79,15 @@ body {
 .app-layout {
   height: 100vh;
   height: 100dvh;
+}
+
+/* 控制台背景图 - 与模型广场一致 */
+.app-layout {
+  background-image: var(--pricing-page-bg-image);
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
 }
 
 .app-sider {
@@ -126,13 +173,17 @@ code {
   flex-direction: column;
   min-height: 0;
   transition: width 0.3s ease;
-  background: var(--semi-color-bg-0);
+  background: var(--sidebar-bg);
+  backdrop-filter: blur(31.50px);
+  border-top-right-radius: 10px;
+  border-bottom-right-radius: 10px;
+  overflow: hidden;
 }
 
 .sidebar-nav {
   flex: 1;
   width: 100%;
-  background: var(--semi-color-bg-0);
+  background: var(--sidebar-bg);
   height: 100%;
   overflow-x: hidden;
   border-right: none;
@@ -149,21 +200,88 @@ code {
 
 /* 侧边栏导航项样式 */
 .sidebar-nav-item {
-  border-radius: 6px;
+  border-radius: 10px;
   margin: 3px 8px;
   transition: all 0.15s ease;
   padding: 8px 12px;
 }
 
 .sidebar-nav-item:hover {
-  background-color: rgba(var(--semi-blue-0), 0.08);
-  color: var(--semi-color-primary);
+  background-color: var(--sidebar-item-hover-bg);
+  color: var(--sidebar-item-hover-color);
 }
 
 .sidebar-nav-item-selected {
-  background-color: rgba(var(--semi-blue-0), 0.12);
-  color: var(--semi-color-primary);
-  font-weight: 500;
+  background: var(--sidebar-item-active-bg);
+  color: var(--sidebar-item-active-color);
+  font-weight: 600;
+}
+
+/* ====== Semi UI Nav 全面覆盖 ====== */
+
+/* 所有导航项 - 背景透明、文字颜色、圆角 */
+.sidebar-nav .semi-navigation-item {
+  background-color: transparent !important;
+  color: var(--sidebar-item-text) !important;
+  border-radius: 10px !important;
+}
+
+/* 导航项文字继承父级颜色 */
+.sidebar-nav .semi-navigation-item .semi-navigation-item-text {
+  color: inherit !important;
+}
+
+/* 导航项图标继承父级颜色 */
+.sidebar-nav .semi-navigation-item .semi-navigation-item-icon {
+  color: inherit !important;
+}
+
+/* 非选中项 hover 状态 */
+.sidebar-nav .semi-navigation-item-normal:hover:not(.semi-navigation-item-selected) {
+  background-color: var(--sidebar-item-hover-bg) !important;
+  color: var(--sidebar-item-hover-color) !important;
+}
+
+.sidebar-nav .semi-navigation-item-normal:hover:not(.semi-navigation-item-selected) .semi-navigation-item-icon:first-child {
+  color: var(--sidebar-item-hover-color) !important;
+}
+
+/* 选中项 - 背景、文字、图标 */
+.sidebar-nav .semi-navigation-item-selected,
+.sidebar-nav .semi-navigation-item-selected:hover,
+.sidebar-nav .semi-navigation-item-normal:hover.semi-navigation-item-selected,
+.sidebar-nav .semi-navigation-item-normal:active.semi-navigation-item-selected {
+  background: var(--sidebar-item-active-bg) !important;
+  color: var(--sidebar-item-active-color) !important;
+}
+
+.sidebar-nav .semi-navigation-item-selected .semi-navigation-item-icon:first-child,
+.sidebar-nav .semi-navigation-item-selected:hover .semi-navigation-item-icon:first-child,
+.sidebar-nav .semi-navigation-item-normal:hover.semi-navigation-item-selected .semi-navigation-item-icon:first-child {
+  color: var(--sidebar-item-active-color) !important;
+}
+
+/* 选中项文字加粗 */
+.sidebar-nav .semi-navigation-item-selected .semi-navigation-item-text {
+  font-weight: 600 !important;
+}
+
+/* 暗色模式 - 选中项文字不加粗，与视觉稿一致 */
+html.dark .sidebar-nav .semi-navigation-item-selected .semi-navigation-item-text,
+html.dark .sidebar-nav-item-selected {
+  font-weight: 400 !important;
+}
+
+/* 移除 Semi UI 选中项左侧指示条 */
+.sidebar-nav .semi-navigation-item-selected::before,
+.sidebar-nav .semi-navigation-item-selected::after {
+  display: none !important;
+}
+
+/* 统一导航项圆角和间距 */
+.sidebar-nav .semi-navigation-list > .semi-navigation-item {
+  border-radius: 10px !important;
+  margin: 3px 8px !important;
 }
 
 /* 图标容器样式 */
@@ -192,12 +310,13 @@ code {
 .sidebar-divider {
   margin: 4px 8px;
   opacity: 0.15;
+  border-color: var(--sidebar-border);
 }
 
 /* 分组标签样式 */
 .sidebar-group-label {
   padding: 4px 15px 8px;
-  color: var(--semi-color-text-2);
+  color: var(--sidebar-group-label);
   font-size: 12px;
   text-transform: uppercase;
   letter-spacing: 0.5px;
@@ -209,16 +328,22 @@ code {
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 12px;
+  padding: 7px 12px;
   margin-top: auto;
   cursor: pointer;
-  background-color: var(--semi-color-bg-0);
+  background: transparent;
   position: sticky;
   bottom: 0;
   z-index: 10;
-  box-shadow: 0 -10px 10px -5px var(--semi-color-bg-0);
-  backdrop-filter: blur(4px);
-  border-top: 1px solid rgba(var(--semi-grey-0), 0.08);
+}
+
+/* 深色主题 - 收起按钮 1:1 还原视觉稿（透明背景、无边框） */
+html.dark .sidebar-collapse-button .semi-button.semi-button-tertiary,
+html.dark .sidebar-collapse-button .semi-button.semi-button-tertiary:not(.semi-button-disabled):hover,
+html.dark .sidebar-collapse-button .semi-button.semi-button-tertiary:not(.semi-button-disabled):active {
+  background: transparent !important;
+  border: none !important;
+  color: var(--sidebar-collapse-text) !important;
 }
 
 .sidebar-collapse-button-inner {
@@ -244,17 +369,16 @@ code {
 
 @media (max-width: 767px) {
   .sidebar-container {
-    background: var(--semi-color-bg-1);
-    border-right: 1px solid var(--semi-color-border);
+    background: var(--sidebar-bg);
+    border-right: 1px solid var(--sidebar-border);
   }
 
   .sidebar-nav {
-    background: var(--semi-color-bg-1);
+    background: var(--sidebar-bg);
   }
 
   .sidebar-collapse-button {
-    background-color: var(--semi-color-bg-1);
-    box-shadow: 0 -10px 10px -5px var(--semi-color-bg-1);
+    background: transparent;
   }
 }
 
@@ -297,6 +421,7 @@ code {
 
 .semi-chat-container {
   overflow-x: hidden !important;
+  padding: 40px 54px;
 }
 
 .semi-chat-chatBox-action {
@@ -447,6 +572,15 @@ html.dark .sbg-variant-green {
   --semi-color-primary-light-active: rgba(52, 211, 153, 0.3);
 }
 
+/* Switch组件开启状态全局样式 */
+.semi-switch-checked {
+  background-color: #645ee7 !important;
+}
+
+.semi-switch-checked:hover {
+  background-color: #5752d4 !important;
+}
+
 /* Tabs组件样式 */
 .semi-tabs-content {
   padding: 0 !important;
@@ -549,6 +683,53 @@ html.dark .sbg-variant-green {
   background: transparent;
 }
 
+/** 表格背景色改动 - 所有单元格背景透明 */
+.semi-table-tbody>.semi-table-row,
+.semi-table-tbody>.semi-table-row>.semi-table-row-cell,
+.semi-table-thead>.semi-table-row,
+.semi-table-thead>.semi-table-row>.semi-table-row-head {
+  background-color: transparent !important;
+}
+
+.semi-table-row-head.semi-table-cell-fixed-right:before {
+  background-color: transparent !important;
+}
+
+/** 固定列虚化背景：防止横向滚动时内容穿透固定列 */
+.semi-table-tbody>.semi-table-row .semi-table-cell-fixed-left,
+.semi-table-tbody>.semi-table-row .semi-table-cell-fixed-right {
+  background-color: #ecf5fe !important;
+}
+
+/* 固定列表头同样虚化处理 */
+.semi-table-thead .semi-table-row-head.semi-table-cell-fixed-left,
+.semi-table-thead .semi-table-row-head.semi-table-cell-fixed-right {
+  background-color: #ecf5fe !important;
+}
+
+html.dark .semi-table-tbody>.semi-table-row .semi-table-cell-fixed-left,
+html.dark .semi-table-tbody>.semi-table-row .semi-table-cell-fixed-right {
+  background-color: #1f204f !important;
+}
+
+html.dark .semi-table-thead .semi-table-row-head.semi-table-cell-fixed-left,
+html.dark .semi-table-thead .semi-table-row-head.semi-table-cell-fixed-right {
+  background-color: #1f204f !important;
+}
+
+/** 表格行 hover 样式 */
+.semi-table-tbody>.semi-table-row:hover {
+  background: #FFFFFF80 !important;
+  backdrop-filter: blur(12px);
+}
+.semi-table-tbody>.semi-table-row:hover>.semi-table-row-cell {
+  background: transparent !important;
+}
+/* 固定列 hover 背景色保持不变 */
+.semi-table-tbody>.semi-table-row:hover .semi-table-cell-fixed-left,
+.semi-table-tbody>.semi-table-row:hover .semi-table-cell-fixed-right {
+  background: #ecf5fe !important;
+}
 /* 侧边抽屉滚动条样式 */
 .semi-sidesheet-body::-webkit-scrollbar {
   width: 6px;
@@ -907,13 +1088,17 @@ html.dark .with-pastel-balls::before {
   min-width: clamp(280px, 24vw, 520px) !important;
   max-width: clamp(280px, 24vw, 520px) !important;
   height: calc(100vh - 60px);
-  background-color: var(--semi-color-bg-0);
+  /* background-color: rgba(255, 255, 255, 0.88); */
+  backdrop-filter: blur(8px);
+  padding-top: 28px;
   overflow: auto;
 }
 
 .pricing-content {
-  height: calc(100vh - 60px);
-  background-color: var(--semi-color-bg-0);
+  height: calc(100vh - 88px);
+  /* background-color: rgba(255, 255, 255, 0.88); */
+  backdrop-filter: blur(8px);
+  margin-top: 28px;
   display: flex;
   flex-direction: column;
 }
@@ -931,7 +1116,8 @@ html.dark .with-pastel-balls::before {
 
 .pricing-search-header {
   padding: 0.5rem;
-  background-color: var(--semi-color-bg-0);
+  /* background-color: rgba(255, 255, 255, 0.88); */
+  backdrop-filter: blur(8px);
   flex-shrink: 0;
   position: sticky;
   top: 0;
@@ -1000,6 +1186,862 @@ html.dark .with-pastel-balls::before {
   border-radius: 10px !important;
 }
 
+/* ==================== 表格卡片主题样式 ==================== */
+.table-scroll-card.semi-card {
+  background: var(--table-card-bg) !important;
+  backdrop-filter: blur(22.50px);
+  border: 1px solid var(--table-card-border) !important;
+  box-shadow: var(--table-card-shadow) !important;
+}
+
+/* ==================== 表格头部主题样式 ==================== */
+.table-scroll-card .semi-table-header,
+.table-scroll-card .semi-table-thead {
+  background: var(--table-card-header-bg) !important;
+  border-radius: 12px 12px 0 0;
+}
+
+.table-scroll-card .semi-table-header .semi-table-header-fixed-full {
+  border-bottom: 2px solid var(--table-card-header-border) !important;
+}
+
+.table-scroll-card .semi-table-thead > .semi-table-row {
+  background: var(--table-card-header-bg) !important;
+  border-bottom: 2px solid var(--table-card-header-border) !important;
+}
+
+.table-scroll-card .semi-table-thead > .semi-table-row > .semi-table-row-head {
+  background: var(--table-card-header-bg) !important;
+  font-weight: 600;
+}
+
+/* 固定列表头单元格也使用表头背景色 */
+.table-scroll-card .semi-table-thead .semi-table-row-head.semi-table-cell-fixed-left,
+.table-scroll-card .semi-table-thead .semi-table-row-head.semi-table-cell-fixed-right {
+  background: var(--table-card-header-bg) !important;
+}
+
+.table-scroll-card .semi-table-thead .semi-table-row-head.semi-table-cell-fixed-right:before {
+  background-color: var(--table-card-header-border) !important;
+}
+
+/* ==================== 暗黑模式表格表头文字颜色 ==================== */
+html.dark .table-scroll-card .semi-table-thead .semi-table-row-head,
+html.dark .table-scroll-card .semi-table-header .semi-table-row-head {
+  color: #FCFCFC !important;
+}
+
+html.dark .table-scroll-card .semi-table-thead .semi-table-row-head .semi-icon,
+html.dark .table-scroll-card .semi-table-header .semi-table-row-head .semi-icon {
+  color: #FCFCFC !important;
+}
+
+/* ==================== 渐变主按钮 ==================== */
+.semi-button.btn-gradient-primary {
+  background: var(--btn-gradient-primary) !important;
+  border: none !important;
+  color: #fff !important;
+}
+
+.semi-button.btn-gradient-primary:hover {
+  background: var(--btn-gradient-primary-hover) !important;
+  color: #fff !important;
+}
+
+.semi-button.btn-gradient-primary:active {
+  opacity: 0.9;
+}
+
+/* ==================== 浅色危险按钮 ==================== */
+.semi-button.btn-light-danger {
+  background: var(--btn-light-danger-bg) !important;
+  border: none !important;
+  color: var(--btn-light-danger-color) !important;
+}
+
+.semi-button.btn-light-danger:hover {
+  background: var(--btn-light-danger-hover-bg) !important;
+  color: var(--btn-light-danger-color) !important;
+}
+
+/* ==================== 暗黑模式 Tertiary 按钮主题样式 ==================== */
+html.dark .semi-button.semi-button-tertiary {
+  background: rgba(52, 109, 193, 0.32) !important;
+  border: none !important;
+  color: #FCFCFC !important;
+  font-weight: 600 !important;
+}
+
+html.dark .semi-button.semi-button-tertiary .semi-icon {
+  color: inherit !important;
+}
+
+html.dark .semi-button.semi-button-tertiary:not(.semi-button-disabled):hover {
+  background: rgba(52, 109, 193, 0.45) !important;
+  color: #FCFCFC !important;
+}
+
+html.dark .semi-button.semi-button-tertiary:not(.semi-button-disabled):active {
+  background: rgba(52, 109, 193, 0.55) !important;
+  color: #FCFCFC !important;
+}
+
+html.dark .semi-button.semi-button-tertiary.semi-button-disabled {
+  background: rgba(52, 109, 193, 0.16) !important;
+  color: rgba(252, 252, 252, 0.35) !important;
+}
+
+/* ==================== 浅色搜索输入框（兼容旧用法） ==================== */
+.semi-input-wrapper.input-search-light {
+  background: var(--table-input-bg) !important;
+}
+
+.semi-input-wrapper.input-search-light:hover {
+  background: var(--table-input-bg) !important;
+}
+
+/* ==================== 浅色模式全局输入框主题样式 ==================== */
+/* 普通输入框 */
+.semi-input-wrapper {
+  background: #FBF9FF !important;
+  border: 1px solid transparent !important;
+}
+
+.semi-input-wrapper .semi-input {
+  color: #1C1F23 !important;
+}
+
+.semi-input-wrapper .semi-input::placeholder {
+  color: rgba(28, 31, 35, 0.62) !important;
+}
+
+.semi-input-wrapper .semi-icon {
+  color: rgba(28, 31, 35, 0.62) !important;
+}
+
+.semi-input-wrapper:hover {
+  background: #FBF9FF !important;
+  border-color: #E2DAFD !important;
+}
+
+.semi-input-wrapper-focus,
+.semi-input-wrapper-focus:hover {
+  background: #FBF9FF !important;
+  border-color: #635DE7 !important;
+}
+
+/* 清除按钮 */
+.semi-input-clearbtn {
+  color: rgba(28, 31, 35, 0.62) !important;
+}
+
+.semi-input-clearbtn:hover {
+  color: #1C1F23 !important;
+}
+
+/* Select 下拉选择器 */
+.semi-select {
+  background: #FBF9FF !important;
+  border: 1px solid transparent !important;
+}
+
+.semi-select .semi-select-selection {
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+}
+
+.semi-select .semi-select-selection-text {
+  color: #1C1F23 !important;
+}
+
+.semi-select .semi-select-arrow {
+  color: rgba(28, 31, 35, 0.62) !important;
+}
+
+.semi-select:hover {
+  border-color: #E2DAFD !important;
+}
+
+.semi-select-focus,
+.semi-select-focus:hover {
+  border-color: #635DE7 !important;
+}
+
+/* 日期范围选择器 */
+.semi-datepicker-range-input {
+  background: #FBF9FF !important;
+  border: 1px solid transparent !important;
+}
+
+.semi-datepicker-range-input .semi-input-wrapper {
+  background: transparent !important;
+  border: none !important;
+}
+
+.semi-datepicker-range-input .semi-input {
+  color: #1C1F23 !important;
+}
+
+.semi-datepicker-range-input .semi-input::placeholder {
+  color: rgba(28, 31, 35, 0.62) !important;
+}
+
+.semi-datepicker-range-input .semi-icon {
+  color: rgba(28, 31, 35, 0.62) !important;
+}
+
+.semi-datepicker-range-input:hover {
+  border-color: #E2DAFD !important;
+}
+
+.semi-datepicker-range-input:focus-within {
+  border-color: #635DE7 !important;
+}
+
+.semi-datepicker-range-input-separator {
+  color: #1C1F23 !important;
+}
+
+/* Textarea */
+.semi-input-textarea-wrapper {
+  background: #FBF9FF !important;
+  border: 1px solid transparent !important;
+}
+
+.semi-input-textarea-wrapper .semi-input-textarea {
+  color: #1C1F23 !important;
+}
+
+.semi-input-textarea-wrapper .semi-input-textarea::placeholder {
+  color: rgba(28, 31, 35, 0.62) !important;
+}
+
+.semi-input-textarea-wrapper:hover {
+  border-color: #E2DAFD !important;
+}
+
+.semi-input-textarea-wrapper:focus-within {
+  border-color: #635DE7 !important;
+}
+
+/* TagInput */
+.semi-tagInput {
+  background: #FBF9FF !important;
+  border: 1px solid transparent !important;
+}
+
+.semi-tagInput .semi-input {
+  color: #1C1F23 !important;
+}
+
+.semi-tagInput .semi-input::placeholder {
+  color: rgba(28, 31, 35, 0.62) !important;
+}
+
+.semi-tagInput:hover {
+  border-color: #E2DAFD !important;
+}
+
+.semi-tagInput:focus-within {
+  border-color: #635DE7 !important;
+}
+
+/* ==================== 暗黑模式全局输入框主题样式 ==================== */
+/* 普通输入框 */
+html.dark .semi-input-wrapper {
+  background: linear-gradient(180deg, rgba(60, 54, 136, 0.50) 0%, rgba(22, 42, 87, 0.40) 100%) !important;
+  border: 1px solid #594699 !important;
+}
+
+html.dark .semi-input-wrapper .semi-input {
+  color: #FCFCFC !important;
+}
+
+html.dark .semi-input-wrapper .semi-input::placeholder {
+  color: #93A0C5 !important;
+}
+
+html.dark .semi-input-wrapper .semi-icon {
+  color: #93A0C5 !important;
+}
+
+html.dark .semi-input-wrapper:hover {
+  background: linear-gradient(180deg, rgba(60, 54, 136, 0.50) 0%, rgba(22, 42, 87, 0.40) 100%) !important;
+  border-color: #7C94FF !important;
+}
+
+html.dark .semi-input-wrapper-focus,
+html.dark .semi-input-wrapper-focus:hover {
+  background: linear-gradient(180deg, rgba(60, 54, 136, 0.50) 0%, rgba(22, 42, 87, 0.40) 100%) !important;
+  border-color: #7C94FF !important;
+}
+
+/* 清除按钮 */
+html.dark .semi-input-clearbtn {
+  color: #93A0C5 !important;
+}
+
+html.dark .semi-input-clearbtn:hover {
+  color: #FCFCFC !important;
+}
+
+/* Select 下拉选择器 */
+html.dark .semi-select {
+  background: linear-gradient(180deg, rgba(60, 54, 136, 0.50) 0%, rgba(22, 42, 87, 0.40) 100%) !important;
+  border: 1px solid #594699 !important;
+}
+
+html.dark .semi-select .semi-select-selection {
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+}
+
+html.dark .semi-select .semi-select-selection-text {
+  color: #FCFCFC !important;
+}
+
+html.dark .semi-select .semi-select-arrow {
+  color: #93A0C5 !important;
+}
+
+html.dark .semi-select:hover {
+  border-color: #7C94FF !important;
+}
+
+html.dark .semi-select-focus,
+html.dark .semi-select-focus:hover {
+  border-color: #7C94FF !important;
+}
+
+/* 日期范围选择器 */
+html.dark .semi-datepicker-range-input {
+  background: linear-gradient(180deg, rgba(60, 54, 136, 0.50) 0%, rgba(22, 42, 87, 0.40) 100%) !important;
+  border: 1px solid #594699 !important;
+}
+
+html.dark .semi-datepicker-range-input .semi-input-wrapper {
+  background: transparent !important;
+  border: none !important;
+}
+
+html.dark .semi-datepicker-range-input .semi-input {
+  color: #FCFCFC !important;
+}
+
+html.dark .semi-datepicker-range-input .semi-input::placeholder {
+  color: #93A0C5 !important;
+}
+
+html.dark .semi-datepicker-range-input .semi-icon {
+  color: #93A0C5 !important;
+}
+
+html.dark .semi-datepicker-range-input:hover {
+  border-color: #7C94FF !important;
+}
+
+html.dark .semi-datepicker-range-input:focus-within {
+  border-color: #7C94FF !important;
+}
+
+html.dark .semi-datepicker-range-input-separator {
+  color: #FCFCFC !important;
+}
+
+/* Textarea */
+html.dark .semi-input-textarea-wrapper {
+  background: linear-gradient(180deg, rgba(60, 54, 136, 0.50) 0%, rgba(22, 42, 87, 0.40) 100%) !important;
+  border: 1px solid #594699 !important;
+}
+
+html.dark .semi-input-textarea-wrapper .semi-input-textarea {
+  color: #FCFCFC !important;
+}
+
+html.dark .semi-input-textarea-wrapper .semi-input-textarea::placeholder {
+  color: #93A0C5 !important;
+}
+
+html.dark .semi-input-textarea-wrapper:hover {
+  border-color: #7C94FF !important;
+}
+
+html.dark .semi-input-textarea-wrapper:focus-within {
+  border-color: #7C94FF !important;
+}
+
+/* TagInput */
+html.dark .semi-tagInput {
+  background: linear-gradient(180deg, rgba(60, 54, 136, 0.50) 0%, rgba(22, 42, 87, 0.40) 100%) !important;
+  border: 1px solid #594699 !important;
+}
+
+html.dark .semi-tagInput .semi-input {
+  color: #FCFCFC !important;
+}
+
+html.dark .semi-tagInput .semi-input::placeholder {
+  color: #93A0C5 !important;
+}
+
+html.dark .semi-tagInput:hover {
+  border-color: #7C94FF !important;
+}
+
+html.dark .semi-tagInput:focus-within {
+  border-color: #7C94FF !important;
+}
+
+/* ==================== 令牌编辑弹窗主题样式 ==================== */
+:root {
+  --token-modal-border: #E2DAFD;
+  --token-modal-shadow: 0px 4px 8px rgba(179,125,251,0.08);
+  --token-modal-section-title: #635DE7;
+  --token-modal-section-subtitle: #67676C;
+  --token-modal-label: #3C3C43;
+  --token-modal-required: #F93920;
+  --token-modal-helper: #6D6D78;
+  --token-modal-cancel-bg: #F7F4FE;
+  --token-modal-cancel-text: #635DE7;
+  --token-modal-title: #3F3F3F;
+}
+
+html.dark {
+  --token-modal-border: #594699;
+  --token-modal-shadow: 0px 4px 8px rgba(106,58,199,0.12);
+  --token-modal-section-title: #7C94FF;
+  --token-modal-section-subtitle: rgba(252,252,252,0.6);
+  --token-modal-label: rgba(252,252,252,0.85);
+  --token-modal-required: #FF6B72;
+  --token-modal-helper: rgba(252,252,252,0.45);
+  --token-modal-cancel-bg: rgba(60,54,136,0.30);
+  --token-modal-cancel-text: #7C94FF;
+  --token-modal-title: #FCFCFC;
+}
+
+/* 弹窗容器 */
+.token-edit-modal .semi-modal-content {
+  background:
+    /* 装饰性渐变球 - 左上区域 */
+    radial-gradient(ellipse 400px 320px at 0% 5%, rgba(99, 93, 231, 0.20) 0%, transparent 70%),
+    radial-gradient(ellipse 380px 310px at 25% 5%, rgba(129, 203, 250, 0.30) 0%, transparent 70%),
+    radial-gradient(ellipse 500px 410px at 8% 35%, rgba(99, 93, 231, 0.15) 0%, transparent 70%),
+    /* 装饰性渐变球 - 右下区域 */
+    radial-gradient(ellipse 360px 310px at 95% 90%, rgba(129, 203, 250, 0.12) 0%, transparent 70%),
+    radial-gradient(ellipse 470px 410px at 80% 95%, rgba(99, 93, 231, 0.10) 0%, transparent 70%),
+    /* 紫色渐变层 */
+    linear-gradient(135deg, rgba(233, 196, 251, 0.85) 0%, rgba(242, 219, 249, 0.85) 13%, rgba(236, 226, 251, 0.85) 32%, rgba(245.85, 244.23, 255, 0.85) 47%, rgba(245, 242, 253, 0.85) 61%, rgba(244.82, 238.93, 255, 0.85) 80%, rgba(226, 222, 252, 0.85) 100%),
+    /* 蓝色渐变层 */
+    linear-gradient(135deg, rgba(255, 255, 255, 0.70) 4%, rgba(233, 243, 249, 0.70) 59%, rgba(129, 203, 250, 0.48) 100%),
+    /* 白色底 */
+    white !important;
+  border: 1px solid var(--token-modal-border) !important;
+  border-radius: 14px !important;
+  box-shadow: var(--token-modal-shadow) !important;
+  backdrop-filter: blur(16px);
+  max-height: 90vh;
+  overflow-y: auto;
+}
+
+.token-edit-modal .semi-modal-content::-webkit-scrollbar {
+  width: 6px;
+}
+.token-edit-modal .semi-modal-content::-webkit-scrollbar-thumb {
+  background: rgba(var(--semi-grey-2), 0.3);
+  border-radius: 2px;
+}
+
+/* 暗色模式弹窗背景 */
+html.dark .token-edit-modal .semi-modal-content {
+  background:
+    radial-gradient(ellipse 400px 320px at 0% 5%, rgba(99, 93, 231, 0.15) 0%, transparent 70%),
+    radial-gradient(ellipse 380px 310px at 25% 5%, rgba(129, 203, 250, 0.12) 0%, transparent 70%),
+    radial-gradient(ellipse 500px 410px at 8% 35%, rgba(99, 93, 231, 0.10) 0%, transparent 70%),
+    radial-gradient(ellipse 360px 310px at 95% 90%, rgba(129, 203, 250, 0.08) 0%, transparent 70%),
+    radial-gradient(ellipse 470px 410px at 80% 95%, rgba(99, 93, 231, 0.08) 0%, transparent 70%),
+    linear-gradient(135deg, rgba(60, 54, 136, 0.50) 0%, rgba(22, 42, 87, 0.40) 100%),
+    linear-gradient(135deg, rgba(22, 24, 62, 0.90) 4%, rgba(22, 42, 87, 0.80) 59%, rgba(60, 54, 136, 0.60) 100%),
+    #16183E !important;
+}
+
+/* 弹窗头部 */
+.token-edit-modal .semi-modal-header {
+  background: transparent !important;
+  border-bottom: none !important;
+  padding: 40px 54px 0 54px !important;
+}
+
+.token-edit-modal .semi-modal-title {
+  font-size: 24px !important;
+  font-weight: 600 !important;
+  color: var(--token-modal-title) !important;
+}
+
+/* 弹窗关闭按钮 */
+.token-edit-modal .semi-modal-close {
+  color: var(--token-modal-helper) !important;
+}
+
+/* 弹窗内容区 */
+.token-edit-modal .semi-modal-body {
+  background: transparent !important;
+  padding: 0 54px !important;
+}
+
+/* 弹窗底部 */
+.token-edit-modal .semi-modal-footer {
+  background: transparent !important;
+  border-top: none !important;
+  padding: 16px 54px 28px 54px !important;
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+}
+
+/* 弹窗遮罩 */
+.token-edit-modal-mask {
+  backdrop-filter: blur(4px);
+}
+
+/* 表单区域 */
+.token-edit-form {
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+  padding: 24px 0;
+}
+
+/* 分区标题 */
+.token-section {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.token-section-title {
+  font-size: 20px;
+  font-weight: 600;
+  color: var(--token-modal-section-title);
+}
+
+.token-section-subtitle {
+  font-size: 16px;
+  font-weight: 500;
+  color: var(--token-modal-section-subtitle);
+  margin-bottom: 12px;
+}
+
+/* 表单网格 - 两列布局 */
+.token-form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px 28px;
+}
+
+@media (max-width: 767px) {
+  .token-form-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* 表单项 */
+.token-edit-modal .semi-form-field {
+  margin-bottom: 0 !important;
+}
+
+.token-edit-modal .semi-form-field-label {
+  font-size: 16px !important;
+  font-weight: 600 !important;
+  color: var(--token-modal-label) !important;
+}
+
+.token-edit-modal .semi-form-field-label .semi-form-field-required-dot {
+  color: var(--token-modal-required) !important;
+}
+
+.token-edit-modal .semi-form-field-extra {
+  color: var(--token-modal-helper) !important;
+  font-size: 14px !important;
+}
+
+/* 输入框 */
+.token-edit-modal .semi-input-wrapper,
+.token-edit-modal .semi-select,
+.token-edit-modal .semi-input-number,
+.token-edit-modal .semi-datepicker,
+.token-edit-modal .semi-textarea-wrapper {
+  background: var(--table-input-bg) !important;
+  border: 1px solid var(--token-modal-border) !important;
+  border-radius: 10px !important;
+  height: 38px !important;
+}
+
+.token-edit-modal .semi-input-wrapper:hover,
+.token-edit-modal .semi-select:hover,
+.token-edit-modal .semi-input-number:hover,
+.token-edit-modal .semi-datepicker:hover,
+.token-edit-modal .semi-textarea-wrapper:hover {
+  border-color: var(--token-modal-section-title) !important;
+}
+
+.token-edit-modal .semi-input-wrapper:focus-within,
+.token-edit-modal .semi-select:focus-within,
+.token-edit-modal .semi-input-number:focus-within,
+.token-edit-modal .semi-datepicker:focus-within,
+.token-edit-modal .semi-textarea-wrapper:focus-within {
+  border-color: var(--token-modal-section-title) !important;
+}
+
+.token-edit-modal .semi-input,
+.token-edit-modal .semi-input-number-input,
+.token-edit-modal .semi-textarea {
+  color: var(--token-modal-label) !important;
+  font-size: 14px !important;
+}
+
+.token-edit-modal .semi-textarea-wrapper {
+  height: auto !important;
+  min-height: 38px;
+}
+
+/* 日期选择器快捷按钮 */
+.token-edit-modal .semi-button.token-quick-btn {
+  background: var(--table-input-bg) !important;
+  border: 1px solid var(--token-modal-border) !important;
+  border-radius: 10px !important;
+  color: var(--token-modal-label) !important;
+  height: 38px !important;
+  font-size: 14px !important;
+}
+
+.token-edit-modal .semi-button.token-quick-btn:hover {
+  border-color: var(--token-modal-section-title) !important;
+  color: var(--token-modal-section-title) !important;
+}
+
+/* 弹窗底部按钮 */
+.token-edit-modal .semi-modal-footer .btn-modal-submit {
+  background: var(--btn-gradient-primary) !important;
+  border: none !important;
+  border-radius: 8px !important;
+  color: #fff !important;
+  font-weight: 500 !important;
+  height: 36px !important;
+  min-width: 112px;
+}
+
+.token-edit-modal .semi-modal-footer .btn-modal-submit:hover {
+  background: var(--btn-gradient-primary-hover) !important;
+  color: #fff !important;
+}
+
+.token-edit-modal .semi-modal-footer .btn-modal-cancel {
+  background: var(--token-modal-cancel-bg) !important;
+  border: 1px solid var(--token-modal-border) !important;
+  border-radius: 8px !important;
+  color: var(--token-modal-cancel-text) !important;
+  font-weight: 500 !important;
+  height: 36px !important;
+  min-width: 112px;
+}
+
+.token-edit-modal .semi-modal-footer .btn-modal-cancel:hover {
+  border-color: var(--token-modal-section-title) !important;
+  color: var(--token-modal-section-title) !important;
+}
+
+/* ==================== 通用分页组件主题样式 ==================== */
+/* 使用方式: 在分页容器上添加 .pagination-themed 类即可 */
+/* 亮色模式 */
+.pagination-themed .semi-page-item {
+  border: none !important;
+  border-radius: 10px !important;
+  background: transparent !important;
+}
+
+.pagination-themed .semi-page-item-active {
+  background: var(--btn-gradient-primary) !important;
+  border-radius: 10px !important;
+  border: none !important;
+  color: #fff !important;
+  font-weight: 700 !important;
+}
+
+.pagination-themed .semi-page-item-active:hover {
+  background: var(--btn-gradient-primary) !important;
+  color: #fff !important;
+}
+
+.pagination-themed .semi-page-item:not(.semi-page-item-active) {
+  color: rgba(28, 31, 35, 0.80) !important;
+  font-weight: 400 !important;
+}
+
+.pagination-themed .semi-page-item:not(.semi-page-item-active):hover {
+  background: rgba(106, 58, 199, 0.08) !important;
+  border-radius: 10px !important;
+  color: #635DE7 !important;
+}
+
+.pagination-themed .semi-page-prev,
+.pagination-themed .semi-page-next {
+  color: rgba(28, 31, 35, 0.80) !important;
+}
+
+.pagination-themed .semi-page-prev:hover,
+.pagination-themed .semi-page-next:hover {
+  background: rgba(106, 58, 199, 0.08) !important;
+  border-radius: 10px !important;
+}
+
+.pagination-themed .semi-page-prev .semi-icon,
+.pagination-themed .semi-page-next .semi-icon {
+  color: rgba(28, 31, 35, 0.80) !important;
+}
+
+.pagination-themed .semi-page-prev.semi-page-item-disabled,
+.pagination-themed .semi-page-next.semi-page-item-disabled {
+  color: rgba(28, 31, 35, 0.30) !important;
+}
+
+.pagination-themed .semi-page-prev.semi-page-item-disabled .semi-icon,
+.pagination-themed .semi-page-next.semi-page-item-disabled .semi-icon {
+  color: rgba(28, 31, 35, 0.30) !important;
+}
+
+.pagination-themed .semi-page .semi-select {
+  background: var(--table-input-bg) !important;
+  border: 1px solid var(--table-card-border) !important;
+  border-radius: 10px !important;
+}
+
+.pagination-themed .semi-page .semi-select .semi-select-selection {
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+}
+
+.pagination-themed .semi-page .semi-select:hover {
+  border-color: #635DE7 !important;
+}
+
+.pagination-themed .semi-page-quickjump-input-number {
+  background: var(--table-input-bg) !important;
+  border: 1px solid var(--table-card-border) !important;
+  border-radius: 10px !important;
+}
+
+.pagination-themed .semi-page-quickjump {
+  color: var(--semi-color-text-2) !important;
+}
+
+.pagination-themed .semi-page-total {
+  color: var(--semi-color-text-2) !important;
+}
+
+/* 暗色模式 */
+html.dark .pagination-themed .semi-table-pagination-outer {
+  border-top: 1px solid var(--pricing-divider-border) !important;
+}
+
+html.dark .pagination-themed .semi-page-item {
+  border: none !important;
+  border-radius: 10px !important;
+  background: transparent !important;
+}
+
+html.dark .pagination-themed .semi-page-item-active {
+  background: linear-gradient(180deg, rgba(60, 54, 136, 0.50) 0%, rgba(22, 42, 87, 0.40) 100%) !important;
+  border-radius: 10px !important;
+  border: none !important;
+  color: #7C94FF !important;
+  font-weight: 700 !important;
+}
+
+html.dark .pagination-themed .semi-page-item-active:hover {
+  background: linear-gradient(180deg, rgba(60, 54, 136, 0.50) 0%, rgba(22, 42, 87, 0.40) 100%) !important;
+  color: #7C94FF !important;
+}
+
+html.dark .pagination-themed .semi-page-item:not(.semi-page-item-active) {
+  color: #FCFCFC !important;
+  font-weight: 400 !important;
+}
+
+html.dark .pagination-themed .semi-page-item:not(.semi-page-item-active):hover {
+  background: rgba(255, 255, 255, 0.08) !important;
+  border-radius: 10px !important;
+  color: #7C94FF !important;
+}
+
+html.dark .pagination-themed .semi-page-prev,
+html.dark .pagination-themed .semi-page-next {
+  color: #FCFCFC !important;
+}
+
+html.dark .pagination-themed .semi-page-prev:hover,
+html.dark .pagination-themed .semi-page-next:hover {
+  background: rgba(255, 255, 255, 0.08) !important;
+  border-radius: 10px !important;
+}
+
+html.dark .pagination-themed .semi-page-prev .semi-icon,
+html.dark .pagination-themed .semi-page-next .semi-icon {
+  color: #FCFCFC !important;
+}
+
+html.dark .pagination-themed .semi-page-prev.semi-page-item-disabled,
+html.dark .pagination-themed .semi-page-next.semi-page-item-disabled {
+  color: rgba(252, 252, 252, 0.3) !important;
+}
+
+html.dark .pagination-themed .semi-page-prev.semi-page-item-disabled .semi-icon,
+html.dark .pagination-themed .semi-page-next.semi-page-item-disabled .semi-icon {
+  color: rgba(252, 252, 252, 0.3) !important;
+}
+
+html.dark .pagination-themed .semi-page .semi-select {
+  background: linear-gradient(180deg, rgba(60, 54, 136, 0.50) 0%, rgba(22, 42, 87, 0.40) 100%) !important;
+  border: 1px solid #594699 !important;
+  border-radius: 10px !important;
+  backdrop-filter: blur(6px);
+}
+
+html.dark .pagination-themed .semi-page .semi-select .semi-select-selection {
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+}
+
+html.dark .pagination-themed .semi-page .semi-select .semi-select-selection-text {
+  color: #FCFCFC !important;
+}
+
+html.dark .pagination-themed .semi-page .semi-select .semi-select-arrow {
+  color: #FCFCFC !important;
+}
+
+html.dark .pagination-themed .semi-page .semi-select:hover {
+  border-color: #7C94FF !important;
+}
+
+html.dark .pagination-themed .semi-page-quickjump-input-number {
+  background: rgba(255, 255, 255, 0.05) !important;
+  border: 1px solid #594699 !important;
+  color: #FCFCFC !important;
+  border-radius: 10px !important;
+}
+
+html.dark .pagination-themed .semi-page-quickjump {
+  color: #FCFCFC !important;
+}
+
+html.dark .pagination-themed .semi-page-total {
+  color: #FCFCFC !important;
+}
+
 @keyframes slideInLeft {
   from {
     transform: translateX(-100%);
@@ -1024,3 +2066,1127 @@ html.dark .with-pastel-balls::before {
 }
 
 .ec-dbcd0a3c01b55203 { forced-color-adjust: auto; }
+
+/* ==================== 登录/注册页主题变量 ==================== */
+:root {
+  --login-bg: linear-gradient(148deg, rgba(111, 130, 221, 0.50) 0%, rgba(178, 223, 247, 0.50) 50%, rgba(191, 182, 236, 0.50) 100%);
+  --login-card-bg: linear-gradient(180deg, rgba(235, 237, 254, 0.80) 0%, rgba(255, 255, 255, 0.80) 100%);
+  --login-card-border: rgba(28, 31, 35, 0.08);
+  --login-text-primary: #1C1F23;
+  --login-text-secondary: rgba(28, 31, 35, 0.80);
+  --login-btn-outline-border: rgba(28, 31, 35, 0.08);
+  --login-divider-color: rgba(28, 31, 35, 0.08);
+  --login-link-color: #0064FA;
+}
+
+html.dark {
+  --login-bg: #16183E;
+  --login-card-bg: linear-gradient(180deg, rgba(60, 54, 136, 0.50) 0%, rgba(22, 42, 87, 0.40) 100%);
+  --login-card-border: rgba(28, 31, 35, 0.08);
+  --login-text-primary: #FCFCFC;
+  --login-text-secondary: #FCFCFC;
+  --login-btn-outline-border: #594699;
+  --login-divider-color: rgba(28, 31, 35, 0.08);
+  --login-link-color: #635DE7;
+}
+
+/* ==================== 模型广场暗色主题变量 ==================== */
+:root {
+  --pricing-card-bg: rgba(255, 255, 255, 0.5);
+  --pricing-card-border: #E2DAFD;
+  --pricing-card-shadow: 0px 4px 8px 0px rgba(106, 58, 199, 0.08);
+  --pricing-card-inset-shadow: inset -4px -4px 4px 0px rgba(255, 255, 255, 0.25), inset 0px 4px 4px 0px rgba(255, 255, 255, 0.25);
+  --pricing-card-hover-border: #c4b5fd;
+  --pricing-table-hover: rgba(255, 255, 255, 0.5);
+  --pricing-divider-border: var(--semi-color-border);
+  --pricing-tag-bg: rgba(255, 255, 255, 0.95);
+  --pricing-tag-color: #1f2937;
+  --pricing-tag-border: rgba(255, 255, 255, 0.8);
+  --pricing-avatar-bg: rgba(255, 255, 255, 0.9);
+  --pricing-avatar-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
+  --pricing-hot-btn-inactive-bg: #ede3ff;
+  --pricing-hot-btn-inactive-color: rgba(28, 31, 35, 0.8);
+  --pricing-hot-btn-hover-bg: #6639BF;
+  --pricing-hot-btn-hover-color: #fff;
+  --pricing-skeleton-border: var(--semi-color-border);
+  --pricing-page-overlay: transparent;
+  --pricing-page-bg-image: url('/newapiBg.jpg');
+  --pricing-vendor-cover-gradient: linear-gradient(0deg, rgba(var(--palette-primary-darkerChannel, 37 99 235) / 80%), rgba(var(--palette-primary-darkerChannel, 37 99 235) / 80%));
+  --pricing-sidebar-text: var(--semi-color-text-0);
+  --pricing-sidebar-reset-text: var(--semi-color-text-2);
+  --pricing-sidebar-reset-hover-text: var(--semi-color-text-1);
+  --pricing-search-label-text: var(--semi-color-text-2);
+  --pricing-hot-card-gradient: linear-gradient(90deg, #8b72fc, #E5A2FD 100%);
+  /* Header */
+  --header-bg: #E8EBFE;
+  --header-border: #E2DAFD;
+  --header-nav-text: #17171C;
+  --header-nav-hover-bg: rgba(255, 255, 255, 0.4);
+  --header-nav-active-bg: #D3DFFF;
+  --header-btn-bg: rgba(249, 252, 255, 0.30);
+  --header-btn-hover-bg: rgba(255, 255, 255, 0.5);
+  --header-system-name: #1C1F23;
+  --header-login-text: rgba(28, 31, 35, 0.80);
+  --header-login-hover-bg: rgba(255, 255, 255, 0.4);
+
+  /* Table card theme */
+  --table-card-bg: rgba(255, 255, 255, 0.50);
+  --table-card-border: #E2DAFD;
+  --table-card-shadow: 0px 4px 8px rgba(106, 58, 199, 0.08);
+  --table-card-header-bg: #F7F4FE;
+  --table-card-header-border: #E2DAFD;
+  --table-input-bg: #FBF9FF;
+  --btn-gradient-primary: linear-gradient(180deg, #89BDF9 0%, #8164FF 100%);
+  --btn-gradient-primary-hover: linear-gradient(180deg, #7AADF0 0%, #7154E5 100%);
+  --btn-light-danger-bg: #FEE8E8;
+  --btn-light-danger-color: #FD545B;
+  --btn-light-danger-hover-bg: #FDD0D0;
+}
+
+html.dark {
+  --pricing-card-bg: linear-gradient(180deg, rgba(60, 54, 136, 0.40) 0%, rgba(22, 43, 87, 0.28) 100%);
+  --pricing-card-border: #594699;
+  --pricing-card-shadow: 0px 4px 8px rgba(106, 58, 199, 0.08);
+  --pricing-card-inset-shadow: inset -4px -4px 4px rgba(255, 255, 255, 0.25), inset 0px 4px 4px rgba(255, 255, 255, 0.25);
+  --pricing-card-hover-border: rgba(182, 170, 255, 0.55);
+  --pricing-table-hover: rgba(255, 255, 255, 0.05);
+  --pricing-divider-border: rgba(176, 210, 255, 0.08);
+  --pricing-tag-bg: rgba(255, 255, 255, 0.95);
+  --pricing-tag-color: #1F2937;
+  --pricing-tag-border: rgba(255, 255, 255, 0.80);
+  --pricing-avatar-bg: rgba(255, 255, 255, 0.1);
+  --pricing-avatar-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3), 0 2px 4px -2px rgba(0, 0, 0, 0.3);
+  --pricing-hot-btn-inactive-bg: rgba(237, 227, 255, 0.15);
+  --pricing-hot-btn-inactive-color: #FCFCFC;
+  --pricing-hot-btn-hover-bg: #6639BF;
+  --pricing-hot-btn-hover-color: #fff;
+  --pricing-skeleton-border: rgba(176, 210, 255, 0.08);
+  --pricing-page-overlay: rgba(13, 21, 56, 0.6);
+  --pricing-page-bg-image: url('/newapidarkbg.jpg');
+  --pricing-vendor-cover-gradient: linear-gradient(180deg, rgba(60, 54, 136, 0.50) 0%, rgba(22, 42, 87, 0.40) 100%);
+  --pricing-sidebar-text: #FCFCFC;
+  --pricing-sidebar-reset-text: rgba(255, 255, 255, 0.6);
+  --pricing-sidebar-reset-hover-text: rgba(255, 255, 255, 0.8);
+  --pricing-search-label-text: #FCFCFC;
+  --pricing-hot-card-gradient: linear-gradient(90deg, rgba(74, 35, 251, 0.64) 0%, rgba(229, 162, 253, 0.80) 100%);
+  /* Header */
+  --header-bg: rgba(13, 21, 56, 0.8);
+  --header-border: rgba(176, 210, 255, 0.08);
+  --header-nav-text: #FCFCFC;
+  --header-nav-hover-bg: rgba(255, 255, 255, 0.1);
+  --header-nav-active-bg: rgba(129, 100, 255, 0.15);
+  --header-btn-bg: rgba(249, 252, 255, 0.30);
+  --header-btn-hover-bg: rgba(255, 255, 255, 0.15);
+  --header-system-name: #FCFCFC;
+  --header-login-text: #FCFCFC;
+  --header-login-hover-bg: rgba(255, 255, 255, 0.15);
+
+  /* Table card theme - dark mode */
+  --table-card-bg: linear-gradient(180deg, rgba(60, 54, 136, 0.50) 0%, rgba(22, 42, 87, 0.40) 100%);
+  --table-card-border: #594699;
+  --table-card-shadow: 0px 4px 8px rgba(106, 58, 199, 0.08);
+  --table-card-header-bg: linear-gradient(180deg, rgba(60, 54, 136, 0.50) 0%, rgba(22, 42, 87, 0.40) 100%);
+  --table-card-header-border: #594699;
+  --table-input-bg: linear-gradient(180deg, rgba(60, 54, 136, 0.50) 0%, rgba(22, 42, 87, 0.40) 100%);
+  --btn-gradient-primary: linear-gradient(180deg, #5B7BD9 0%, #635DE7 100%);
+  --btn-gradient-primary-hover: linear-gradient(180deg, #4E6BC8 0%, #5650D6 100%);
+  --btn-light-danger-bg: rgba(253, 84, 91, 0.15);
+  --btn-light-danger-color: #FF6B72;
+  --btn-light-danger-hover-bg: rgba(253, 84, 91, 0.25);
+}
+
+/* Page background dark overlay */
+html.dark .pricing-page-wrapper {
+  position: relative;
+}
+
+html.dark .pricing-page-wrapper::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: var(--pricing-page-overlay);
+  pointer-events: none;
+  z-index: 0;
+}
+
+html.dark .pricing-page-wrapper > * {
+  position: relative;
+  z-index: 1;
+}
+
+/* Pagination divider */
+.pricing-pagination-divider {
+  border-color: var(--pricing-divider-border);
+}
+
+/* Force override Semi UI Card default background for pricing model cards */
+.pricing-model-card {
+  background: var(--pricing-card-bg) !important;
+  border-color: var(--pricing-card-border) !important;
+  box-shadow: var(--pricing-card-shadow), var(--pricing-card-inset-shadow) !important;
+  backdrop-filter: blur(6px);
+}
+
+.pricing-model-card:hover {
+  border-color: var(--pricing-card-hover-border) !important;
+}
+
+/* 深色模式下模型卡片文字 1:1 还原设计稿（#FCFCFC） */
+html.dark .pricing-model-card .pricing-card-title,
+html.dark .pricing-model-card .pricing-card-price-info,
+html.dark .pricing-model-card .pricing-card-price-info span {
+  color: #FCFCFC !important;
+}
+
+/* 深色模式下计费标签 1:1 还原设计稿（Pay as you go 徽章） */
+html.dark .pricing-model-card .pricing-billing-tag {
+  background: rgba(106, 58, 199, 0.15) !important;
+  border-color: transparent !important;
+  color: #9F90CF !important;
+}
+
+/* Table hover */
+html.dark .semi-table-tbody > .semi-table-row:hover {
+  background: var(--pricing-table-hover) !important;
+  backdrop-filter: blur(12px);
+}
+
+html.dark .semi-table-tbody > .semi-table-row:hover > .semi-table-row-cell {
+  background: transparent !important;
+}
+
+html.dark .semi-table-tbody > .semi-table-row:hover .semi-table-cell-fixed-left,
+html.dark .semi-table-tbody > .semi-table-row:hover .semi-table-cell-fixed-right {
+  background: #1f204f !important;
+}
+
+/* ==================== 顶部导航栏交互样式 ==================== */
+.header-nav-link {
+  position: relative;
+}
+
+.header-nav-link:hover {
+  background: var(--header-nav-hover-bg);
+}
+
+.header-nav-link.active {
+  background: var(--header-nav-active-bg);
+}
+
+.header-nav-link.active::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 12px;
+  right: 12px;
+  height: 2px;
+  border-radius: 1px;
+  background: var(--btn-gradient-primary);
+  pointer-events: none;
+}
+
+.header-circle-btn:hover {
+  background: var(--header-btn-hover-bg) !important;
+}
+
+.header-login-btn:hover {
+  background: var(--header-login-hover-bg) !important;
+}
+
+/* ==================== 暗色模式分页组件 ==================== */
+/* 已迁移至 .pagination-themed 通用类，详见上方「通用分页组件主题样式」部分 */
+
+/* ==================== 暗色模式模型广场头部组件 ==================== */
+
+/* Vendor Intro Card */
+html.dark .pricing-page-wrapper .pricing-search-header .semi-card {
+  background: #16183E !important;
+  border: 1px solid rgba(176, 210, 255, 0.08) !important;
+  box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.05) !important;
+}
+
+/* Card body (search actions area) */
+html.dark .pricing-page-wrapper .pricing-search-header .semi-card-body {
+  background: #16183E !important;
+}
+
+/* 搜索输入框 */
+html.dark .pricing-page-wrapper .pricing-search-header .semi-input-wrapper {
+  background: linear-gradient(180deg, rgba(60, 54, 136, 0.50) 0%, rgba(22, 42, 87, 0.40) 100%) !important;
+  border: 1px solid #594699 !important;
+  border-radius: 10px !important;
+}
+
+html.dark .pricing-page-wrapper .pricing-search-header .semi-input-wrapper .semi-input {
+  color: #FCFCFC !important;
+}
+
+html.dark .pricing-page-wrapper .pricing-search-header .semi-input-wrapper .semi-input::placeholder {
+  color: #93A0C5 !important;
+}
+
+html.dark .pricing-page-wrapper .pricing-search-header .semi-input-wrapper .semi-icon {
+  color: #93A0C5 !important;
+}
+
+html.dark .pricing-page-wrapper .pricing-search-header .semi-input-wrapper:hover {
+  background: linear-gradient(180deg, rgba(60, 54, 136, 0.50) 0%, rgba(22, 42, 87, 0.40) 100%) !important;
+  border-color: #7C94FF !important;
+}
+
+html.dark .pricing-page-wrapper .pricing-search-header .semi-input-wrapper-focus,
+html.dark .pricing-page-wrapper .pricing-search-header .semi-input-wrapper-focus:hover {
+  background: linear-gradient(180deg, rgba(60, 54, 136, 0.50) 0%, rgba(22, 42, 87, 0.40) 100%) !important;
+  border-color: #7C94FF !important;
+}
+
+/* 清除按钮 */
+html.dark .pricing-page-wrapper .pricing-search-header .semi-input-clearbtn {
+  color: #93A0C5 !important;
+}
+
+html.dark .pricing-page-wrapper .pricing-search-header .semi-input-clearbtn:hover {
+  color: #FCFCFC !important;
+}
+
+/* 操作按钮 - outline 风格 (Copy, 表格视图, M) */
+html.dark .pricing-page-wrapper .pricing-search-header .semi-button.semi-button-outline {
+  background: transparent !important;
+  border: 1px solid #594699 !important;
+  color: #FCFCFC !important;
+  font-weight: 700 !important;
+}
+
+html.dark .pricing-page-wrapper .pricing-search-header .semi-button.semi-button-outline:not(.semi-button-disabled):hover {
+  border-color: #7C94FF !important;
+  color: #7C94FF !important;
+  background: rgba(255, 255, 255, 0.05) !important;
+}
+
+html.dark .pricing-page-wrapper .pricing-search-header .semi-button.semi-button-outline.semi-button-disabled {
+  color: #93A0C5 !important;
+  border-color: #594699 !important;
+  background: transparent !important;
+  opacity: 1 !important;
+}
+
+/* 操作按钮 - solid 风格 (active 状态) */
+html.dark .pricing-page-wrapper .pricing-search-header .semi-button.semi-button-solid {
+  background: linear-gradient(180deg, rgba(60, 54, 136, 0.50) 0%, rgba(22, 42, 87, 0.40) 100%) !important;
+  border: 1px solid #594699 !important;
+  color: #FCFCFC !important;
+  font-weight: 700 !important;
+}
+
+html.dark .pricing-page-wrapper .pricing-search-header .semi-button.semi-button-solid:hover {
+  border-color: #7C94FF !important;
+}
+
+/* 按钮 icon 颜色 */
+html.dark .pricing-page-wrapper .pricing-search-header .semi-button .semi-icon {
+  color: inherit !important;
+}
+
+/* Switch 开关 */
+html.dark .pricing-page-wrapper .pricing-search-header .semi-switch {
+  background-color: rgba(255, 255, 255, 0.1) !important;
+  border: 1px solid #594699 !important;
+}
+
+html.dark .pricing-page-wrapper .pricing-search-header .semi-switch:hover {
+  background-color: rgba(255, 255, 255, 0.15) !important;
+}
+
+html.dark .pricing-page-wrapper .pricing-search-header .semi-switch-checked {
+  background-color: #594699 !important;
+  border-color: #594699 !important;
+}
+
+html.dark .pricing-page-wrapper .pricing-search-header .semi-switch-checked:hover {
+  background-color: #6B54B5 !important;
+}
+
+/* Select 下拉选择器 (货币) */
+html.dark .pricing-page-wrapper .pricing-search-header .semi-select {
+  background: linear-gradient(180deg, rgba(60, 54, 136, 0.50) 0%, rgba(22, 42, 87, 0.40) 100%) !important;
+  border: 1px solid #594699 !important;
+  border-radius: 10px !important;
+}
+
+html.dark .pricing-page-wrapper .pricing-search-header .semi-select .semi-select-selection {
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+}
+
+html.dark .pricing-page-wrapper .pricing-search-header .semi-select .semi-select-selection-text {
+  color: #FCFCFC !important;
+}
+
+html.dark .pricing-page-wrapper .pricing-search-header .semi-select .semi-select-arrow {
+  color: #93A0C5 !important;
+}
+
+html.dark .pricing-page-wrapper .pricing-search-header .semi-select:hover {
+  border-color: #7C94FF !important;
+}
+
+/* Divider 分隔线 */
+html.dark .pricing-page-wrapper .pricing-search-header .semi-divider {
+  border-color: rgba(176, 210, 255, 0.08) !important;
+}
+
+html.dark .pricing-page-wrapper .pricing-search-header .semi-divider-vertical {
+  border-left-color: rgba(176, 210, 255, 0.08) !important;
+}
+
+/* Tag (模型数量标签) */
+html.dark .pricing-page-wrapper .pricing-search-header .semi-tag {
+  border-radius: 9999px !important;
+  font-weight: 500 !important;
+}
+
+/* ==================== 数据看板主题变量 ==================== */
+:root {
+  --dash-card-bg: rgba(255, 255, 255, 0.50);
+  --dash-card-border: #E2DAFD;
+  --dash-card-shadow: 0px 4px 8px rgba(106, 58, 199, 0.08), -4px -4px 4px rgba(255, 255, 255, 0.25) inset, 0px 4px 4px rgba(255, 255, 255, 0.25) inset;
+  --dash-card-header-border: #E2DAFD;
+  --dash-text-primary: #1C1F23;
+  --dash-text-secondary: rgba(28, 31, 35, 0.80);
+  --dash-text-muted: #6B7280;
+  --dash-bg-secondary: rgba(255, 255, 255, 0.50);
+  --dash-bg-hover: rgba(255, 255, 255, 0.80);
+  --dash-divider-color: #E2DAFD;
+}
+
+html.dark {
+  --dash-card-bg: linear-gradient(180deg, rgba(60, 54, 136, 0.50) 0%, rgba(22, 42, 87, 0.40) 100%);
+  /* 侧边栏主题变量 - 暗色模式 */
+  --sidebar-bg: linear-gradient(180deg, rgba(60, 54, 136, 0.50) 0%, rgba(22, 42, 87, 0.40) 100%);
+  --sidebar-item-active-bg: linear-gradient(180deg, rgba(60, 54, 136, 0.50) 0%, rgba(22.23, 42.81, 87.22, 0.40) 100%);
+  --sidebar-item-active-color: #635DE7;
+  --sidebar-item-text: #FCFCFC;
+  --sidebar-item-hover-bg: rgba(255, 255, 255, 0.08);
+  --sidebar-item-hover-color: #635DE7;
+  --sidebar-border: rgba(249, 249, 249, 0.08);
+  --sidebar-group-label: rgba(252, 252, 252, 0.50);
+  --sidebar-collapse-shadow: rgba(60, 54, 136, 0.50);
+  --sidebar-btn-outline: #594699;
+  --sidebar-collapse-text: rgba(220, 230, 244, 0.80);
+  --dash-card-border: #594699;
+  --dash-card-shadow: 0px 4px 8px rgba(106, 58, 199, 0.08), inset -4px -4px 4px rgba(255, 255, 255, 0.25), inset 0px 4px 4px rgba(255, 255, 255, 0.25);
+  --dash-card-header-border: #594699;
+  --dash-text-primary: #FCFCFC;
+  --dash-text-secondary: #93A0C5;
+  --dash-text-muted: #93A0C5;
+  --dash-bg-secondary: rgba(255, 255, 255, 0.05);
+  --dash-bg-hover: rgba(255, 255, 255, 0.08);
+  --dash-divider-color: rgba(89, 70, 153, 0.30);
+}
+
+/* ==================== 数据看板 - 通用卡片样式 ==================== */
+
+/* 卡片背景、边框、圆角、阴影 */
+.dashboard-page .semi-card {
+  background: var(--dash-card-bg) !important;
+  border: 1px solid var(--dash-card-border) !important;
+  border-radius: 16px !important;
+  box-shadow: var(--dash-card-shadow) !important;
+  backdrop-filter: blur(8px);
+}
+
+/* 卡片头部 */
+.dashboard-page .semi-card .semi-card-header {
+  border-bottom: 1px solid var(--dash-card-header-border) !important;
+}
+
+/* 卡片标题文字 */
+.dashboard-page .semi-card .semi-card-header-title {
+  color: var(--dash-text-primary) !important;
+  font-weight: 700 !important;
+}
+
+/* 卡片 body */
+.dashboard-page .semi-card .semi-card-body {
+  color: var(--dash-text-secondary) !important;
+}
+
+/* ==================== 数据看板 - 问候语头部 ==================== */
+.dashboard-page h2 {
+  color: var(--dash-text-primary) !important;
+}
+
+/* 头部圆形按钮 */
+.dashboard-page .semi-button.bg-green-500,
+.dashboard-page .semi-button.bg-blue-500 {
+  color: white !important;
+}
+
+html.dark .dashboard-page .semi-button.bg-green-500 {
+  background: linear-gradient(180deg, rgba(60, 54, 136, 0.50) 0%, rgba(22, 42, 87, 0.40) 100%) !important;
+  border: 1px solid #594699 !important;
+}
+
+html.dark .dashboard-page .semi-button.bg-blue-500 {
+  background: linear-gradient(180deg, rgba(60, 54, 136, 0.50) 0%, rgba(22, 42, 87, 0.40) 100%) !important;
+  border: 1px solid #594699 !important;
+}
+
+/* ==================== 数据看板 - 统计卡片 ==================== */
+
+/* 移除 stats cards 的 Tailwind 背景色 */
+.dashboard-page .semi-card.bg-blue-50,
+.dashboard-page .semi-card.bg-green-50,
+.dashboard-page .semi-card.bg-yellow-50,
+.dashboard-page .semi-card.bg-indigo-50 {
+  background: var(--dash-card-bg) !important;
+}
+
+/* 统计项标题文字 */
+.dashboard-page .text-gray-500 {
+  color: var(--dash-text-secondary) !important;
+}
+
+/* 统计项数值 */
+.dashboard-page .text-lg.font-semibold {
+  color: var(--dash-text-primary) !important;
+}
+
+/* 统计项描述文字 */
+.dashboard-page .text-gray-900 {
+  color: var(--dash-text-primary) !important;
+}
+
+/* 统计卡片内 VChart canvas 背景透明 */
+.dashboard-page .semi-card canvas {
+  background: transparent !important;
+}
+
+/* ==================== 数据看板 - 文字颜色适配 ==================== */
+html.dark .dashboard-page .text-gray-400 {
+  color: var(--dash-text-muted) !important;
+}
+
+html.dark .dashboard-page .text-gray-600 {
+  color: var(--dash-text-secondary) !important;
+}
+
+html.dark .dashboard-page .text-gray-800 {
+  color: var(--dash-text-primary) !important;
+}
+
+/* ==================== 数据看板 - 背景颜色适配 ==================== */
+html.dark .dashboard-page .bg-gray-50 {
+  /* background: var(--dash-bg-secondary) !important; */
+}
+
+html.dark .dashboard-page .bg-white {
+  background: var(--dash-bg-secondary) !important;
+}
+
+html.dark .dashboard-page .hover\:bg-white:hover {
+  background: var(--dash-bg-hover) !important;
+}
+
+html.dark .dashboard-page .hover\:bg-blue-50:hover {
+  background: var(--dash-bg-hover) !important;
+}
+
+/* ==================== 数据看板 - Tabs 组件 ==================== */
+.dashboard-page .semi-tabs-bar {
+  border-bottom: 1px solid var(--dash-card-header-border) !important;
+}
+
+.dashboard-page .semi-tabs-tab {
+  color: var(--dash-text-secondary) !important;
+}
+
+.dashboard-page .semi-tabs-tab-active {
+  color: var(--dash-text-primary) !important;
+}
+
+.dashboard-page .semi-tabs-tab-active .semi-tabs-tab-title {
+  color: var(--dash-text-primary) !important;
+  font-weight: 700 !important;
+}
+
+/* ==================== 数据看板 - Timeline 组件 ==================== */
+.dashboard-page .semi-timeline-item-content {
+  color: var(--dash-text-secondary) !important;
+}
+
+.dashboard-page .semi-timeline-item-time {
+  color: var(--dash-text-muted) !important;
+}
+
+/* ==================== 数据看板 - Collapse 组件 ==================== */
+.dashboard-page .semi-collapse-header {
+  color: var(--dash-text-primary) !important;
+}
+
+.dashboard-page .semi-collapse-content {
+  color: var(--dash-text-secondary) !important;
+}
+
+/* ==================== 数据看板 - Divider 组件 ==================== */
+.dashboard-page .semi-divider {
+  border-color: var(--dash-divider-color) !important;
+}
+
+.dashboard-page .semi-divider-horizontal {
+  border-bottom-color: var(--dash-divider-color) !important;
+}
+
+/* ==================== 数据看板 - Empty 组件 ==================== */
+.dashboard-page .semi-empty-description {
+  color: var(--dash-text-secondary) !important;
+}
+
+/* ==================== 数据看板 - Tag 组件 ==================== */
+.dashboard-page .semi-tag {
+  border-radius: 9999px !important;
+}
+
+/* ==================== 数据看板 - 滚动容器 ==================== */
+.dashboard-page .semi-scrollbar-track {
+  background: var(--dash-bg-secondary) !important;
+}
+
+/* hover 链接颜色 */
+html.dark .dashboard-page .hover\:text-blue-500:hover {
+  color: #7C94FF !important;
+}
+
+/* Markdown 内容文字 */
+html.dark .dashboard-page .semi-timeline-item-content p,
+html.dark .dashboard-page .semi-collapse-content p {
+  color: var(--dash-text-secondary) !important;
+}
+
+/* Progress 进度条 */
+html.dark .dashboard-page .semi-progress-track {
+  background: var(--dash-bg-secondary) !important;
+}
+
+/* ==================== 数据看板暗色模式 - 统计卡片 1:1 视觉稿还原 ==================== */
+
+/* 卡片 backdrop-filter */
+html.dark .dashboard-page .semi-card {
+  backdrop-filter: blur(22.50px);
+}
+
+/* 卡片标题字重 */
+html.dark .dashboard-page .semi-card .semi-card-header-title {
+  font-weight: 500 !important;
+  font-size: 14px !important;
+}
+
+/* 统计项标签文字颜色 */
+html.dark .dashboard-page .semi-card.bg-blue-50 .text-gray-500,
+html.dark .dashboard-page .semi-card.bg-green-50 .text-gray-500,
+html.dark .dashboard-page .semi-card.bg-yellow-50 .text-gray-500,
+html.dark .dashboard-page .semi-card.bg-indigo-50 .text-gray-500 {
+  color: #FCFCFC !important;
+  font-size: 12px !important;
+  font-weight: 400 !important;
+}
+
+/* 统计项数值样式 */
+html.dark .dashboard-page .semi-card.bg-blue-50 .text-lg.font-semibold,
+html.dark .dashboard-page .semi-card.bg-green-50 .text-lg.font-semibold,
+html.dark .dashboard-page .semi-card.bg-yellow-50 .text-lg.font-semibold,
+html.dark .dashboard-page .semi-card.bg-indigo-50 .text-lg.font-semibold {
+  color: #FCFCFC !important;
+  font-size: 18px !important;
+  font-weight: 700 !important;
+}
+
+/* 统计项头像背景色 */
+html.dark .dashboard-page .semi-avatar-blue {
+  background-color: #65B2FC !important;
+}
+
+html.dark .dashboard-page .semi-avatar-purple {
+  background-color: #C96FD1 !important;
+}
+
+html.dark .dashboard-page .semi-avatar-green {
+  background-color: #34D399 !important;
+}
+
+html.dark .dashboard-page .semi-avatar-cyan {
+  background-color: #22D3EE !important;
+}
+
+html.dark .dashboard-page .semi-avatar-yellow {
+  background-color: #FBBF24 !important;
+}
+
+html.dark .dashboard-page .semi-avatar-pink {
+  background-color: #F472B6 !important;
+}
+
+html.dark .dashboard-page .semi-avatar-indigo {
+  background-color: #818CF8 !important;
+}
+
+html.dark .dashboard-page .semi-avatar-orange {
+  background-color: #FB923C !important;
+}
+
+/* 统计项头像尺寸 */
+html.dark .dashboard-page .semi-card.bg-blue-50 .semi-avatar,
+html.dark .dashboard-page .semi-card.bg-green-50 .semi-avatar,
+html.dark .dashboard-page .semi-card.bg-yellow-50 .semi-avatar,
+html.dark .dashboard-page .semi-card.bg-indigo-50 .semi-avatar {
+  width: 32px !important;
+  height: 32px !important;
+  border-radius: 16px !important;
+}
+
+/* 统计项头像内图标颜色 */
+html.dark .dashboard-page .semi-card.bg-blue-50 .semi-avatar .semi-icon,
+html.dark .dashboard-page .semi-card.bg-green-50 .semi-avatar .semi-icon,
+html.dark .dashboard-page .semi-card.bg-yellow-50 .semi-avatar .semi-icon,
+html.dark .dashboard-page .semi-card.bg-indigo-50 .semi-avatar .semi-icon {
+  color: #FFFFFF !important;
+}
+
+/* 充值按钮 - 胶囊样式 */
+html.dark .dashboard-page .dash-topup-tag {
+  background: linear-gradient(180deg, rgba(60, 54, 136, 0.50) 0%, rgba(22, 42, 87, 0.40) 100%) !important;
+  border: 1px solid rgba(198, 202, 205, 0.70) !important;
+  color: #FCFCFC !important;
+  border-radius: 9999px !important;
+  font-size: 12px !important;
+  font-weight: 400 !important;
+  padding: 4px 16px !important;
+  height: 24px !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  cursor: pointer !important;
+  transition: border-color 0.2s ease, color 0.2s ease !important;
+}
+
+html.dark .dashboard-page .dash-topup-tag:hover {
+  border-color: #7C94FF !important;
+  color: #7C94FF !important;
+}
+
+html.dark .sidebar-container {
+  background: none !important;
+}
+
+/* ================= 操练场（Playground）视觉稿样式 ================= */
+
+/* 聊天消息气泡：用户灰底 / 助手紫色底 */
+.pg-chat .semi-chat-chatBox-content-user {
+  background: #635de7 !important;
+  color: #1c1f23;
+  border-radius: 12px;
+}
+.pg-chat .semi-chat-chatBox-content-bubble {
+  background: #e7ebf3;
+  color: #ffffff;
+  border-radius: 12px;
+}
+.pg-chat .semi-chat-chatBox-content-bubble p,
+.pg-chat .semi-chat-chatBox-content-bubble span,
+.pg-chat .semi-chat-chatBox-content-bubble li,
+.pg-chat .semi-chat-chatBox-content-bubble h1,
+.pg-chat .semi-chat-chatBox-content-bubble h2,
+.pg-chat .semi-chat-chatBox-content-bubble h3 {
+  color: #ffffff;
+}
+.pg-chat .semi-chat-chatBox-content-bubble a {
+  color: #cfe0ff;
+}
+/* 深色主题：用户消息气泡 */
+html.dark .pg-chat .semi-chat-chatBox-content-bubble {
+  background: #93a0c5;
+  color: #fcfcfc;
+}
+html.dark .pg-chat .semi-chat-chatBox-content-bubble p,
+html.dark .pg-chat .semi-chat-chatBox-content-bubble span,
+html.dark .pg-chat .semi-chat-chatBox-content-bubble li,
+html.dark .pg-chat .semi-chat-chatBox-content-bubble h1,
+html.dark .pg-chat .semi-chat-chatBox-content-bubble h2,
+html.dark .pg-chat .semi-chat-chatBox-content-bubble h3 {
+  color: #fcfcfc;
+}
+
+/* 参数面板：渐变滑块 */
+.pg-settings .pg-slider .semi-slider-rail {
+  height: 4px;
+  border-radius: 3px;
+  background: rgba(46, 50, 56, 0.05);
+}
+html.dark .pg-settings .pg-slider .semi-slider-rail {
+  background: #93a0c5;
+}
+.pg-settings .pg-slider .semi-slider-track {
+  height: 4px;
+  border-radius: 3px;
+  background: linear-gradient(164deg, #635de7 0%, #81cbfa 100%);
+}
+.pg-settings .pg-slider .semi-slider-handle {
+  border-color: #635de7;
+}
+.pg-settings .pg-slider .semi-slider-handle-dot {
+  width: 20px;
+  height: 20px;
+}
+
+/* 参数面板：输入框 / 选择框 / 文本域统一底色 */
+.pg-settings .semi-input-wrapper,
+.pg-settings .semi-select {
+  background: #f7f4fe;
+  border-radius: 10px;
+}
+html.dark .pg-settings .semi-input-wrapper,
+html.dark .pg-settings .semi-select {
+  background: linear-gradient(180deg, rgba(60, 54, 136, 0.5) 0%, rgba(22.23, 42.81, 87.22, 0.4) 100%);
+}
+.pg-settings .semi-input-wrapper-focus,
+.pg-settings .semi-select-open {
+  border-color: #8164ff;
+}
+
+/* 参数面板滚动条 */
+.pg-settings .model-settings-scroll::-webkit-scrollbar {
+  width: 4px;
+}
+.pg-settings .model-settings-scroll::-webkit-scrollbar-thumb {
+  background: rgba(99, 93, 231, 0.25);
+  border-radius: 4px;
+}
+
+/* ==================== ModalPro 背景图样式 ==================== */
+/* 背景图设在 .semi-modal-content 上（style prop 在外层 .semi-modal 上） */
+.modal-pro-bg .semi-modal-content {
+  background-image: var(--modal-bg-url) !important;
+  background-size: cover !important;
+  background-position: center top !important;
+  background-repeat: no-repeat !important;
+}
+/* 深色主题下使用深色背景图 */
+html.dark .modal-pro-bg .semi-modal-content {
+  background-image: var(--modal-bg-url-dark) !important;
+}
+/* 使 modal 内部区域背景透明，让 .semi-modal-content 上的背景图透出 */
+.modal-pro-bg .semi-modal-header,
+.modal-pro-bg .semi-modal-body,
+.modal-pro-bg .semi-modal-footer {
+  background: transparent !important;
+}
+
+/* ==================== 令牌编辑弹窗主题样式 ==================== */
+
+/* ---- 亮色模式 ---- */
+.token-edit-modal-pro .token-modal-title {
+  font-size: 24px;
+  font-weight: 600;
+  color: #3F3F3F;
+}
+.token-edit-modal-pro .token-section-title {
+  color: #635DE7;
+  font-size: 20px;
+  font-weight: 600;
+}
+.token-edit-modal-pro .token-section-subtitle {
+  color: #67676C;
+  font-size: 16px;
+  font-weight: 500;
+  margin-top: 2px;
+}
+.token-edit-modal-pro .token-section-hint {
+  color: #6D6D78;
+  font-size: 14px;
+  font-weight: 400;
+}
+.token-edit-modal-pro .token-field-label {
+  font-weight: 600;
+  color: #3C3C43;
+}
+/* 必填字段 * 号颜色 */
+.token-edit-modal-pro .semi-form-field-label-required .semi-form-field-label-text::after {
+  color: #F93920 !important;
+}
+.token-edit-modal-pro .token-quota-toggle {
+  color: var(--semi-color-text-2);
+}
+.token-edit-modal-pro .token-cancel-btn {
+  background: #F7F4FE !important;
+  border: 1px solid #E2DAFD !important;
+  border-radius: 8px !important;
+  color: #635DE7 !important;
+  font-weight: 500;
+  min-width: 112px;
+  height: 36px;
+}
+.token-edit-modal-pro .token-submit-btn {
+  background: linear-gradient(180deg, #89BDF9 0%, #8164FF 100%) !important;
+  border: none !important;
+  border-radius: 8px !important;
+  font-weight: 500;
+  min-width: 112px;
+  height: 36px;
+}
+
+/* ---- InputNumber spinner 亮色 ---- */
+.token-edit-modal-pro .semi-input-number-suffix-btns {
+  background: #FBF9FF !important;
+  border: 1px solid #E2DAFD !important;
+  border-radius: 3px !important;
+}
+.token-edit-modal-pro .semi-input-number-button {
+  color: #635DE7 !important;
+}
+
+/* ---- 深色模式 ---- */
+html.dark .token-edit-modal-pro .token-modal-title {
+  color: #FCFCFC;
+}
+html.dark .token-edit-modal-pro .token-section-subtitle {
+  color: #93A0C5;
+}
+html.dark .token-edit-modal-pro .token-section-hint {
+  color: #93A0C5;
+}
+html.dark .token-edit-modal-pro .token-field-label {
+  color: #FCFCFC;
+}
+html.dark .token-edit-modal-pro .token-quota-toggle {
+  color: #93A0C5;
+}
+html.dark .token-edit-modal-pro .token-cancel-btn {
+  background: linear-gradient(180deg, rgba(60, 54, 136, 0.50) 0%, rgba(22.23, 42.81, 87.22, 0.40) 100%) !important;
+  border: 1px solid #594699 !important;
+  color: #FCFCFC !important;
+}
+/* 深色模式下 extraText 文字 */
+html.dark .token-edit-modal-pro .semi-form-field-extra {
+  color: #93A0C5 !important;
+}
+/* 深色模式下输入框文字 */
+html.dark .token-edit-modal-pro .semi-input,
+html.dark .token-edit-modal-pro .semi-input-number .semi-input,
+html.dark .token-edit-modal-pro .semi-textarea {
+  color: #93A0C5 !important;
+}
+/* 深色模式下 placeholder */
+html.dark .token-edit-modal-pro .semi-input::placeholder,
+html.dark .token-edit-modal-pro .semi-textarea::placeholder {
+  color: rgba(147, 160, 197, 0.6) !important;
+}
+/* 深色模式下 Select 文字 */
+html.dark .token-edit-modal-pro .semi-select-selection {
+  color: #93A0C5 !important;
+}
+
+/* ---- InputNumber spinner 深色 ---- */
+html.dark .token-edit-modal-pro .semi-input-number-suffix-btns {
+  background: linear-gradient(180deg, rgba(60, 54, 136, 0.50) 0%, rgba(22.23, 42.81, 87.22, 0.40) 100%) !important;
+  border: 1px solid #594699 !important;
+}
+html.dark .token-edit-modal-pro .semi-input-number-button {
+  color: #93A0C5 !important;
+}
+html.dark .token-edit-modal-pro .semi-input-number-button:hover {
+  background-color: rgba(99, 93, 231, 0.15) !important;
+}
+
+/* ==================== 使用日志列设置弹窗样式 ==================== */
+
+/* ---- 弹窗 padding（按视觉稿） ---- */
+.column-selector-modal .semi-modal-header {
+  padding: 33px 38px 12px !important;
+}
+.column-selector-modal .semi-modal-body {
+  padding: 16px 38px 0 !important;
+}
+.column-selector-modal .semi-modal-footer {
+  padding: 0 38px 25px !important;
+}
+
+/* ---- 标题 ---- */
+.column-selector-modal .column-selector-title {
+  font-size: 24px;
+  font-weight: 600;
+  color: #3F3F3F;
+}
+html.dark .column-selector-modal .column-selector-title {
+  color: #FCFCFC;
+}
+
+/* ---- 区块标签 ---- */
+.column-selector-modal .column-selector-section-label {
+  font-size: 16px;
+  font-weight: 500;
+  color: #3F3F3F;
+}
+html.dark .column-selector-modal .column-selector-section-label {
+  color: #FCFCFC;
+}
+
+/* ---- 计费模式 Tab 切换 ---- */
+.column-selector-modal .column-selector-tabs {
+  display: flex;
+  border-bottom: 2px solid #E2DAFD;
+  position: relative;
+}
+.column-selector-modal .column-selector-tab {
+  flex: 1;
+  text-align: center;
+  font-size: 16px;
+  font-weight: 500;
+  color: #6D6D78;
+  padding: 4px 0 8px;
+  cursor: pointer;
+  position: relative;
+  transition: color 0.2s;
+  user-select: none;
+}
+.column-selector-modal .column-selector-tab:hover {
+  color: #635DE7;
+}
+.column-selector-modal .column-selector-tab.active {
+  color: #17171C;
+}
+.column-selector-modal .column-selector-tab.active::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(180deg, #89BDF9 0%, #8164FF 100%);
+  border-radius: 9999px;
+}
+html.dark .column-selector-modal .column-selector-tabs {
+  border-bottom-color: #594699;
+}
+html.dark .column-selector-modal .column-selector-tab {
+  color: #93A0C5;
+}
+html.dark .column-selector-modal .column-selector-tab.active {
+  color: #FCFCFC;
+}
+
+/* ---- Checkbox 文字 ---- */
+.column-selector-modal .semi-checkbox-content {
+  font-size: 16px;
+  font-weight: 500;
+  color: #3F3F3F;
+}
+html.dark .column-selector-modal .semi-checkbox-content {
+  color: #FCFCFC;
+}
+
+/* ---- 列选择框 ---- */
+.column-selector-modal .column-selector-box {
+  border: 1px solid #E2DAFD;
+  border-radius: 10px;
+  padding: 16px 20px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 18px 16px;
+  max-height: 330px;
+  overflow-y: auto;
+}
+html.dark .column-selector-modal .column-selector-box {
+  border-color: #594699;
+}
+
+/* ---- 底部按钮（全局通用） ---- */
+.column-selector-btn-secondary {
+  background: #F7F4FE !important;
+  border: 1px solid #E2DAFD !important;
+  border-radius: 8px !important;
+  color: #635DE7 !important;
+  font-weight: 500;
+  min-width: 76px;
+  height: 36px;
+}
+.column-selector-btn-primary {
+  background: linear-gradient(180deg, #89BDF9 0%, #8164FF 100%) !important;
+  border: none !important;
+  border-radius: 8px !important;
+  color: #fff !important;
+  font-weight: 500;
+  min-width: 76px;
+  height: 36px;
+}
+html.dark .column-selector-btn-secondary {
+  background: linear-gradient(180deg, rgba(60, 54, 136, 0.50) 0%, rgba(22.23, 42.81, 87.22, 0.40) 100%) !important;
+  border: 1px solid #594699 !important;
+  color: #FCFCFC !important;
+}
+
+/* ==================== ModalPro footer 按钮统一样式 ==================== */
+/* 适用于所有 ModalPro 弹窗底部按钮，自动识别主/次按钮 */
+
+/* 次按钮（取消/重置/关闭等）：非 primary/danger/warning/borderless/outline 的按钮 */
+.modal-pro-bg .semi-modal-footer .semi-button:not(.semi-button-primary):not(.semi-button-borderless):not(.semi-button-outline):not(.semi-button-danger):not(.semi-button-warning),
+/* light primary 按钮也用次按钮样式（如 theme='light' type='primary' 的取消按钮） */
+.modal-pro-bg .semi-modal-footer .semi-button-primary.semi-button-light {
+  background: #F7F4FE !important;
+  border: 1px solid #E2DAFD !important;
+  border-radius: 8px !important;
+  color: #635DE7 !important;
+  font-weight: 500;
+}
+
+/* 主按钮（确认/提交等）：solid primary 按钮用渐变主按钮样式 */
+.modal-pro-bg .semi-modal-footer .semi-button-primary:not(.semi-button-light):not(.semi-button-borderless):not(.semi-button-outline) {
+  background: linear-gradient(180deg, #89BDF9 0%, #8164FF 100%) !important;
+  border: none !important;
+  border-radius: 8px !important;
+  color: #fff !important;
+  font-weight: 500;
+}
+
+/* 深色模式 */
+html.dark .modal-pro-bg .semi-modal-footer .semi-button:not(.semi-button-primary):not(.semi-button-borderless):not(.semi-button-outline):not(.semi-button-danger):not(.semi-button-warning),
+html.dark .modal-pro-bg .semi-modal-footer .semi-button-primary.semi-button-light {
+  background: linear-gradient(180deg, rgba(60, 54, 136, 0.50) 0%, rgba(22.23, 42.81, 87.22, 0.40) 100%) !important;
+  border: 1px solid #594699 !important;
+  color: #FCFCFC !important;
+}
+/* 深色模式主按钮渐变不变 */
+html.dark .modal-pro-bg .semi-modal-footer .semi-button-primary:not(.semi-button-light):not(.semi-button-borderless):not(.semi-button-outline) {
+  background: linear-gradient(180deg, #89BDF9 0%, #8164FF 100%) !important;
+  color: #fff !important;
+}
+
+/* ==================== 全局 Checkbox 选中/半选统一样式 ==================== */
+.semi-checkbox-checked .semi-checkbox-inner-display,
+.semi-checkbox-inner-checked .semi-checkbox-inner-display,
+.semi-checkbox-indeterminate .semi-checkbox-inner-display {
+  background: #6d68e3 !important;
+  box-shadow: inset 0 0 0 1px #6d68e3 !important;
+  color: #fff !important;
+}
+.semi-checkbox:hover .semi-checkbox-inner-checked .semi-checkbox-inner-display,
+.semi-checkbox:hover.semi-checkbox-indeterminate .semi-checkbox-inner-display,
+.semi-checkbox-indeterminate .semi-checkbox-inner-display:hover,
+.semi-checkbox-checked .semi-checkbox-inner-display:hover {
+  background: #6d68e3 !important;
+  border-color: #6d68e3 !important;
+  color: #fff !important;
+}
+.semi-checkbox:active .semi-checkbox-inner-checked .semi-checkbox-inner-display,
+.semi-checkbox:active.semi-checkbox-indeterminate .semi-checkbox-inner-display,
+.semi-checkbox-indeterminate .semi-checkbox-inner-display:active,
+.semi-checkbox-checked .semi-checkbox-inner-display:active {
+  background: #6d68e3 !important;
+  border-color: #6d68e3 !important;
+  color: #fff !important;
+}
+/* 未选中态 hover/active 内圈环统一主题色（覆盖默认蓝色 focus 环） */
+.semi-checkbox:not(.semi-checkbox-disabled):hover .semi-checkbox-inner-display,
+.semi-checkbox:not(.semi-checkbox-disabled):active .semi-checkbox-inner-display {
+  box-shadow: inset 0 0 0 1px #6d68e3 !important;
+}

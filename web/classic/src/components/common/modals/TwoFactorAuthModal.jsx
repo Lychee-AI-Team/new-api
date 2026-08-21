@@ -19,7 +19,8 @@ For commercial licensing, please contact support@quantumnous.com
 
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { Modal, Button, Input, Typography } from '@douyinfe/semi-ui';
+import { Button, Input, Typography } from '@douyinfe/semi-ui'
+import ModalPro from '@/components/common/ui/ModalPro';
 
 /**
  * 可复用的两步验证模态框组件
@@ -54,7 +55,7 @@ const TwoFactorAuthModal = ({
   };
 
   return (
-    <Modal
+    <ModalPro
       title={
         <div className='flex items-center'>
           <div className='w-8 h-8 rounded-full bg-blue-100 dark:bg-blue-900 flex items-center justify-center mr-3'>
@@ -141,7 +142,7 @@ const TwoFactorAuthModal = ({
           </Typography.Text>
         </div>
       </div>
-    </Modal>
+    </ModalPro>
   );
 };
 

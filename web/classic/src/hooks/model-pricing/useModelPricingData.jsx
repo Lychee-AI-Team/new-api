@@ -20,9 +20,9 @@ For commercial licensing, please contact support@quantumnous.com
 import { useState, useEffect, useContext, useRef, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { API, copy, showError, showInfo, showSuccess } from '../../helpers';
-import { Modal } from '@douyinfe/semi-ui';
 import { UserContext } from '../../context/User';
 import { StatusContext } from '../../context/Status';
+import ModalPro from '@/components/common/ui/ModalPro';
 
 export const useModelPricingData = () => {
   const { t } = useTranslation();
@@ -268,7 +268,7 @@ export const useModelPricingData = () => {
     if (await copy(text)) {
       showSuccess(t('已复制：') + text);
     } else {
-      Modal.error({ title: t('无法复制到剪贴板，请手动复制'), content: text });
+      ModalPro.error({ title: t('无法复制到剪贴板，请手动复制'), content: text });
     }
   };
 

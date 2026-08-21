@@ -19,24 +19,7 @@ For commercial licensing, please contact support@quantumnous.com
 
 import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import {
-  Modal,
-  Button,
-  Table,
-  Tag,
-  Typography,
-  Space,
-  Tooltip,
-  Popconfirm,
-  Empty,
-  Spin,
-  Select,
-  Row,
-  Col,
-  Badge,
-  Progress,
-  Card,
-} from '@douyinfe/semi-ui';
+import { Button, Table, Tag, Typography, Space, Tooltip, Popconfirm, Empty, Spin, Select, Row, Col, Badge, Progress, Card } from '@douyinfe/semi-ui'
 import {
   IllustrationNoResult,
   IllustrationNoResultDark,
@@ -47,6 +30,7 @@ import {
   showSuccess,
   timestamp2string,
 } from '../../../../helpers';
+import ModalPro from '@/components/common/ui/ModalPro';
 
 const { Text } = Typography;
 
@@ -453,7 +437,7 @@ const MultiKeyManageModal = ({ visible, onCancel, channel, onRefresh }) => {
   ];
 
   return (
-    <Modal
+    <ModalPro
       title={
         <Space>
           <Text>{t('多密钥管理')}</Text>
@@ -735,7 +719,7 @@ const MultiKeyManageModal = ({ visible, onCancel, channel, onRefresh }) => {
           </Spin>
         </div>
       </div>
-    </Modal>
+    </ModalPro>
   );
 };
 

@@ -18,8 +18,9 @@ For commercial licensing, please contact support@quantumnous.com
 */
 
 import React from 'react';
-import { Modal, Badge } from '@douyinfe/semi-ui';
+import { Badge } from '@douyinfe/semi-ui'
 import { renderQuota, renderNumber } from '../../../../helpers';
+import ModalPro from '@/components/common/ui/ModalPro';
 
 const UserInfoModal = ({
   showUserInfo,
@@ -66,7 +67,7 @@ const UserInfoModal = ({
   };
 
   return (
-    <Modal
+    <ModalPro
       title={t('用户信息')}
       visible={showUserInfo}
       onCancel={() => setShowUserInfoModal(false)}
@@ -170,7 +171,7 @@ const UserInfoModal = ({
           )}
         </div>
       )}
-    </Modal>
+    </ModalPro>
   );
 };
 

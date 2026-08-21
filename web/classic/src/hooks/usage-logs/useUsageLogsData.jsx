@@ -19,7 +19,6 @@ For commercial licensing, please contact support@quantumnous.com
 
 import { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Modal } from '@douyinfe/semi-ui';
 import {
   API,
   getTodayStartTimestamp,
@@ -42,6 +41,7 @@ import {
 import { ITEMS_PER_PAGE } from '../../constants';
 import { useTableCompactMode } from '../common/useTableCompactMode';
 import ParamOverrideEntry from '../../components/table/usage-logs/components/ParamOverrideEntry';
+import ModalPro from '@/components/common/ui/ModalPro';
 
 export const useLogsData = () => {
   const { t } = useTranslation();
@@ -802,7 +802,7 @@ export const useLogsData = () => {
     if (await copy(text)) {
       showSuccess('已复制：' + text);
     } else {
-      Modal.error({ title: t('无法复制到剪贴板，请手动复制'), content: text });
+      ModalPro.error({ title: t('无法复制到剪贴板，请手动复制'), content: text });
     }
   };
 

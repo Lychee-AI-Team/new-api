@@ -18,8 +18,9 @@ For commercial licensing, please contact support@quantumnous.com
 */
 
 import React from 'react';
-import { Modal, Button, Checkbox } from '@douyinfe/semi-ui';
+import { Button, Checkbox } from '@douyinfe/semi-ui'
 import { getChannelsColumns } from '../ChannelsColumnDefs';
+import ModalPro from '@/components/common/ui/ModalPro';
 
 const ColumnSelectorModal = ({
   showColumnSelector,
@@ -69,18 +70,31 @@ const ColumnSelectorModal = ({
   });
 
   return (
-    <Modal
+    <ModalPro
       title={t('列设置')}
       visible={showColumnSelector}
       onCancel={() => setShowColumnSelector(false)}
       footer={
-        <div className='flex justify-end'>
-          <Button onClick={() => initDefaultColumns()}>{t('重置')}</Button>
-          <Button onClick={() => setShowColumnSelector(false)}>
-            {t('取消')}
+        <div className='flex justify-end gap-3'>
+          <Button
+            className='column-selector-btn-secondary'
+            onClick={() => initDefaultColumns()}
+          >
+            {t('重 置')}
           </Button>
-          <Button onClick={() => setShowColumnSelector(false)}>
-            {t('确定')}
+          <Button
+            className='column-selector-btn-secondary'
+            onClick={() => setShowColumnSelector(false)}
+          >
+            {t('取 消')}
+          </Button>
+          <Button
+            theme='solid'
+            type='primary'
+            className='column-selector-btn-primary'
+            onClick={() => setShowColumnSelector(false)}
+          >
+            {t('确 认')}
           </Button>
         </div>
       }
@@ -121,7 +135,7 @@ const ColumnSelectorModal = ({
           );
         })}
       </div>
-    </Modal>
+    </ModalPro>
   );
 };
 

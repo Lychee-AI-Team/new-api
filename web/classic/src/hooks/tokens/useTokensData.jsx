@@ -19,7 +19,6 @@ For commercial licensing, please contact support@quantumnous.com
 
 import { useState, useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Modal } from '@douyinfe/semi-ui';
 import {
   API,
   copy,
@@ -35,6 +34,7 @@ import {
   getServerAddress,
   encodeChannelConnectionString,
 } from '../../helpers/token';
+import ModalPro from '@/components/common/ui/ModalPro';
 
 export const useTokensData = (openFluentNotification, openCCSwitchModal) => {
   const { t } = useTranslation();
@@ -125,7 +125,7 @@ export const useTokensData = (openFluentNotification, openCCSwitchModal) => {
     if (await copy(text)) {
       showSuccess(t('已复制到剪贴板！'));
     } else {
-      Modal.error({
+      ModalPro.error({
         title: t('无法复制到剪贴板，请手动复制'),
         content: text,
         size: 'large',

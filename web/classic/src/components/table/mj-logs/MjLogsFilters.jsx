@@ -92,7 +92,7 @@ const MjLogsFilters = ({
           <div></div>
           <div className='flex gap-2'>
             <Button
-              type='tertiary'
+              className='btn-gradient-primary'
               htmlType='submit'
               loading={loading}
               size='small'

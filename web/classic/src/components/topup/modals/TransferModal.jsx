@@ -18,8 +18,9 @@ For commercial licensing, please contact support@quantumnous.com
 */
 
 import React from 'react';
-import { Modal, Typography, Input, InputNumber } from '@douyinfe/semi-ui';
+import { Typography, Input, InputNumber } from '@douyinfe/semi-ui'
 import { CreditCard } from 'lucide-react';
+import ModalPro from '@/components/common/ui/ModalPro';
 
 const TransferModal = ({
   t,
@@ -33,7 +34,7 @@ const TransferModal = ({
   setTransferAmount,
 }) => {
   return (
-    <Modal
+    <ModalPro
       title={
         <div className='flex items-center'>
           <CreditCard className='mr-2' size={18} />
@@ -70,7 +71,7 @@ const TransferModal = ({
           />
         </div>
       </div>
-    </Modal>
+    </ModalPro>
   );
 };
 

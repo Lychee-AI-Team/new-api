@@ -18,7 +18,7 @@ For commercial licensing, please contact support@quantumnous.com
 */
 
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import SkeletonWrapper from '../components/SkeletonWrapper';
 
 const Navigation = ({
@@ -28,16 +28,36 @@ const Navigation = ({
   userState,
   pricingRequireAuth,
 }) => {
+  const location = useLocation();
+  const pathname = location.pathname;
+
+  const isLinkActive = (link) => {
+    if (link.isExternal) return false;
+    if (link.to === '/') return pathname === '/';
+    return pathname === link.to || pathname.startsWith(link.to + '/');
+  };
+
   const renderNavLinks = () => {
     const baseClasses =
-      'flex-shrink-0 flex items-center gap-1 font-semibold rounded-md transition-all duration-200 ease-in-out';
-    const hoverClasses = 'hover:text-semi-color-primary';
-    const spacingClasses = isMobile ? 'p-1' : 'p-2';
-
-    const commonLinkClasses = `${baseClasses} ${spacingClasses} ${hoverClasses}`;
+      'flex-shrink-0 flex items-center justify-center rounded-lg transition-all duration-200 ease-in-out header-nav-link';
+    const spacingClasses = 'h-9 px-3';
 
     return mainNavLinks.map((link) => {
-      const linkContent = <span>{link.text}</span>;
+      const isActive = isLinkActive(link);
+      const commonLinkClasses = `${baseClasses} ${spacingClasses}${isActive ? ' active' : ''}`;
+
+      const linkContent = (
+        <span
+          style={{
+            fontSize: '14px',
+            fontWeight: 400,
+            color: 'var(--header-nav-text)',
+            fontFamily: 'Inter, sans-serif',
+          }}
+        >
+          {link.text}
+        </span>
+      );
 
       if (link.isExternal) {
         return (

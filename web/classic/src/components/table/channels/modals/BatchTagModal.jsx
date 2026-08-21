@@ -18,7 +18,8 @@ For commercial licensing, please contact support@quantumnous.com
 */
 
 import React from 'react';
-import { Modal, Input, Typography } from '@douyinfe/semi-ui';
+import { Input, Typography } from '@douyinfe/semi-ui'
+import ModalPro from '@/components/common/ui/ModalPro';
 
 const BatchTagModal = ({
   showBatchSetTag,
@@ -30,7 +31,7 @@ const BatchTagModal = ({
   t,
 }) => {
   return (
-    <Modal
+    <ModalPro
       title={t('批量设置标签')}
       visible={showBatchSetTag}
       onOk={batchSetChannelTag}
@@ -56,7 +57,7 @@ const BatchTagModal = ({
           )}
         </Typography.Text>
       </div>
-    </Modal>
+    </ModalPro>
   );
 };
 

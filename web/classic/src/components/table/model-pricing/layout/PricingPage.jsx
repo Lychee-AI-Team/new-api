@@ -40,7 +40,15 @@ const PricingPage = () => {
   };
 
   return (
-    <div className='bg-white'>
+    <div
+      className='pricing-page-wrapper'
+      style={{
+        backgroundImage: 'var(--pricing-page-bg-image)',
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+        backgroundAttachment: 'fixed',
+      }}
+    >
       <Layout className='pricing-layout'>
         {!isMobile && (
           <Sider className='pricing-scroll-hide pricing-sidebar'>

@@ -19,16 +19,8 @@ For commercial licensing, please contact support@quantumnous.com
 
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import {
-  Modal,
-  Button,
-  Input,
-  Typography,
-  Tabs,
-  TabPane,
-  Space,
-  Spin,
-} from '@douyinfe/semi-ui';
+import { Button, Input, Typography, Tabs, TabPane, Space, Spin } from '@douyinfe/semi-ui'
+import ModalPro from '@/components/common/ui/ModalPro';
 
 /**
  * 通用安全验证模态框组件
@@ -83,7 +75,7 @@ const SecureVerificationModal = ({
   // 如果用户没有启用任何验证方式
   if (visible && !has2FA && !hasPasskey) {
     return (
-      <Modal
+      <ModalPro
         title={title || t('安全验证')}
         visible={visible}
         onCancel={onCancel}
@@ -116,12 +108,12 @@ const SecureVerificationModal = ({
             {t('请前往个人设置 → 安全设置进行配置。')}
           </Typography.Text>
         </div>
-      </Modal>
+      </ModalPro>
     );
   }
 
   return (
-    <Modal
+    <ModalPro
       title={title || t('安全验证')}
       visible={visible}
       onCancel={loading ? undefined : onCancel}
@@ -315,7 +307,7 @@ const SecureVerificationModal = ({
           )}
         </Tabs>
       </div>
-    </Modal>
+    </ModalPro>
   );
 };
 

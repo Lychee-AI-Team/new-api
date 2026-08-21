@@ -18,9 +18,10 @@ For commercial licensing, please contact support@quantumnous.com
 */
 
 import React, { useState, useRef, useEffect } from 'react';
-import { Modal, Typography, Tag, Button } from '@douyinfe/semi-ui';
+import { Typography, Tag, Button } from '@douyinfe/semi-ui'
 import { IconExternalOpen, IconCopy } from '@douyinfe/semi-icons';
 import { useTranslation } from 'react-i18next';
+import ModalPro from '@/components/common/ui/ModalPro';
 
 const { Text, Title } = Typography;
 
@@ -151,7 +152,7 @@ const AudioPreviewModal = ({ isModalOpen, setIsModalOpen, audioClips }) => {
   const clips = Array.isArray(audioClips) ? audioClips : [];
 
   return (
-    <Modal
+    <ModalPro
       title={t('音乐预览')}
       visible={isModalOpen}
       onOk={() => setIsModalOpen(false)}
@@ -174,7 +175,7 @@ const AudioPreviewModal = ({ isModalOpen, setIsModalOpen, audioClips }) => {
           ))}
         </div>
       )}
-    </Modal>
+    </ModalPro>
   );
 };
 

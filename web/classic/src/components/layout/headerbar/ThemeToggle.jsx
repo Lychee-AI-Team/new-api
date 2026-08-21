@@ -101,7 +101,15 @@ const ThemeToggle = ({ theme, onThemeToggle, t }) => {
           aria-label={t('切换主题')}
           theme='borderless'
           type='tertiary'
-          className='!p-1.5 !text-current focus:!bg-semi-color-fill-1 !rounded-full !bg-semi-color-fill-0 hover:!bg-semi-color-fill-1'
+          className='header-circle-btn !p-1.5 !text-current !rounded-full'
+          style={{
+            width: '32px',
+            height: '32px',
+            background: 'var(--header-btn-bg)',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+          }}
         />
       </span>
     </Dropdown>

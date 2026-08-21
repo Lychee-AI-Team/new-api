@@ -144,50 +144,54 @@ const UserArea = ({
   } else {
     const showRegisterButton = !isSelfUseMode;
 
-    const commonSizingAndLayoutClass =
-      'flex items-center justify-center !py-[10px] !px-1.5';
-
-    const loginButtonSpecificStyling =
-      '!bg-semi-color-fill-0 dark:!bg-semi-color-fill-1 hover:!bg-semi-color-fill-1 dark:hover:!bg-gray-700 transition-colors';
-    let loginButtonClasses = `${commonSizingAndLayoutClass} ${loginButtonSpecificStyling}`;
-
-    let registerButtonClasses = `${commonSizingAndLayoutClass}`;
-
-    const loginButtonTextSpanClass =
-      '!text-xs !text-semi-color-text-1 dark:!text-gray-300 !p-1.5';
-    const registerButtonTextSpanClass = '!text-xs !text-white !p-1.5';
-
-    if (showRegisterButton) {
-      if (isMobile) {
-        loginButtonClasses += ' !rounded-full';
-      } else {
-        loginButtonClasses += ' !rounded-l-full !rounded-r-none';
-      }
-      registerButtonClasses += ' !rounded-r-full !rounded-l-none';
-    } else {
-      loginButtonClasses += ' !rounded-full';
-    }
-
     return (
-      <div className='flex items-center'>
+      <div className='flex items-center gap-2'>
         <Link to='/login' className='flex'>
           <Button
             theme='borderless'
             type='tertiary'
-            className={loginButtonClasses}
+            className='header-login-btn flex items-center justify-center !rounded-lg'
+            style={{
+              width: '64px',
+              height: '32px',
+              background: 'var(--header-btn-bg)',
+            }}
           >
-            <span className={loginButtonTextSpanClass}>{t('登录')}</span>
+            <span
+              style={{
+                fontSize: '12px',
+                fontWeight: 700,
+                color: 'var(--header-login-text)',
+                fontFamily: 'Inter, sans-serif',
+              }}
+            >
+              {t('登录')}
+            </span>
           </Button>
         </Link>
         {showRegisterButton && (
           <div className='hidden md:block'>
-            <Link to='/register' className='flex -ml-px'>
+            <Link to='/register' className='flex'>
               <Button
                 theme='solid'
                 type='primary'
-                className={registerButtonClasses}
+                className='flex items-center justify-center !rounded-lg !border-0'
+                style={{
+                  width: '68px',
+                  height: '32px',
+                  background: 'linear-gradient(180deg, #89BDF9 0%, #8164FF 100%)',
+                }}
               >
-                <span className={registerButtonTextSpanClass}>{t('注册')}</span>
+                <span
+                  style={{
+                    fontSize: '12px',
+                    fontWeight: 700,
+                    color: 'white',
+                    fontFamily: 'Inter, sans-serif',
+                  }}
+                >
+                  {t('注册')}
+                </span>
               </Button>
             </Link>
           </div>

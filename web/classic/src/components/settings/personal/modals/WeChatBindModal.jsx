@@ -18,10 +18,11 @@ For commercial licensing, please contact support@quantumnous.com
 */
 
 import React, { useEffect, useRef, useState } from 'react';
-import { Button, Input, Modal, Image } from '@douyinfe/semi-ui';
+import { Button, Input, Image } from '@douyinfe/semi-ui'
 import { IconKey } from '@douyinfe/semi-icons';
 import { SiWechat } from 'react-icons/si';
 import { API, showError, showSuccess } from '../../../../helpers';
+import ModalPro from '@/components/common/ui/ModalPro';
 
 const WeChatBindModal = ({
   t,
@@ -128,7 +129,7 @@ const WeChatBindModal = ({
   // 新模式：动态二维码扫码绑定
   if (isOffiAccountMode) {
     return (
-      <Modal
+      <ModalPro
         title={
           <div className='flex items-center'>
             <SiWechat className='mr-2 text-green-500' size={20} />
@@ -165,13 +166,13 @@ const WeChatBindModal = ({
             </div>
           )}
         </div>
-      </Modal>
+      </ModalPro>
     );
   }
 
   // 旧模式：验证码绑定
   return (
-    <Modal
+    <ModalPro
       title={
         <div className='flex items-center'>
           <SiWechat className='mr-2 text-green-500' size={20} />
@@ -212,7 +213,7 @@ const WeChatBindModal = ({
           {t('绑定')}
         </Button>
       </div>
-    </Modal>
+    </ModalPro>
   );
 };
 

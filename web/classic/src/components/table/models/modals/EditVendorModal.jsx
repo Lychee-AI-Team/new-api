@@ -18,12 +18,13 @@ For commercial licensing, please contact support@quantumnous.com
 */
 
 import React, { useState, useRef, useEffect } from 'react';
-import { Modal, Form, Col, Row } from '@douyinfe/semi-ui';
+import { Form, Col, Row } from '@douyinfe/semi-ui'
 import { API, showError, showSuccess } from '../../../../helpers';
 import { Typography } from '@douyinfe/semi-ui';
 import { IconLink } from '@douyinfe/semi-icons';
 import { useTranslation } from 'react-i18next';
 import { useIsMobile } from '../../../../hooks/common/useIsMobile';
+import ModalPro from '@/components/common/ui/ModalPro';
 
 const EditVendorModal = ({ visible, handleClose, refresh, editingVendor }) => {
   const { t } = useTranslation();
@@ -117,7 +118,7 @@ const EditVendorModal = ({ visible, handleClose, refresh, editingVendor }) => {
   };
 
   return (
-    <Modal
+    <ModalPro
       title={isEdit ? t('编辑供应商') : t('新增供应商')}
       visible={visible}
       onOk={() => formApiRef.current?.submitForm()}
@@ -179,7 +180,7 @@ const EditVendorModal = ({ visible, handleClose, refresh, editingVendor }) => {
           </Col>
         </Row>
       </Form>
-    </Modal>
+    </ModalPro>
   );
 };
 

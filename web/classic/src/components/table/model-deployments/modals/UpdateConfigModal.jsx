@@ -18,22 +18,7 @@ For commercial licensing, please contact support@quantumnous.com
 */
 
 import React, { useState, useEffect, useRef } from 'react';
-import {
-  Modal,
-  Form,
-  Input,
-  InputNumber,
-  Typography,
-  Card,
-  Space,
-  Divider,
-  Button,
-  Banner,
-  Tag,
-  Collapse,
-  TextArea,
-  Switch,
-} from '@douyinfe/semi-ui';
+import { Form, Input, InputNumber, Typography, Card, Space, Divider, Button, Banner, Tag, Collapse, TextArea, Switch } from '@douyinfe/semi-ui'
 import {
   FaCog,
   FaDocker,
@@ -45,6 +30,7 @@ import {
   FaMinus,
 } from 'react-icons/fa';
 import { API, showError, showSuccess } from '../../../../helpers';
+import ModalPro from '@/components/common/ui/ModalPro';
 
 const { Text, Title } = Typography;
 
@@ -193,7 +179,7 @@ const UpdateConfigModal = ({ visible, onCancel, deployment, onSuccess, t }) => {
   };
 
   return (
-    <Modal
+    <ModalPro
       title={
         <div className='flex items-center gap-2'>
           <FaCog className='text-blue-500' />
@@ -490,7 +476,7 @@ const UpdateConfigModal = ({ visible, onCancel, deployment, onSuccess, t }) => {
           </div>
         </div>
       </div>
-    </Modal>
+    </ModalPro>
   );
 };
 
